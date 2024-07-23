@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "19.0.0-rc-8b08e99e-20240713",
-    "react-dom": "19.0.0-rc-8b08e99e-20240713"
+    "react-dom": "19.0.0-rc-8b08e99e-20240713",
+    "react-router-dom": "^6.25.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
