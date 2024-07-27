@@ -1,9 +1,9 @@
 import './homePage.css'
 
-const Homepage = () => {
+const HomePage = () => {
   return (
     <div className="homepage">Homepage</div>
   )
 }
 
-export default Homepage
+export default HomePage
