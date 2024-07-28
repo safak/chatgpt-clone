@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.2.9",
+    "imagekitio-react": "^4.2.0",
     "react": "19.0.0-rc-8b08e99e-20240713",
     "react-dom": "19.0.0-rc-8b08e99e-20240713",
     "react-router-dom": "^6.25.1",
