@@ -85,6 +85,15 @@
         color: #ececec;
       }
       button {
+        background-color: #605e68;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
         img {
           width: 16px;
           height: 16px;
