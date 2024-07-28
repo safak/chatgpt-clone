@@ -9,7 +9,6 @@ const NewPrompt = () => {
   }, []);
   return (
     <>
-      {/* add new chat */}
       <div className="endChat" ref={endRef}></div>
       <from className="newForm">
         <label htmlFor="file">
