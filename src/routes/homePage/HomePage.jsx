@@ -1,8 +1,13 @@
+import { Link } from 'react-router-dom'
 import './homePage.css'
 
 const HomePage = () => {
   return (
-    <div className="homepage">Homepage</div>
+    <div className="homepage">
+      <Link to='/dashboard'>
+        Home
+      </Link>
+    </div>
   )
 }
 
