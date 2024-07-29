@@ -48,6 +48,7 @@
     .texts {
       display: flex;
       flex-direction: column;
+      gap: 0px;
 
       span {
         &:first-child {

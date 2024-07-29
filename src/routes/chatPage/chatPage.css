@@ -1,0 +1,33 @@
+.chatPage {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* BC IN newPrompt.css WE USE position: absolute */
+  position: relative;
+
+  .wrapper {
+    flex: 1;
+    overflow: scroll;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .chat {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+
+      .message {
+        padding: 20px;
+
+        &.user {
+          background-color: #2C2937;
+          border-radius: 20px;
+          max-width: 80%;
+          align-self: flex-end;
+        }
+      }
+    }
+  }
+}
