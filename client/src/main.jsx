@@ -41,10 +41,10 @@ const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: '/chat',
-        element: <ChatPage />,
-      },
+      // {
+      //   path: '/chat',
+      //   element: <ChatPage />,
+      // },
     ],
   }
 ])

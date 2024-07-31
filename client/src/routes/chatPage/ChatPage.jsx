@@ -4,8 +4,8 @@ import './chatPage.css'
 const ChatPage = () => {
   return (
     <div className="chatPage">
+      {/* div className="wrapper" IT'S ADDED SO THAT WE ARE ABLE TO SCROLL */}
       <div className="wrapper">
-        {/* IT'S ADDED SO THAT WE ARE ABLE TO SCROLL */}
         <div className="chat">
           <div className="message">Test from AI</div>
           <div className="message user">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores optio adipisci fugit quaerat molestiae! Voluptatibus, sint iure? Corrupti cum adipisci dolores pariatur velit temporibus repellat?</div>
@@ -36,6 +36,7 @@ const ChatPage = () => {
           <div className="message">Test from AI</div>
           <div className="message user">Test from user</div>
 
+          {/* IT IS ADDED IN ANOTHER component OTHERWISE WHENEVER WE RECEIVE A NEW MESSAGE FROM THE AI IT IS GOING TO RENDER THE ENTIRE ChatPage component */}
           <NewPrompt />          
         </div>
       </div>
