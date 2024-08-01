@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { ClerkProvider } from '@clerk/clerk-react'
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import { SignedIn, UserButton } from "@clerk/clerk-react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import './rootLayout.css'
 
@@ -11,28 +12,32 @@ if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
 
+const queryClient = new QueryClient();
+
 const RootLayout = () => {
   return (
     // ADDED HERE INSTEAD OF main.jsx BC WE ARE USING react-router-dom
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
-      <div className='rootLayout'>
-        <header>
-          <Link to='/' className='logo'>
-            <img src="/logo.png" alt="" />
-            <span>AI Chat</span>
-          </Link>
+      <QueryClientProvider client={queryClient}>
+        <div className='rootLayout'>
+          <header>
+            <Link to='/' className='logo'>
+              <img src="/logo.png" alt="" />
+              <span>AI Chat</span>
+            </Link>
 
-          <div className="user">
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </div>
-        </header>
+            <div className="user">
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </div>
+          </header>
 
-        <main>
-          <Outlet />
-        </main>
-      </div>
+          <main>
+            <Outlet />
+          </main>
+        </div>
+      </QueryClientProvider>
     </ClerkProvider>
   )
 }
