@@ -7,6 +7,12 @@ import './homePage.css'
 const HomePage = () => {
   const [typingStatus, setTypingStatus] = useState("human1");
 
+  // const test = async () => {
+  //   await fetch('http://localhost:4000/api/test', {
+  //     credentials: 'include'
+  //   })
+  // }
+
   return (
     <div className="homepage">
       {/* <img src="/orbital.png" alt="" className='orbital' /> */}
@@ -17,6 +23,8 @@ const HomePage = () => {
         <h3>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, magnam sit repellendus voluptas nam eligendi at. Officiis, deserunt velit! Quia a suscipit aliquid iste dolor.</h3>
 
         <Link to='/dashboard'>Get Started</Link>
+
+        {/* <button onClick={test}>TEST BE AUTH</button> */}
       </div>
 
       <div className="right">

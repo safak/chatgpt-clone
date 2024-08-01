@@ -1,6 +1,31 @@
+import { useAuth } from '@clerk/clerk-react'
+
 import './dashboardPage.css'
 
 const DashboardPage = () => {
+  const { userId } = useAuth()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const text = e.target.text.value
+
+    if(!text) return
+
+    await fetch('http://localhost:4000/api/chats', {
+      method: 'POST',
+      // BC WE ARE GOING TO SEND cookies AND THE user IN IT
+      credentials: 'include',
+      // FORMAT OF WHAT WE ARE GOING TO SEND TO THE BE
+      headers: { 
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ text }),
+    })
+    .then(res => res.json())
+    .then(data => setImg({ ...img, aiData: data }))
+  }
+
   return (
     <div className="dashboardPage">
       <div className="texts">
@@ -32,8 +57,8 @@ const DashboardPage = () => {
       </div>
 
       <div className="formContainer">
-        <form action="">
-          <input type="text" placeholder="Ask me anything" />
+        <form action="" onSubmit={handleSubmit}>
+          <input type="text" name="text" placeholder="Ask me anything" />
 
           <button>
             <img src="/arrow.png" alt="" />
