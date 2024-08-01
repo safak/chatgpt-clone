@@ -10,7 +10,8 @@ const NewPrompt = () => {
   const [img, setImg] = useState({
     isLoading: false,
     error: '',
-    dbData: {} // THE INFO COMING FROM IMAGE KIT? R/ YES
+    dbData: {}, // THE INFO COMING FROM IMAGE KIT? R/ YES
+    aiData: {}
   })
   const [question, setQuestion] = useState('')
   // BC THE answer FROM THE AI IS IN markdown FORMAT WE INSTALL react-markdown
@@ -25,9 +26,19 @@ const NewPrompt = () => {
   const add = async (text) => {
     setQuestion(text)
 
-    const result = await model.generateContent(text);
+    const result = await model.generateContent(
+      Object.entries(img.aiData).length ? [img.aiData, text] : [text]
+    )
+
     const response = await result.response;
     setAnswer(response.text());
+
+    setImg({
+      isLoading: false,
+      error: '',
+      dbData: {},
+      aiData: {}
+    })
   }
 
   const handleSubmit = (e) => {

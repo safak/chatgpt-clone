@@ -43,12 +43,28 @@ const Upload = ({ setImg }) => {
   };
   
   const onUploadStart = evt => {
-    console.log("Start", evt);
+    //  evt CONTAINS THE LOCAL FILE INFORMATION
 
-    setImg((prev) => ({
-      ...prev,
-      isLoading: true
-    }))
+    // WE CHOOSE ONLY ONE FILE [0]
+    const file = evt.target.files[0]
+
+    // FOR Gemini
+    const reader = new FileReader()
+    reader.onloadend = () => {
+      setImg((prev) => ({
+        ...prev,
+        isLoading: true,
+        aiData: {
+          inlineData: {
+            // WE TAKE THE SECOND ITEM [1] WHICH IS THE CODE VERSION (BUFFER) OF THE img
+            data: reader.result.split(",")[1],
+            mimeType: file.type
+          }
+        }
+      }))
+    }
+
+    reader.readAsDataURL(file)
   };
 
   return (
