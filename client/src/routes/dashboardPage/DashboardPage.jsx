@@ -1,9 +1,31 @@
 import { useAuth } from '@clerk/clerk-react'
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import './dashboardPage.css'
 
 const DashboardPage = () => {
-  const { userId } = useAuth()
+  const queryClient = useQueryClient();
+
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: (text) => {
+      return fetch(`${import.meta.env.VITE_API_URL}/api/chats`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      }).then((res) => res.json());
+    },
+    onSuccess: (id) => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["userChats"] });
+      navigate(`/dashboard/chats/${id}`);
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -12,18 +34,21 @@ const DashboardPage = () => {
 
     if(!text) return
 
-    await fetch('http://localhost:4000/api/chats', {
-      method: 'POST',
-      // BC WE ARE GOING TO SEND cookies AND THE user IN IT
-      credentials: 'include',
-      // FORMAT OF WHAT WE ARE GOING TO SEND TO THE BE
-      headers: { 
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ text }),
-    })
-    .then(res => res.json())
-    .then(data => setImg({ ...img, aiData: data }))
+    mutation.mutate(text);
+
+    // NO SE POR QUE ESTO ESTABA AQUI
+    // await fetch('http://localhost:4000/api/chats', {
+    //   method: 'POST',
+    //   // BC WE ARE GOING TO SEND cookies AND THE user IN IT
+    //   credentials: 'include',
+    //   // FORMAT OF WHAT WE ARE GOING TO SEND TO THE BE
+    //   headers: { 
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({ text }),
+    // })
+    // .then(res => res.json())
+    // .then(data => setImg({ ...img, aiData: data }))
   }
 
   return (
