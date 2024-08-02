@@ -114,6 +114,19 @@ app.get('/api/userchats', ClerkExpressRequireAuth(), async (req, res) => {
   }
 })
 
+app.get('/api/chats/:id', ClerkExpressRequireAuth(), async (req, res) => {
+  const userId = req.auth.userId
+
+  try {
+    const chat = await Chat.findOne({ _id: req.params.id, userId: userId })
+
+    res.status(200).send(chat)
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ error: 'error fetching chat' });    
+  }
+})
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(401).send('Unauthenticated!');

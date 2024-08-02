@@ -1,43 +1,65 @@
+import { useQuery } from '@tanstack/react-query';
+import { useLocation } from 'react-router-dom';
+import Markdown from 'react-markdown';
+import { IKImage } from 'imagekitio-react';
+
 import NewPrompt from '../../components/newPrompt/NewPrompt'
 import './chatPage.css'
 
 const ChatPage = () => {
+  const path = useLocation().pathname;
+  // pop() WILL GIVE ME THE LAST ITEM
+  const chatId = path.split("/").pop();
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["chat", chatId],
+    queryFn: () =>
+      fetch(`${import.meta.env.VITE_API_URL}/api/chats/${chatId}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
+  });
+
+  console.log(data);
+  
+
   return (
     <div className="chatPage">
       {/* div className="wrapper" IT'S ADDED SO THAT WE ARE ABLE TO SCROLL */}
       <div className="wrapper">
         <div className="chat">
-          <div className="message">Test from AI</div>
-          <div className="message user">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores optio adipisci fugit quaerat molestiae! Voluptatibus, sint iure? Corrupti cum adipisci dolores pariatur velit temporibus repellat?</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
-          <div className="message">Test from AI</div>
-          <div className="message user">Test from user</div>
+          {isPending
+            ? "Loading..."
+            : error
+            ? "Something went wrong!"
+            : data?.history?.map((message, i) => (
+                <>
+                  {message.img && (
+                    <IKImage
+                      urlEndpoint={import.meta.env.VITE_IMAGE_KIT_ENDPOINT}
+                      path={message.img}
+                      height="300"
+                      width="400"
+                      transformation={[{ height: 300, width: 400 }]}
+                      loading="lazy"
+                      // WHILE LOADING IT WILL SHOW A LOW QUALITY VERSION OF THE img
+                      lqip={{ active: true, quality: 20 }}
+                    />
+                  )}
+                  <div
+                    className={
+                      message.role === "user" ? "message user" : "message"
+                    }
+                    key={i}
+                  >
+                    <Markdown>{message?.parts[0].text}</Markdown>
+                  </div>
+                </>
+              )
+            )
+          }
 
           {/* IT IS ADDED IN ANOTHER component OTHERWISE WHENEVER WE RECEIVE A NEW MESSAGE FROM THE AI IT IS GOING TO RENDER THE ENTIRE ChatPage component */}
-          <NewPrompt />          
+          {/* {data && <NewPrompt data={data} />}           */}
         </div>
       </div>
     </div>
