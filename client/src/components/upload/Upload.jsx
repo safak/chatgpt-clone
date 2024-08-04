@@ -39,7 +39,19 @@ const Upload = ({ setImg }) => {
   };
 
   const onUploadStart = (evt) => {
+    // .files[0] INDICATES THE FIRST FILE ONLY
     const file = evt.target.files[0];
+
+    // THIS IS THE React.js VERSION OF THE function TAKEN FROM Gemini API FROM A function WRITEN IN Node.js. SUGGESTED BY Gemini API.
+    // Converts local file information to a GoogleGenerativeAI.Part object.
+    // function fileToGenerativePart(path, mimeType) {
+    //   return {
+    //     inlineData: {
+    //       data: Buffer.from(fs.readFileSync(path)).toString("base64"),
+    //       mimeType
+    //     },
+    //   };
+    // }
 
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -48,12 +60,14 @@ const Upload = ({ setImg }) => {
         isLoading: true,
         aiData: {
           inlineData: {
+            // [1] CONTAINS THE code VERSION OF THE img
             data: reader.result.split(",")[1],
             mimeType: file.type,
           },
         },
       }));
     };
+    
     reader.readAsDataURL(file);
   };
 
@@ -67,6 +81,7 @@ const Upload = ({ setImg }) => {
         fileName="test-upload.png"
         onError={onError}
         onSuccess={onSuccess}
+        // SO I DON'T HAVE TO WORRY ABOUT GIVING UNIQUE FILE NAMES
         useUniqueFileName={true}
         onUploadProgress={onUploadProgress}
         onUploadStart={onUploadStart}

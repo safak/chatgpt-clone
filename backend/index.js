@@ -3,12 +3,17 @@ import ImageKit from "imagekit";
 import cors from "cors";
 import mongoose from "mongoose";
 import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node';
+import path from "path";
+import url from "url";
 
 import Chat from "./models/chat.js";
 import UserChats from "./models/userChats.js";
 
 const port = process.env.PORT || 3000;
 const app = express();
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(
   cors({
@@ -55,15 +60,16 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
     const newChat = new Chat({
       userId: userId,
       // text HERE WOULD BE THE prompt
+      // SINCE WE ARE CREATING THE chat FOR THE FIRST TIME, THE role WILL BE "user" ALL THE TIME
       history: [{ role: "user", parts: [{ text }] }],
     });
 
     const savedChat = await newChat.save();
 
-    // CHECK IF userChats EXISTS
+    // CHECK IF THE userChats EXISTS
     const userChats = await UserChats.find({ userId: userId });
 
-    // IF userChats DOES NOT EXIST CREATE IT AND ADD CHAT IN THE chats ARRAY
+    // IF userChats DOES NOT EXIST CREATE IT AND ADD chat IN THE chats ARRAY OF MODEL UserChats
     if (!userChats?.length) {
       const newUserChats = new UserChats({
         userId: userId,
@@ -77,8 +83,9 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
 
       await newUserChats.save()
     } else {
-      // IF userChats DOES EXIST ADD CHAT IN THE chats ARRAY
+      // IF userChats DOES EXIST ADD chat IN THE chats ARRAY OF MODEL UserChats
       await UserChats.updateOne(
+        // FIRST WE SEARCH FOR THE userId
         { userId: userId }, 
         {
           $push: {
@@ -107,6 +114,10 @@ app.get('/api/userchats', ClerkExpressRequireAuth(), async (req, res) => {
   try {
     const userChats = await UserChats.find({ userId: userId })
 
+    if (userChats.length === 0) {
+      return res.status(200).send([]);
+    }
+
     res.status(200).send(userChats[0].chats)
   } catch (error) {
     console.log(error);
@@ -127,10 +138,51 @@ app.get('/api/chats/:id', ClerkExpressRequireAuth(), async (req, res) => {
   }
 })
 
+// put BC WE ARE GOING TO UPDATE OUR EXISTING chats
+app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
+  const userId = req.auth.userId;
+
+  const { question, answer, img } = req.body;
+
+  const newItems = [
+    // THE REASON FOR ...(question) IS THAT WHEN WE CREATE A NEW chat IT AUTOMATICALLY ADD A NEW user MESSAGE IN THE chatPage component on top, THAT MEANS IT IS ALREADY IN OUR DB, ENTONCES NOSOTROS AÑADIMOS UN NUEVO mensaje AL chat
+    ...(question
+      // ... INDICA QUE SI HAY UNA img SE AGREGARA AL ARRAY DE parts (POR ESO PROPAGA DENTRO DEL ARRAY parts LA img), SINO NO SE AGREGARA AL ARRAY DE parts
+      ? [{ role: "user", parts: [{ text: question }], ...(img && { img }) }]
+      : []),
+    { role: "model", parts: [{ text: answer }] },
+  ];
+
+  try {
+    const updatedChat = await Chat.updateOne(
+      { _id: req.params.id, userId },
+      {
+        $push: {
+          history: {
+            // WILL SEND EVERY SINGLE item IN THE history ARRAY
+            $each: newItems,
+          },
+        },
+      }
+    );
+    res.status(200).send(updatedChat);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error adding conversation!");
+  }
+})
+
+// error HANDLER TAKEN FROM Clerk's DOCUMENTATION FOR WHEN WE DO AUTHENTICATION
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(401).send('Unauthenticated!');
 });
+
+app.use(express.static(path.join(__dirname, '../client/dist')))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/dist', 'index.html'))
+})
 
 app.listen(port, () => {
   connect();

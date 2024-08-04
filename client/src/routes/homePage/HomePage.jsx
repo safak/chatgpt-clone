@@ -29,7 +29,9 @@ const HomePage = () => {
 
       <div className="right">
         <div className="imgContainer">
+            {/* THIS div IS FOR THE ANIMATED BACKGROUND */}
           <div className="bgContainer">
+            {/* THIS div CONTAINS THE img TO BE ANIMATED */}
             <div className="bg"></div>
           </div>
 
@@ -37,15 +39,15 @@ const HomePage = () => {
 
           <div className="chat">
             <img
-                src={
-                  typingStatus === "human1"
-                    ? "/human1.jpeg"
-                    : typingStatus === "human2"
-                    ? "/human2.jpeg"
-                    : "bot.png"
-                }
-                alt=""
-              />
+              src={
+                typingStatus === "human1"
+                  ? "/human1.jpeg"
+                  : typingStatus === "human2"
+                  ? "/human2.jpeg"
+                  : "bot.png"
+              }
+              alt=""
+            />
             
             <TypeAnimation
                 sequence={[

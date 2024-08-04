@@ -85,7 +85,7 @@
           opacity: 0.2;
           width: 200%;
           height: 100%;
-          background-size: auto 100%;
+          background-size: auto 100%;          /* FULL HEIGHT AND WIDTH */
           animation: 8s ease-in-out infinite alternate slideBg;
         }
       }

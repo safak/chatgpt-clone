@@ -8,18 +8,19 @@ import './chatPage.css'
 
 const ChatPage = () => {
   const path = useLocation().pathname;
-  // pop() WILL GIVE ME THE LAST ITEM
+  // pop() WILL GIVE ME THE LAST ITEM /dashboard/chats/66ac26a7b397542865c8a509
   const chatId = path.split("/").pop();
 
   const { isPending, error, data } = useQuery({
+    // queryKey IS HOW WE IDENTIFY THIS QUERY, IF WE USE A NAME OF ANOTHER QUERY IT WILL OVERWRITE THIS CALL AND FETCH THE DATA BELONGING TO THAT QUERY
     queryKey: ["chat", chatId],
     queryFn: () =>
       fetch(`${import.meta.env.VITE_API_URL}/api/chats/${chatId}`, {
         credentials: "include",
-      }).then((res) => res.json()),
+      }).then((res) => { console.log('res', res); return res.json()}),
   });
 
-  console.log(data);
+  console.log('data', data);
   
 
   return (
@@ -59,7 +60,7 @@ const ChatPage = () => {
           }
 
           {/* IT IS ADDED IN ANOTHER component OTHERWISE WHENEVER WE RECEIVE A NEW MESSAGE FROM THE AI IT IS GOING TO RENDER THE ENTIRE ChatPage component */}
-          {/* {data && <NewPrompt data={data} />}           */}
+          {/* {data && <NewPrompt data={data} />} */}
         </div>
       </div>
     </div>
