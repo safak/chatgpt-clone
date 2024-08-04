@@ -21,23 +21,20 @@ const NewPrompt = ({ data }) => {
   const formRef = useRef(null);
 
   const queryClient = useQueryClient();
-  console.log('hi2');
 
   const chat = model.startChat({
-    // THIS IS HOW THE AI REMEMBERS THE CONVERSATION
-    history: [
-      data?.history.map(({ role, parts }) => ({
-        role,
-        parts: [{ text: parts[0].text }],
-      })),
-    ],
+    // THIS IS HOW THE AI REMEMBERS THE CONVERSATION    
+    history: data?.history?.length > 0 
+      ? data.history.map(({ role, parts }) => ({
+          role,
+          parts: parts?.length > 0 && parts[0]?.text ? [{ text: parts[0].text }] : [],
+        }))
+      : [],
+
     generationConfig: {
       // maxOutputTokens: 100,
     },
   });
-
-  console.log('chat', chat.history);
-  
 
   useEffect(() => {
     endRef.current.scrollIntoView({ behavior: "smooth" });

@@ -17,11 +17,8 @@ const ChatPage = () => {
     queryFn: () =>
       fetch(`${import.meta.env.VITE_API_URL}/api/chats/${chatId}`, {
         credentials: "include",
-      }).then((res) => { console.log('res', res); return res.json()}),
-  });
-
-  console.log('data', data);
-  
+      }).then((res) => res.json()),
+  });  
 
   return (
     <div className="chatPage">
@@ -60,7 +57,7 @@ const ChatPage = () => {
           }
 
           {/* IT IS ADDED IN ANOTHER component OTHERWISE WHENEVER WE RECEIVE A NEW MESSAGE FROM THE AI IT IS GOING TO RENDER THE ENTIRE ChatPage component */}
-          {/* {data && <NewPrompt data={data} />} */}
+          {data && <NewPrompt data={data} />}
         </div>
       </div>
     </div>
