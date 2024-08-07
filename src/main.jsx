@@ -5,24 +5,31 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './routes/homePage/HomePage.jsx';
 import DashBoard from './routes/dashboardPage/DashboardPage.jsx';
 import ChatPage from './routes/chatPage/ChatPage.jsx';
+import RootLayOut from './layouts/rootLayout/RootLayOut.jsx';
+import DashBoardLayout from './layouts/dashboardLayout/DashBoardLayout.jsx';
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <HomePage />,
-  },
-  {
-    path: '/dashboard',
+   element: <RootLayOut />,
     children: [
       {
-        path: '/dashboard',
-        element: <DashBoard />,
+        path: '/',
+        element: <HomePage />,
       },
       {
-        path: '/dashboard/chats/:id',
-        element: <ChatPage />,
+        element: <DashBoardLayout />,
+        children: [
+          {
+            path: '/dashboard',
+            element: <DashBoard />,
+          },
+          {
+            path: '/dashboard/chats/:id',
+            element: <ChatPage />,
+          }
+        ]
       },
-    ],
+    ] 
   },
 ]);
 
