@@ -10,8 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.2.7",
+    "@google/generative-ai": "^0.15.0",
+    "@tanstack/react-query": "^5.51.18",
+    "imagekitio-react": "^4.1.0",
     "react": "19.0.0-rc-8b08e99e-20240713",
-    "react-dom": "19.0.0-rc-8b08e99e-20240713"
+    "react-dom": "19.0.0-rc-8b08e99e-20240713",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.25.0",
+    "react-type-animation": "^3.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

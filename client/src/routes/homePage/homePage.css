@@ -1,0 +1,190 @@
+.homepage {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+  height: 100%;
+
+  @media screen and (max-width: 1024px) {
+    flex-direction: column;
+    gap: 0px;
+  }
+
+  .left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+
+    h1 {
+      font-size: 128px;
+      background: linear-gradient(to right, #217BFE, #E55571);
+      background-clip: text;                           /* THIS */
+      -webkit-background-clip: text;                   /* THIS IS FOR CHROME */
+      color: transparent;
+
+      @media screen and (max-width: 1280px) {
+        font-size: 64px;
+      }
+    }
+
+    h3 {
+      font-weight: 400;
+      max-width: 70%;
+
+      @media screen and (max-width: 1024px) {
+        max-width: 100%;
+      }
+    }
+
+    a {
+      padding: 15px 25px;
+      background-color: #217BFE;
+      color: white;
+      border-radius: 20px;
+      font-size: 14px;
+      margin-top: 20px;
+
+      &:hover {
+        background-color: white;
+        color: #217BFE;
+      }
+    }
+  }
+
+  .right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    .imgContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #140E2D;
+      border-radius: 50px;
+      width: 80%;
+      height: 50%;
+      position: relative;                   /* PARENT */
+      
+      .bgContainer {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;                  /* CHILD */    
+        top: 0;
+        left: 0;
+        border-radius: 50px;
+
+        .bg {
+          background-image: url('/bg.png');
+          opacity: 0.2;
+          width: 200%;
+          height: 100%;
+          background-size: auto 100%;          /* FULL HEIGHT AND WIDTH */
+          animation: 8s ease-in-out infinite alternate slideBg;
+        }
+      }
+
+      .bot {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        animation: 3s ease-in-out infinite alternate botAnimate;
+      }
+
+     .chat {
+       position: absolute;
+       bottom: -30px;
+       right: -50px;
+       display: flex;
+       align-items: center;
+       gap: 10px;
+       padding: 20px;
+       background-color: #2C2937;
+       border-radius: 10px;
+
+      @media screen and (max-width: 1024px) {
+        display: none;
+      }
+
+      @media screen and (max-width: 1280px) {
+        right: 0;
+      }
+
+       img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+       }
+     } 
+    }
+  }
+
+  .orbital {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0.2;
+    animation: 100s linear infinite rotateOrbital;
+    z-index: -1;
+  }
+
+  .terms {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .links {
+      display: flex;
+      gap: 10px;
+      color: #888;
+      font-size: 10px;
+    }
+  }
+}
+
+@keyframes rotateOrbital {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(60deg);
+  }
+}
+
+@keyframes botAnimate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  100% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+}
+
+@keyframes slideBg {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
