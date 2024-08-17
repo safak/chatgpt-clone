@@ -6,7 +6,7 @@ import "./chatList.css";
 const ChatList = () => {
   // WE COULD HAVE USED A useEffect INSTEAD OF useQuery
   const { isPending, error, data } = useQuery({
-    // WHEN WE ADD A NEW chat WE CAN REFETCH OUR chats USING THIS queryKey
+    // WHEN WE ADD A NEW chat WE CAN REFETCH OUR chats USING THIS queryKey AND DISPLAY THE NEW chat IN THE ChatList
     queryKey: ["userChats"],
     queryFn: () =>
       fetch(`${import.meta.env.VITE_API_URL}/api/userchats`, {

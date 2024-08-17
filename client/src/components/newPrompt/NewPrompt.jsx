@@ -59,7 +59,7 @@ const NewPrompt = ({ data }) => {
     },
     onSuccess: () => {
       queryClient
-        // THANKS TO THIS THE NEW messages IN THE CHAT REMAIN IN DISPLAY BC THEY ARE NO LONGER prompt AND answer FROM THE AI BUT THEY ARE COMING FROM THE DB
+        // THANKS TO THIS THE NEW messages IN THE ChatPage REMAIN IN DISPLAY BC THEY ARE NO LONGER prompt AND answer FROM THE AI BUT THEY ARE COMING FROM THE DB
         .invalidateQueries({ queryKey: ["chat", data._id] })
         .then(() => {
           formRef.current.reset();
@@ -79,6 +79,7 @@ const NewPrompt = ({ data }) => {
   });
 
   const add = async (text, isInitial) => {
+    // SINCE WE ARE STARTING A NEW chat FROM DashboardPage WE ALREADY HAVE A prompt 
     if (!isInitial) setQuestion(text);
 
     try {
@@ -90,7 +91,7 @@ const NewPrompt = ({ data }) => {
 
       for await (const chunk of result.stream) {
         const chunkText = chunk.text();
-        console.log(chunkText);
+        // console.log(chunkText);
         accumulatedText += chunkText;
         
         setAnswer(accumulatedText);
@@ -119,11 +120,12 @@ const NewPrompt = ({ data }) => {
   // WHEN WE START A NEW chat FROM dashboardPage AND WE HIT enter THE AI DOESN'T RESPOND BC WE ONLY TRIGGER OUR function ONLY WHEN WE SUBMIT THE chatPage form
   useEffect(() => {
     if (!hasRun.current) {
-      // WHEN VERIFY IF WE ONLY HAVE ONE message IN THE CHAT THAT MEANS IT IS ONLY THE user's prompt, THEN WE CAN GENERATE OUR ANSWER AND SEND IT TO THE DB, THAT IS WHY WE IMPLEMENT isInitial
+      // WHEN VERIFY IF WE ONLY HAVE ONE message IN THE CHAT (WHEN WE CREATE A NEW chat IT WILL REDIRECT TO ChatPage AND WE WILL NEED AN answer FROM THE AI) THAT MEANS IT IS ONLY THE user's prompt, THEN WE CAN GENERATE OUR ANSWER AND SEND IT TO THE DB, THAT IS WHY WE IMPLEMENT isInitial
       if (data?.history?.length === 1) {
         add(data.history[0].parts[0].text, true);
       }
     }
+
     hasRun.current = true;
   }, []);
 

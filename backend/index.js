@@ -98,7 +98,7 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
         }
       )
 
-      // WE SEND THE _id BC WHEN WE SEND ANY text WE ARE GOING TO BE REDIRECTED TO THE chatPage
+      // WE SEND THE _id BC WHEN WE SEND ANY text (prompt) FROM THE DashboardPage, WE ARE GOING TO BE REDIRECTED TO THE ChatPage AND RETRIEVE THE _id TO DISPLAY THE chat IN THE chatPage
       res.status(201).send(newChat._id);
     }    
   } catch (error) {
@@ -112,8 +112,10 @@ app.get('/api/userchats', ClerkExpressRequireAuth(), async (req, res) => {
   const userId = req.auth.userId
 
   try {
+    // I CAN USE .findOne AND THEN userChats WILL NOT BE AN array AND I DONT HAVE TO DO userChats[0] ANYMORE
     const userChats = await UserChats.find({ userId: userId })
 
+    // ESTA VALIDACION LA OBTUVE EN LOS COMENTARIOS DE YT
     if (userChats.length === 0) {
       return res.status(200).send([]);
     }
@@ -145,7 +147,7 @@ app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
   const { question, answer, img } = req.body;
 
   const newItems = [
-    // THE REASON FOR ...(question) IS THAT WHEN WE CREATE A NEW chat IT AUTOMATICALLY ADD A NEW user MESSAGE IN THE chatPage component on top, THAT MEANS IT IS ALREADY IN OUR DB, ENTONCES NOSOTROS AÑADIMOS UN NUEVO mensaje AL chat
+    // THE REASON FOR ...(question) IS THAT WHEN WE CREATE A NEW chat IT AUTOMATICALLY ADD A NEW user MESSAGE IN THE chatPage component on top, THAT MEANS IT IS ALREADY IN OUR DB, ENTONCES NOSOTROS AÑADIMOS UN NUEVO mensaje AL chat, SO THEN WE WILL SEND THE answer FROM THE AI TO THE DB
     ...(question
       // ... INDICA QUE SI HAY UNA img SE AGREGARA AL ARRAY DE parts (POR ESO PROPAGA DENTRO DEL ARRAY parts LA img), SINO NO SE AGREGARA AL ARRAY DE parts
       ? [{ role: "user", parts: [{ text: question }], ...(img && { img }) }]
@@ -165,6 +167,7 @@ app.put("/api/chats/:id", ClerkExpressRequireAuth(), async (req, res) => {
         },
       }
     );
+    
     res.status(200).send(updatedChat);
   } catch (err) {
     console.log(err);

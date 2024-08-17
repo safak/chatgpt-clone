@@ -40,6 +40,7 @@ const Upload = ({ setImg }) => {
 
   const onUploadStart = (evt) => {
     // .files[0] INDICATES THE FIRST FILE ONLY
+    // INSIDE evt WE HAVE THE LOCAL file INFORMATION
     const file = evt.target.files[0];
 
     // THIS IS THE React.js VERSION OF THE function TAKEN FROM Gemini API FROM A function WRITEN IN Node.js. SUGGESTED BY Gemini API.

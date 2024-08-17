@@ -1,10 +1,11 @@
-import { useAuth } from '@clerk/clerk-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import './dashboardPage.css'
 
 const DashboardPage = () => {
+  // NO LO USAMOS PORQUE CUALQUIERA PUEDE INTRODUCIR UN id, MEJOR UTILIZAR ClerkExpressRequireAuth() middleware, WE ARE GOING TO SEND cookies TO THE API AND GET THE userId
+  // const { userId } = useAuth()
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
