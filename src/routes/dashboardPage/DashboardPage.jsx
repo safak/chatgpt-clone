@@ -1,7 +1,7 @@
 import "./dashboardPage.css";
 
-function dashboardPage() {
+function DashboardPage() {
   return <div></div>;
 }
 
-export default dashboardPage;
+export default DashboardPage;
