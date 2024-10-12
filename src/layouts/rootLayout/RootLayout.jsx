@@ -9,6 +9,7 @@ function RootLayout() {
           <img src="/logo.png" alt="logo" />
           <span>Lama AI</span>
         </Link>
+        <div className="user">user</div>
       </header>
       <main>
         <Outlet />
