@@ -8,18 +8,16 @@ import HomePage from "../src/routes/homepage/HomePage.jsx";
 import DashboardPage from "../src/routes/dashboardPage/DashboardPage.jsx";
 import ChatPage from "./routes/chatPage/ChatPage";
 import DashboardLayout from "../src/layouts/dashboardLayout/DashboardLayout.jsx";
-
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-
-if (!PUBLISHABLE_KEY) {
-  throw new Error("Missing Publishable Key");
-}
+import SignInPage from "../src/routes/signInPage/SignInPage.jsx";
+import SignUpPage from "../src/routes/signUpPage/SignUpPage.jsx";
 
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
     children: [
       { path: "/", element: <HomePage /> },
+      { path: "/sign-in/*", element: <SignInPage /> },
+      { path: "/sign-up/*", element: <SignUpPage /> },
       {
         element: <DashboardLayout />,
         children: [
