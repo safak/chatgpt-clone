@@ -10,7 +10,6 @@ import './rootLayout.css'
             <span> MELLER AI</span>
             </Link>
         </header>
-
         <main>
             <Outlet/>
         </main>
