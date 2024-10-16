@@ -3,7 +3,7 @@ import './dashboardLayout.css'
 
 const DashboardLayout = () => {
   return (
-    <div className="dashboardLayout">
+    <div className="DashboardLayout">
         <div classname="menu">MENU </div>
         <div classname="content"><Outlet/></div>
     </div>
