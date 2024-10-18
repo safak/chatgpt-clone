@@ -1,14 +1,14 @@
 .chatPage{
     height: 100%;
-
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 
     .wrapper{
         flex: 1;
         overflow: scroll;
-        width: 100%;
+        width: 125%;
         display: flex;
         justify-content: center;
 
@@ -31,5 +31,4 @@
     }
 
 
-    
 }

@@ -1,15 +1,9 @@
-import { useRef } from 'react';
 import './chatPage.css';
-import { useEffect } from 'react';
+import NewPromt from "../../components/newPromt/NewPromt";
+
 
  const ChatPage = () => {
-  const endRef= useRef(null);
-  useEffect(() => {
-    const scrollToBottom = () => {
-      endRef.current?.scrollIntoView({ behavior:'smooth' });
-    };
-    scrollToBottom();
-  },[]);
+
   return (
     <div className="chatPage">
       <div className="wrapper">
@@ -28,7 +22,8 @@ import { useEffect } from 'react';
           <div className='message user'>Test message from user</div>
           <div className='message'>Test message from ai</div>
           <div className='message user'>Test message from user</div>
-          <div ref={endRef}/>
+          <NewPromt/>
+
         </div>
       </div>
     </div>
