@@ -47,11 +47,15 @@ img {
   height: 24px;
 }
 
-.text {
+.texts {
   display: flex;
   flex-direction: column;
 }
 
-span:first-child:hover {
+span:first-child {
   font-size: 600;
+}
+
+span:last-child {
+  color: #888;
 }
