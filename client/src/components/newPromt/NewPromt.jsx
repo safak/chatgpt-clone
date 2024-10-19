@@ -6,6 +6,8 @@ import { IKImage } from 'imagekitio-react';
 import model from '../../lib/gemini';
 
 const NewPromt = ()=>{
+    const [question,setQuestion] = useState(""); 
+    const [answer,setAnswer] = useState(""); 
 
     const [img, setImg] = useState({
         isLoading: false,
@@ -22,14 +24,24 @@ const NewPromt = ()=>{
       scrollToBottom();
     },[]);
 
-    const add = async () => {
+    const add = async (text) => {
+        console.log("IN ADD FUNC");
+        console.log(text);
+        setQuestion(text);
 
-        //result.response.text()
-        const prompt = "Write a story about an ai and magic";
+        const result = await model.generateContent(text);
+        console.log(result.response.text());
+        setAnswer(result.response.text());
+    };
 
-        const result = await model.generateContent(prompt);
-        const response = await result.response.text();
-        console.log(response)
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("IN HANDLE SUBMIT FUNC");
+
+        const text= e.target.text.value;
+        if(!text) return;
+        add(text);
+
     };
 
     return(
@@ -46,13 +58,15 @@ const NewPromt = ()=>{
                 />  
             )}
 
-            <button onClick={add}>TEST AI</button>
+            {question && <div className="message user">{question}</div>}
+            {answer && <div className="message">{answer}</div>}
+            {/*<button onClick={add}>test</button>*/}
 
             <div className="endChat" ref={endRef}></div>
-            <form className="newform">
+            <form className="newform" onSubmit={handleSubmit}>
                 <Upload setImg={setImg}/>
                 <input id="file" type="file" multiple={false} hidden/>
-                <input type="text" placeholder="Ask Anything boy..."/>
+                <input type="text" name="text" placeholder="Ask Anything boy..."/>
                 <button>
                     <img src="/arrow.png" alt="" />
                 </button>
