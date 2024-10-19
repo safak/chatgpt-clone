@@ -15,6 +15,7 @@
     "imagekitio-react": "^4.2.0",
     "react": "19.0.0-rc-8b08e99e-20240713",
     "react-dom": "19.0.0-rc-8b08e99e-20240713",
+    "react-markdown": "^9.0.1",
     "react-router-dom": "^6.27.0"
   },
   "devDependencies": {

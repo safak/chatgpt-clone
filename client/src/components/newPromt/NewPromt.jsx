@@ -4,6 +4,7 @@ import { useRef, useEffect} from 'react';
 import  Upload from '../upload/Upload';
 import { IKImage } from 'imagekitio-react';
 import model from '../../lib/gemini';
+import Markdown from 'react-markdown';
 
 const NewPromt = ()=>{
     const [question,setQuestion] = useState(""); 
@@ -22,7 +23,7 @@ const NewPromt = ()=>{
         endRef.current?.scrollIntoView({ behavior:'smooth' });
       };
       scrollToBottom();
-    },[]);
+    },[question,answer,img.dbData]);
 
     const add = async (text) => {
         console.log("IN ADD FUNC");
@@ -59,7 +60,7 @@ const NewPromt = ()=>{
             )}
 
             {question && <div className="message user">{question}</div>}
-            {answer && <div className="message">{answer}</div>}
+            {answer && <div className="message"><Markdown>{answer}</Markdown></div>}
             {/*<button onClick={add}>test</button>*/}
 
             <div className="endChat" ref={endRef}></div>

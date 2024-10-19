@@ -1,3 +1,10 @@
+*{
+    -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+    display: none;
+}
+
 .chatList{
     display: flex;
     flex-direction: column;
