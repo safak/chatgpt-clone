@@ -1,17 +1,17 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
 import { createBrowserRouter ,RouterProvider } from "react-router-dom";
-import HomePage from "./routes/homepage/Homepage"
-import DashboardPage from "./routes/dashboardPage/DashboardPage"
-import ChatPage from "./routes/chatPage/ChatPage"
+import HomePage from "./routes/homepage/Homepage";
+import DashboardPage from "./routes/dashboardPage/DashboardPage";
+import ChatPage from "./routes/chatPage/ChatPage";
 
 import SigninPage from "./routes/signinPage/SigninPage";
 import SignUpPage from "./routes/signUpPage/SignUpPage";
 
 import RootLayout from './layouts/rootLayout/RootLayout';
 import DashboardLayout from './layouts/dashboardLayout/DashboardLayout';
-import './index.css'
+import './index.css';
 
 
 const router = createBrowserRouter([
@@ -54,4 +54,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>,
-)
+);

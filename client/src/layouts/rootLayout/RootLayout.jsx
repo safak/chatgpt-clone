@@ -17,7 +17,7 @@ if (!PUBLISHABLE_KEY) {
       <div className='rootLayout'>
         <header>
           <Link to="/" className="logo">
-            <img src="logo.png" alt="" />
+            <img src="/logo.png" alt="" />
             <span> MELLER AI</span>
           </Link>
           <div className= "user">

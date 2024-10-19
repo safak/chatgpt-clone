@@ -2,7 +2,8 @@ import { useState } from 'react';
 import './newPromt.css'
 import { useRef, useEffect} from 'react';
 import  Upload from '../upload/Upload';
-import { IKContext, IKImage } from 'imagekitio-react';
+import { IKImage } from 'imagekitio-react';
+import model from '../../lib/gemini';
 
 const NewPromt = ()=>{
 
@@ -21,8 +22,19 @@ const NewPromt = ()=>{
       scrollToBottom();
     },[]);
 
+    const add = async () => {
+
+        //result.response.text()
+        const prompt = "Write a story about an ai and magic";
+
+        const result = await model.generateContent(prompt);
+        const response = await result.response.text();
+        console.log(response)
+    };
+
     return(
         <div className="newpPromt">
+            {/*ADD NEW CHAT*/}
             {img.isLoading && <div className=''>Loading...</div>}
 
             {img.dbData?.filePath && (
@@ -31,8 +43,11 @@ const NewPromt = ()=>{
                 path={img.dbData?.filePath}
                 width="380"
                 transformationPosition={[{width:360}]}
-                />
-             )}
+                />  
+            )}
+
+            <button onClick={add}>TEST AI</button>
+
             <div className="endChat" ref={endRef}></div>
             <form className="newform">
                 <Upload setImg={setImg}/>

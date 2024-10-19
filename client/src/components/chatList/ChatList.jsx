@@ -11,7 +11,7 @@ const chatList = () =>{
             <hr/>
             <span className="title">Recent Chats</span>
             <div className="list">
-                <Link to="/">My chat title</Link>  
+                <Link to="/dashboard/chats/132131231231231231232332">My chat title</Link>  
                 <Link to="/">My chat title</Link>  
                 <Link to="/">My chat title</Link>  
                 <Link to="/">My chat title</Link>  
