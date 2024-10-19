@@ -1,29 +1,15 @@
-.rootLayout {
-  padding: 14px 64px;
-  height: 100vh;
+.dashboardLayout {
   display: flex;
-  flex-direction: column;
+  gap: 50px;
+  padding-top: 20px;
+  height: 100%;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  gap: 8px;
-}
-
-img {
-  width: 32px;
-  height: 32px;
-}
-
-main {
+.menu {
   flex: 1;
-  overflow: hidden;
+}
+
+.content {
+  flex: 4;
+  background-color: #12101b;
 }
