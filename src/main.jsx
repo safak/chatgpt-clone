@@ -2,13 +2,12 @@ import React, { Children } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-// import router from "./router"; // Ensure you have this import for the router
 import Homepage from "./routes/homepage/Homepage";
 import ChatPage from "./routes/chatPage/ChatPage";
 import TestPage from "./routes/testPage/TestPage";
-import DashboardPage from "./routes/dashboardPage/DashboardPage";
 import RootLayout from "./layouts/rootLayout/RootLayout";
-import DashboardLayout from "./dashboardLayout/DashboardLayout";
+import DashboardLayout from "./layouts/dashboardLayout/DashboardLayout";
+import DashboardPage from "./routes/dashboardPage/DashboardPage";
 import SignInPage from "./routes/signInPage/SignInPage";
 import SignUpPage from "./routes/signUpPage/SignUpPage";
 
@@ -42,5 +41,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 );
-
-console.log(`React version: ${React.version}`);

@@ -42,7 +42,7 @@
       max-width: 70%; /* Set maximum width so there is no overflow */
 
       @media screen and (max-width: 1024px) {
-        max-width: 90%; /* Set maximum width to 100% on smaller screens */
+        max-width: 90%; /* Set maximum width to 90% on smaller screens */
       }
     }
     a {
@@ -134,6 +134,7 @@
     bottom: 0; /* Align to bottom */
     left: 0; /* Align to left */
     opacity: 0.07; /* Set opacity */
+    height: 140%;
     animation: rotateOrbital 100s linear infinite alternate-reverse; /* Animate rotation */
     z-index: -1; /* Set z-index to -1, to ensure the image is behind the Get Started Button */
   }
