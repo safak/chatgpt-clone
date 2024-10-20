@@ -4,6 +4,11 @@
   gap: 100px; /* Add space between children */
   height: 100%; /* Full viewport height */
 
+  @media screen and (max-width: 1024px) {
+    flex-direction: column; /* Stack children vertically */
+    gap: 0px; /* It was 100 */
+  }
+
   .left {
     flex: 1; /* Left half of page */
     display: flex; /* Use flexbox */
@@ -23,6 +28,10 @@
       background-clip: text; /* Clip background to text */
       -webkit-background-clip: text; /* Clip background to text for Safari, Chrome */
       color: transparent; /* Make text transparent */
+
+      @media screen and (max-width: 1280px) {
+        font-size: 64px;
+      }
     }
     h2 {
       font-size: 24px;
@@ -31,6 +40,10 @@
       font-size: 18px;
       font-weight: 400; /* Set font weight to thinner */
       max-width: 70%; /* Set maximum width so there is no overflow */
+
+      @media screen and (max-width: 1024px) {
+        max-width: 90%; /* Set maximum width to 100% on smaller screens */
+      }
     }
     a {
       padding: 15px 25px; /* Add padding */
@@ -97,6 +110,14 @@
         padding: 20px; /* Add padding */
         background-color: #2c2937; /* Set background color */
         border-radius: 10px; /* Make the container corners rounded */
+
+        @media screen and (max-width: 1024px) {
+          display: none; /* Hide the chat on smaller screens */
+        }
+
+        @media screen and (max-width: 1280px) {
+          right: 0; /* Align to right */
+        }
 
         img {
           width: 32px; /* Set width */
