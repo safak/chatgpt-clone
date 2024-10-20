@@ -1,0 +1,7 @@
+/* Center the sign-in object */
+.signInPage {
+  height: 100%; /* Full viewport height */
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
