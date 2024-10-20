@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import "./dashboardLayout.css";
 import { useAuth } from "@clerk/clerk-react";
 import { useEffect } from "react";
+import ChatList from "../components/ChatList";
 
 const DashboardLayout = () => {
   const { userId, isLoaded } = useAuth(); // This is a hook that gives us access to the user's authentication state. It returns an object with the user's ID and a boolean indicating whether the user's authentication state has been loaded.
@@ -22,7 +23,9 @@ const DashboardLayout = () => {
 
   return (
     <div className="dashboardLayout">
-      <div className="menu">MENU</div>
+      <div className="menu">
+        <ChatList />
+      </div>
       <div className="content">
         <Outlet />
       </div>

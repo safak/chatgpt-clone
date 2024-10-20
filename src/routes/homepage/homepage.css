@@ -151,8 +151,10 @@
     gap: 20px;
 
     img {
+      /* Logo image */
       width: 16px;
       height: 16px;
+      filter: brightness(0) invert(1);
     }
 
     .links {
