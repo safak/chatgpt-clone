@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import "./homepage.css";
 import { TypeAnimation } from "react-type-animation";
+import { useState } from "react";
 
 const Homepage = () => {
+  const [typingStatus, setTypingStatus] = useState("Child");
+
   return (
     <div className="homepage">
       <img src="/orbital.png" alt="" className="orbital" />
@@ -22,18 +25,30 @@ const Homepage = () => {
           </div>
           <img src="bot.png" alt="" className="bot" />
           <div className="chat">
-            <img src="/bot.png" alt="" />
+            <img
+              src={typingStatus === "Child" ? "/child.jpg" : "bot.png"}
+              alt=""
+            />
             <TypeAnimation
               sequence={[
                 // Same substring at the start will only be typed out once, initially
                 "Child: Why is the sky blue?",
-                1000, // wait 1s before replacing "Mice" with "Hamsters"
+                2000, // Delay before next string
+                () => {
+                  setTypingStatus("Toybot");
+                },
                 "Toybot: Because of Rayleigh scattering.",
-                1000,
+                2000,
+                () => {
+                  setTypingStatus("Child");
+                },
                 "Child: Why is the grass green?",
-                1000,
+                2000,
+                () => {
+                  setTypingStatus("Toybot");
+                },
                 "Toybot: Because of chlorophyll.",
-                1000,
+                2000,
               ]}
               wrapper="span"
               repeat={Infinity}
@@ -41,6 +56,14 @@ const Homepage = () => {
               omitDeletionAnimation={true}
             />
           </div>
+        </div>
+      </div>
+      <div className="terms">
+        <img src="/logo.png" alt="" />
+        <div className="links">
+          <Link to="/">Terms of Service</Link>
+          <span>|</span>
+          <Link to="/">Privacy Policy</Link>
         </div>
       </div>
     </div>

@@ -89,8 +89,8 @@
 
       .chat {
         position: absolute; /* Position absolutely */
-        bottom: -30px; /* Align to bottom */
-        right: -50px; /* Align to right */
+        bottom: -30px; /* Align to bottom and -30 px off*/
+        right: -50px; /* Align to right and -50px off */
         display: flex;
         align-items: center; /* Center vertically */
         gap: 10px; /* Add space between children */
@@ -115,6 +115,31 @@
     opacity: 0.07; /* Set opacity */
     animation: rotateOrbital 100s linear infinite alternate-reverse; /* Animate rotation */
     z-index: -1; /* Set z-index to -1, to ensure the image is behind the Get Started Button */
+  }
+
+  .terms {
+    position: absolute;
+    bottom: 20px; /* Align to bottom and 20px off */
+    left: 50%; /* Align to left and 50% off */
+    transform: translateX(
+      -50%
+    ); /* Translate 50% to the left. Without this, the Starting position (left side) of .items is centered. This alows the center of .items to be centered */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .links {
+      display: flex;
+      gap: 10px;
+      color: #888;
+      font-size: 10px;
+    }
   }
 }
 
