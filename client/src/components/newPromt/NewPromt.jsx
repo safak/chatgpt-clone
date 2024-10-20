@@ -17,6 +17,20 @@ const NewPromt = ()=>{
         aiData: {},
     });
 
+    const chat = model.startChat({
+        history: [
+          {
+            role: "user",
+            parts: [{ text: "Hello" }],
+          },
+          {
+            role: "model",
+            parts: [{ text: "Great to meet you. What would you like to know?" }],
+          },
+        ],
+        generationConfig: {},
+      });
+
     const endRef= useRef(null);
     useEffect(() => {
       const scrollToBottom = () => {
@@ -30,9 +44,20 @@ const NewPromt = ()=>{
         console.log(text);
         setQuestion(text);
 
-        const result = await model.generateContent(Object.entries(img.aiData).length ? [img.aiData,text] : [text]);
-        console.log(result.response.text());
-        setAnswer(result.response.text());
+        const result = await chat.sendMessageStream(Object.entries(img.aiData).length ? [img.aiData,text] : [text]);
+        console.log(result.response.text);
+        let accuumltedtext="";
+
+        for await (const chunk of result.stream) {
+            const chunkText = chunk.text();
+            console.log(chunkText);
+            accuumltedtext+=chunkText;
+            setAnswer(accuumltedtext);
+
+           
+        }
+
+        //setAnswer(result.response.text());
         setImg({isLoading: false,
             error: "",
             dbData: {},
