@@ -1,8 +1,8 @@
 .homepage {
-  display: flex;
-  align-items: center;
-  gap: 100px;
-  height: 100%;
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center vertically */
+  gap: 100px; /* Add space between children */
+  height: 100%; /* Full viewport height */
 
   .left {
     flex: 1; /* Left half of page */
@@ -48,6 +48,45 @@
   }
   .right {
     flex: 1; /* Right half of page */
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%;
+
+    .imgContainer {
+      display: flex; /* Use flexbox */
+      align-items: center; /* Center vertically */
+      justify-content: center; /* Center horizontally */
+      background-color: #140e2d; /* Set background color */
+      border-radius: 50px; /* Make the container corners rounded */
+      width: 80%;
+      height: 50%;
+      position: relative; /* Position relatively */
+
+      .bgContainer {
+        width: 100%;
+        height: 100%;
+        overflow: hidden; /* Hide overflow */
+        position: absolute; /* Position absolutely, if youre using popsition absolute your parent should be relative */
+        border-radius: 50px; /* Make the container corners rounded */
+
+        .bg {
+          background-image: url("/bg.png"); /* Background image will now show until you give it width and height */
+          height: 100%;
+          width: 200%; /* This needs to be 200% because of sliding effect */
+          opacity: 0.3; /* Set opacity */
+          background-size: auto 150%; /* Set background size */
+          animation: 8s ease-in-out infinite alternate slideBg; /* Animate the background */
+        }
+      }
+
+      .bot {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; /* Fit the image inside the container */
+        animation: 3s ease-in-out infinite alternate botAnimation; /* Animate the image */
+      }
+    }
   }
 
   .orbital {
@@ -55,7 +94,8 @@
     bottom: 0; /* Align to bottom */
     left: 0; /* Align to left */
     opacity: 0.07; /* Set opacity */
-    animation: rotateOrbital 100s linear infinite; /* Animate rotation */
+    animation: rotateOrbital 100s linear infinite alternate-reverse; /* Animate rotation */
+    z-index: -1; /* Set z-index to -1, to ensure the image is behind the Get Started Button */
   }
 }
 
@@ -66,5 +106,23 @@
   }
   100% {
     transform: rotate(60deg);
+  }
+}
+
+@keyframes botAnimation {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  100% {
+    transform: scale(1.05) rotate(3deg);
+  }
+}
+
+@keyframes slideBg {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-20%);
   }
 }
