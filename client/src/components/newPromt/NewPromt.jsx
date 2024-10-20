@@ -8,6 +8,7 @@ import Markdown from 'react-markdown';
 
 const NewPromt = ()=>{
     const [question,setQuestion] = useState(""); 
+    
     const [answer,setAnswer] = useState(""); 
 
     const [img, setImg] = useState({
@@ -28,7 +29,7 @@ const NewPromt = ()=>{
             parts: [{ text: "Great to meet you. What would you like to know?" }],
           },
         ],
-        generationConfig: {},
+        //generationConfig: {},
       });
 
     const endRef= useRef(null);
@@ -45,7 +46,7 @@ const NewPromt = ()=>{
         setQuestion(text);
 
         const result = await chat.sendMessageStream(Object.entries(img.aiData).length ? [img.aiData,text] : [text]);
-        console.log(result.response.text);
+        //console.log(result.response.text);
         let accuumltedtext="";
 
         for await (const chunk of result.stream) {
