@@ -21,6 +21,10 @@ const DashboardPage = () => {
             <img src="code.png" alt="" />
             <span>Help me with my Code</span>
           </div>
+          <div className="option">
+            <img src="robochat.png" alt="" />
+            <span>Speak with AI Voice</span>
+          </div>
         </div>
       </div>
       <div className="formContainer">
