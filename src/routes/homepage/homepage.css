@@ -1,0 +1,70 @@
+.homepage {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+  height: 100%;
+
+  .left {
+    flex: 1; /* Left half of page */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    gap: 16px; /* Add space between children */
+    text-align: center; /* Center text */
+
+    h1 {
+      font-size: 128px; /* Set font size */
+      background: linear-gradient(
+        to right,
+        #217bfe,
+        #e55571
+      ); /* Set gradient background */
+      background-clip: text; /* Clip background to text */
+      -webkit-background-clip: text; /* Clip background to text for Safari, Chrome */
+      color: transparent; /* Make text transparent */
+    }
+    h2 {
+      font-size: 24px;
+    }
+    h3 {
+      font-size: 18px;
+      font-weight: 400; /* Set font weight to thinner */
+      max-width: 70%; /* Set maximum width so there is no overflow */
+    }
+    a {
+      padding: 15px 25px; /* Add padding */
+      border-radius: 20px; /* Round the corners */
+      background-color: #217bfe; /* Set background color */
+      color: white; /* Set text color */
+      font-size: 14px; /* Set font size */
+      margin-top: 20px; /* Add margin */
+
+      &:hover {
+        background-color: white; /* Change background color on hover */
+        color: #217bfe; /* Change text color on hover */
+      }
+    }
+  }
+  .right {
+    flex: 1; /* Right half of page */
+  }
+
+  .orbital {
+    position: absolute; /* Position absolutely */
+    bottom: 0; /* Align to bottom */
+    left: 0; /* Align to left */
+    opacity: 0.07; /* Set opacity */
+    animation: rotateOrbital 100s linear infinite; /* Animate rotation */
+  }
+}
+
+@keyframes rotateOrbital {
+  /* Define keyframes,  */
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(60deg);
+  }
+}
