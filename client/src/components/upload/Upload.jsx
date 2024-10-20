@@ -22,24 +22,37 @@ const authenticator =  async () => {
 };
 
 const Upload = ({setImg}) =>{
-    const ikUploadRef = useRef(null);
-    const onError = err => {
-        console.log("Error", err);
-      };
+
+  const ikUploadRef = useRef(null);
+  const onError = err => {
+    console.log("Error", err);
+  };
+
+  const onSuccess = res => {
+    console.log("Success", res);
+    setImg((prev) => ({ ...prev, isLoading: false,dbData: res}));
+  };
+
+  const onUploadProgress = progress => {
+    console.log("Progress", progress);
+  };
+
+  const onUploadStart = evt => {
+    const file= evt.target.files[0];
+
+    const reader = new FileReader();
+    reader.onloadend= () => {
+      setImg((prev) => ({...prev,  isLoading: true, aiData:{
+        inlineData:{
+          data: reader.result.split(",")[1],
+          mimeType: file.type,
+        }
+      }}));
+    };
+    console.log("Upload func");
+    reader.readAsDataURL(file);
+  };
       
-      const onSuccess = res => {
-        console.log("Success", res);
-        setImg((prev) => ({ ...prev, isLoading: false,dbData: res}));
-      };
-      
-      const onUploadProgress = progress => {
-        console.log("Progress", progress);
-      };
-      
-      const onUploadStart = evt => {
-        console.log("Start", evt);
-        setImg((prev) => ({ ...prev, isLoading: true }));
-      };
 
     return(
         <IKContext

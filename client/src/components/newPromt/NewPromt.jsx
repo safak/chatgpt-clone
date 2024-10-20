@@ -30,9 +30,13 @@ const NewPromt = ()=>{
         console.log(text);
         setQuestion(text);
 
-        const result = await model.generateContent(text);
+        const result = await model.generateContent(Object.entries(img.aiData).length ? [img.aiData,text] : [text]);
         console.log(result.response.text());
         setAnswer(result.response.text());
+        setImg({isLoading: false,
+            error: "",
+            dbData: {},
+            aiData: {}})
     };
 
     const handleSubmit = async (e) => {
