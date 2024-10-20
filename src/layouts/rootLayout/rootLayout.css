@@ -1,29 +1,34 @@
+/* Root layout container */
 .rootLayout {
-  padding: 16px 64px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+  padding: 16px 64px; /* Padding around the container */
+  height: 100vh; /* Full viewport height */
+  display: flex; /* Use flexbox layout */
+  flex-direction: column; /* Arrange children in a column */
 
+  /* Header section */
   header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: flex; /* Use flexbox layout */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space out items horizontally */
 
+    /* Logo section within the header */
     .logo {
-      display: flex;
-      align-items: center;
-      font-weight: bold;
-      gap: 8px;
+      display: flex; /* Use flexbox layout */
+      align-items: center; /* Center items vertically */
+      font-weight: bold; /* Bold font for the logo text */
+      gap: 8px; /* Space between logo items */
 
+      /* Logo image */
       img {
-        width: 32px;
-        height: 32px;
+        width: 32px; /* Set width of the image */
+        height: 32px; /* Set height of the image */
       }
     }
   }
 
+  /* Main content area */
   main {
-    flex: 1;
-    overflow: hidden;
+    flex: 1; /* Allow main to grow and fill available space */
+    overflow: hidden; /* Hide overflow content */
   }
 }

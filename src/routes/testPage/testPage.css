@@ -1,0 +1,55 @@
+.testPage {
+  background-color: #0e0c16; /* Dark background color */
+  color: #ececec; /* Light text color */
+  min-height: 100vh; /* Ensure the background color covers the full height */
+  padding: 20px; /* Add padding for better layout */
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap; /* Allow cards to wrap to the next line */
+  justify-content: center; /* Center the cards */
+}
+
+.card {
+  background-color: #1e1e2f; /* Card background color */
+  border: 1px solid #333; /* Card border */
+  padding: 20px; /* Card padding */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Box shadow */
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth transition for hover effects */
+  width: 300px; /* Fixed width for cards */
+  margin: 10px; /* Margin between cards */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
+}
+
+.card h3 {
+  margin-top: 0; /* Remove top margin for the title */
+  font-size: 1.5em; /* Larger font size for the title */
+  color: #ffffff; /* Title text color */
+}
+
+.card p {
+  margin-bottom: 0; /* Remove bottom margin for the content */
+  color: #cccccc; /* Content text color */
+}
+
+.click-me-button {
+  background-color: #007bff; /* Button background color */
+  color: #ffffff; /* Button text color */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px; /* Add margin to separate button from text */
+}
+
+.click-me-button:hover {
+  background-color: #0056b3; /* Button background color on hover */
+}
