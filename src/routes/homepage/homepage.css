@@ -86,6 +86,25 @@
         object-fit: contain; /* Fit the image inside the container */
         animation: 3s ease-in-out infinite alternate botAnimation; /* Animate the image */
       }
+
+      .chat {
+        position: absolute; /* Position absolutely */
+        bottom: -30px; /* Align to bottom */
+        right: -50px; /* Align to right */
+        display: flex;
+        align-items: center; /* Center vertically */
+        gap: 10px; /* Add space between children */
+        padding: 20px; /* Add padding */
+        background-color: #2c2937; /* Set background color */
+        border-radius: 10px; /* Make the container corners rounded */
+
+        img {
+          width: 32px; /* Set width */
+          height: 32px; /* Set height */
+          border-radius: 50%; /* Make the container corners rounded */
+          object-fit: cover; /* Fit the image inside the container */
+        }
+      }
     }
   }
 

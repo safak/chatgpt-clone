@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import "./homepage.css";
+import { TypeAnimation } from "react-type-animation";
 
 const Homepage = () => {
   return (
@@ -20,6 +21,26 @@ const Homepage = () => {
             <div className="bg"></div>
           </div>
           <img src="bot.png" alt="" className="bot" />
+          <div className="chat">
+            <img src="/bot.png" alt="" />
+            <TypeAnimation
+              sequence={[
+                // Same substring at the start will only be typed out once, initially
+                "Child: Why is the sky blue?",
+                1000, // wait 1s before replacing "Mice" with "Hamsters"
+                "Toybot: Because of Rayleigh scattering.",
+                1000,
+                "Child: Why is the grass green?",
+                1000,
+                "Toybot: Because of chlorophyll.",
+                1000,
+              ]}
+              wrapper="span"
+              repeat={Infinity}
+              cursor={true}
+              omitDeletionAnimation={true}
+            />
+          </div>
         </div>
       </div>
     </div>
