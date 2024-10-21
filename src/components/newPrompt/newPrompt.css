@@ -1,0 +1,43 @@
+.endChat {
+  padding-bottom: 80px;
+}
+
+.newForm {
+  width: 50%;
+  position: absolute;
+  /* Position absolutely, regardless of scroll, the bar is fixed to bottom. 
+    The parent div should be positon:relative, in this case, the parent div is chatPage in chatPge.css */
+  bottom: 0;
+  background-color: #2c2937;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0px 20px;
+
+  input {
+    flex: 1; /* Take up all available space */
+    padding: 20px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: ececec;
+  }
+
+  button,
+  label {
+    border-radius: 50%;
+    background-color: #605e68;
+    border: none;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
