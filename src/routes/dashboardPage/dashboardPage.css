@@ -62,6 +62,7 @@ h1 {
 }
 
 .formContainer {
+  margin-bottom: 50px;
   margin-top: auto;
   width: 50%;
   background-color: #2c2937;
