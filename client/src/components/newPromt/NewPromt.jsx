@@ -66,12 +66,12 @@ const NewPromt = ()=>{
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log("IN HANDLE SUBMIT FUNC");
 
-        const text= e.target.text.value;
-        if(!text) return;
-        add(text);
+      e.preventDefault();
+      console.log("IN HANDLE SUBMIT FUNC");
+      const text= e.target.text.value;
+      if(!text) return;
+      add(text);
 
     };
 

@@ -1,4 +1,4 @@
-import mongoos from "mongoos";
+import mongoose from "mongoose";
 
 const userChatsSchema = new mongoose.Schema(
   {
@@ -26,5 +26,5 @@ const userChatsSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoos.model.userchats ||
-  mongoos.model("userchats", userChatsSchema);
+export default mongoose.models.userchats ||
+  mongoose.model("userchats", userChatsSchema);

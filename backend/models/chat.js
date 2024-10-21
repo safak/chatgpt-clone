@@ -1,4 +1,4 @@
-import mongoos from "mongoos";
+import mongoose from "mongoose";
 
 const chatSchema = new mongoose.Schema(
   {
@@ -10,7 +10,7 @@ const chatSchema = new mongoose.Schema(
       {
         role: {
           type: String,
-          enum: ["user" || "model"],
+          enum: ["user", "model"],
           required: true,
         },
         parts: [
@@ -22,7 +22,7 @@ const chatSchema = new mongoose.Schema(
           },
         ],
         img: {
-          typeof: "string",
+          type: String,
           required: false,
         },
       },
@@ -31,4 +31,4 @@ const chatSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoos.model.chat || mongoos.model("chat", chatSchema);
+export default mongoose.models.chat || mongoose.model("chat", chatSchema);
