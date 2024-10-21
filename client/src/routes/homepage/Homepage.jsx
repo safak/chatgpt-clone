@@ -1,6 +1,7 @@
 import './homepage.css'
 import { Link } from 'react-router-dom';
  const Homepage = () => {
+
   return (
     <div className="homepage">
       <img src="/orbital.png" alt="" className="orbital"/>
@@ -25,4 +26,4 @@ import { Link } from 'react-router-dom';
   )
 }
 
-export default Homepage
+export default Homepage;
