@@ -2,7 +2,7 @@ import { Link,Outlet } from 'react-router-dom';
 import './rootLayout.css';
 import { ClerkProvider } from '@clerk/clerk-react';
 import { SignedIn, UserButton } from "@clerk/clerk-react";
-import {QueryClient,QueryClientProvider,} from '@tanstack/react-query'
+import {QueryClient,QueryClientProvider} from '@tanstack/react-query'
 
 
 // Import your publishable key
@@ -17,8 +17,11 @@ if (!PUBLISHABLE_KEY) {
 const queryClient = new QueryClient()
 
 
- const RootLayout = () => {
+
+const RootLayout = () => {
+
   return (
+
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
       <QueryClientProvider client={queryClient}>
         <div className='rootLayout'>

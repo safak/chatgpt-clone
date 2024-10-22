@@ -1,5 +1,5 @@
 import './dashboardPage.css';
-import {useAuth} from "@clerk/clerk-react";
+//import {useAuth} from "@clerk/clerk-react";
 
  const DashboardPage = () => {
 
@@ -9,6 +9,7 @@ import {useAuth} from "@clerk/clerk-react";
     e.preventDefault();
     const text= e.target.text.value;
     if(!text) return;
+    console.log("in handle submit on dashbadpage");
 
     await fetch("http://localhost:3000/api/chats",{
       method: "POST",

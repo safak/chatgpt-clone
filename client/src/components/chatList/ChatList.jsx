@@ -8,13 +8,12 @@ const ChatList = () =>{
     const { isPending, error, data } = useQuery({
         queryKey: ['repoData'],
         queryFn: () =>
-          fetch('${import.meta.env.VITE_API_URL}/api/userchats',{
+          fetch(`${import.meta.env.VITE_API_URL}/api/userchats`,{
             credentials:"include",
           }).then((res) =>
             res.json(),
           ),
-      })
-
+    })
 
     return (
         <div className="chatList">
@@ -25,17 +24,20 @@ const ChatList = () =>{
             <hr/>
             <span className="title">Recent Chats</span>
             <div className="list">
-                {isPending? "Loading.." :error?"Something went wrong!": data?.map(chat=>(
-                    <Link to={'/dashboard/chats/${chats._id}'} key={chat._id}>
-                        My chat title
-                    </Link>
-                ))}
                 
+
+              {isPending? "Loading.." : error? "error" : data?.map(chat=>(
+                <Link to={`/dashboard/chats/${chat._id}`} key={chat._id}>
+                    {chat.title}
+                </Link>  
+
+              ))}
+              
             </div>
             <hr/>
             <div className="upgrade">
                 <img src="/logo.png" alt="" />
-                <div className="text">
+                <div className="text">   
                     <span >Upgrade to Meller Ai</span>
                     <span>Get unlimited access</span>
                 </div>
