@@ -50,7 +50,7 @@ const ChatPage = () => {
           ))}
 
 
-          <NewPromt/>
+          <NewPromt data={data}/>
 
         </div>
       </div>

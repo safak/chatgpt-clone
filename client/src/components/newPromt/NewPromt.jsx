@@ -5,8 +5,9 @@ import  Upload from '../upload/Upload';
 import { IKImage } from 'imagekitio-react';
 import model from '../../lib/gemini';
 import Markdown from 'react-markdown';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const NewPromt = ()=>{
+const NewPromt = ({data})=>{
     const [question,setQuestion] = useState(""); 
     
     const [answer,setAnswer] = useState(""); 
@@ -40,29 +41,69 @@ const NewPromt = ()=>{
       scrollToBottom();
     },[question,answer,img.dbData]);
 
-    const add = async (text) => {
-        console.log("IN ADD FUNC");
-        console.log(text);
-        setQuestion(text);
+    const queryClient = useQueryClient()
 
-        const result = await chat.sendMessageStream(Object.entries(img.aiData).length ? [img.aiData,text] : [text]);
-        //console.log(result.response.text);
-        let accuumltedtext="";
-
-        for await (const chunk of result.stream) {
-            const chunkText = chunk.text();
-            console.log(chunkText);
-            accuumltedtext+=chunkText;
-            setAnswer(accuumltedtext);
-
-           
-        }
-
-        //setAnswer(result.response.text());
-        setImg({isLoading: false,
+  
+    const mutation = useMutation({
+      mutationFn: async() =>{
+        return fetch(`${import.meta.env.VITE_API_URL}/api/chats${data._id}`,{
+          method: "PUT",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({question: question.length ? question : undefined,
+            answer,
+            img: img.dbData?.filePath || undefined,
+          }),
+        }).then(res=>res.json())
+      },
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries({ queryKey: ["chat",data._id] }).then(()=>{
+          setQuestion("");
+          setAnswer("");
+          setImg({
+            isLoading: false,
             error: "",
             dbData: {},
-            aiData: {}})
+            aiData: {},
+          });
+        });
+      },
+      onError: (err) => {
+        console.log(err);
+      },
+    })
+
+
+    const add = async (text) => {
+
+      console.log("IN ADD FUNC");
+      console.log(text);
+      setQuestion(text);
+
+    try {
+      const result = await chat.sendMessageStream(Object.entries(img.aiData).length ? [img.aiData,text] : [text]);
+      //console.log(result.response.text);
+      let accuumltedtext="";
+
+      for await (const chunk of result.stream) {
+          const chunkText = chunk.text();
+          console.log(chunkText);
+          accuumltedtext+=chunkText;
+          setAnswer(accuumltedtext);
+      }
+
+      mutation.mutate();
+
+        
+    } catch (error) {
+      console.error(error);
+        
+    }
+        
+
     };
 
     const handleSubmit = async (e) => {
