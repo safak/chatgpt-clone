@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const ChatList = () =>{
     
     const { isPending, error, data } = useQuery({
-        queryKey: ['repoData'],
+        queryKey: ['userChats'],
         queryFn: () =>
           fetch(`${import.meta.env.VITE_API_URL}/api/userchats`,{
             credentials:"include",
@@ -25,14 +25,11 @@ const ChatList = () =>{
             <span className="title">Recent Chats</span>
             <div className="list">
                 
-
               {isPending? "Loading.." : error? "error" : data?.map(chat=>(
                 <Link to={`/dashboard/chats/${chat._id}`} key={chat._id}>
                     {chat.title}
                 </Link>  
-
               ))}
-              
             </div>
             <hr/>
             <div className="upgrade">
