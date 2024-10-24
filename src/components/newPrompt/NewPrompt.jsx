@@ -1,8 +1,17 @@
+import { useRef } from "react";
 import "./newPrompt.css";
 
 function NewPrompt() {
+  const endRef = useRef(null);
+
+  useEffect(() => {
+    endRef.current.scrollIntoView({ behavior: "smooth" });
+  }, []);
+
   return (
-    <div className="newPrompt">
+    <>
+      {/* add new chat */}
+      <div className="endChat" ref={endRef}></div>
       <form className="newForm">
         <label htmlFor="file">
           <img src="/attachment.png" alt="attachment" />
@@ -13,7 +22,8 @@ function NewPrompt() {
           <img src="/arrow.png" alt="arrow btn" />
         </button>
       </form>
-    </div>
+      <div ref={endRef} />
+    </>
   );
 }
 
