@@ -4,12 +4,12 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import RootLayout from "./layouts/rootLayout/rootLayout.jsx";
-import HomePage from "../src/routes/homepage/HomePage.jsx";
-import DashboardPage from "../src/routes/dashboardPage/DashboardPage.jsx";
-import ChatPage from "./routes/chatPage/ChatPage";
-import DashboardLayout from "../src/layouts/dashboardLayout/DashboardLayout.jsx";
-import SignInPage from "../src/routes/signInPage/SignInPage.jsx";
-import SignUpPage from "../src/routes/signUpPage/SignUpPage.jsx";
+import HomePage from "./routes/homepage/HomePage.jsx";
+import DashboardPage from "./routes/dashboardPage/DashboardPage.jsx";
+import ChatPage from "./routes/chatPage/ChatPage.jsx";
+import DashboardLayout from "./layouts/dashboardLayout/DashboardLayout.jsx";
+import SignInPage from "./routes/signInPage/SignInPage.jsx";
+import SignUpPage from "./routes/signUpPage/SignUpPage.jsx";
 
 const router = createBrowserRouter([
   {
