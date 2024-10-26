@@ -1,7 +1,15 @@
 import express from "express";
+import cors from "cors";
+import ImageKit from "imagekit";
 
 const port = process.env.PORT || 3000;
 const app = express();
+
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+  })
+);
 
 const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGE_KIT_ENDPOINT,
@@ -10,7 +18,8 @@ const imagekit = new ImageKit({
 });
 
 app.get("/api/upload", (req, res) => {
-  res.send("it works!");
+  const result = imagekit.getAuthenticationParameters();
+  res.send(result);
 });
 
 app.listen(port, () => {
