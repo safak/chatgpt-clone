@@ -6,6 +6,28 @@ import Markdown from 'react-markdown';
 import { IKImage } from 'imagekitio-react';
 import React from 'react';
 
+/**
+ * ChatPage Component
+ *
+ * The ChatPage component displays a chat interface with a list of messages, images, and the ability to send new prompts.
+ * It retrieves chat history using `useQuery` from the specified chat ID in the URL, displaying messages along with any associated images.
+ * 
+ * ### Key Functionalities:
+ * - **Fetch Chat History**: Queries chat data from the server based on the dynamic `chatId` from the URL.
+ * - **Display Messages and Images**: Renders messages with markdown and displays images if present.
+ * - **NewPrompt Component**: Allows users to submit new prompts at the end of the chat history.
+ * 
+ * ### React Query:
+ * - **useQuery**: Fetches the chat data from the API. Caches chat history for reactivity and efficient data fetching.
+ * 
+ * ### Props & State:
+ * - **chatId**: Extracted from the URL using `useLocation` to uniquely identify and fetch chat data.
+ * - **isPending, error, data**: State values from `useQuery` for handling loading, error, and data display.
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered chat page displaying chat history and user prompts.
+ */
+
 
 const ChatPage = () => {
   const path= useLocation().pathname;

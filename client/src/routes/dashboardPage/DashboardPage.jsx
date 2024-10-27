@@ -2,14 +2,40 @@ import { QueryClient, useMutation, useQueryClient } from '@tanstack/react-query'
 import './dashboardPage.css';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * DashboardPage Component
+ *
+ * This component is the main dashboard where users can create new chats, analyze images, or get coding assistance.
+ * It includes an input form to submit queries, which initiates new chats.
+ * 
+ * ### Key Functionalities:
+ * - **Mutation for New Chat Creation**: Creates a new chat with a POST request and navigates to the newly created chat's page.
+ * - **Form Submission Handling**: Submits user input and triggers the mutation to create a chat.
+ * 
+ * ### React Query Usage:
+ * - **useQueryClient**: For cache management, allowing the chat list to be refetched upon new chat creation.
+ * - **useMutation**: For posting new chat requests to the server, invalidating cache for recent chats to stay updated.
+ * 
+ * ### Navigation:
+ * - Redirects the user to the newly created chat’s page after successful chat creation.
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered component for the Dashboard page.
+ */
+
 
  const DashboardPage = () => {
 
-  // Access the client
-  const queryClient = useQueryClient()
-  const navigate= useNavigate()
+  // Initializes the query client to manage cache and data fetching
+  const queryClient = useQueryClient();
+  
+  // Initializes the navigate function for programmatic routing
+  const navigate = useNavigate();
 
+  // Configures the mutation for creating a new chat session
   const mutation = useMutation({
+
+    // Defines the mutation function, which sends a POST request to create a new chat session
     mutationFn: async(text) =>{
       return fetch(`${import.meta.env.VITE_API_URL}/api/chats`,{
         method: "POST",
@@ -20,14 +46,13 @@ import { useNavigate } from 'react-router-dom';
         body: JSON.stringify({text}),
       }).then(res=>res.json())
     },
+    // Defines actions upon successful chat creation
     onSuccess: (id) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["userChats"] });
-      navigate(`/dashboard/chats/${id}`);
+      queryClient.invalidateQueries({ queryKey: ["userChats"] });// Invalidates and refetches userChats to update the chat list
+      navigate(`/dashboard/chats/${id}`);// Navigates to the new chat page with the given ID
     },
   })
-
-
 
   const handleSubmit= async (e)=>{
     e.preventDefault();
