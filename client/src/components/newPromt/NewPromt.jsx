@@ -8,10 +8,9 @@ import Markdown from 'react-markdown';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const NewPromt = ({data})=>{
-    const [question,setQuestion] = useState(""); 
-    
-    const [answer,setAnswer] = useState(""); 
 
+    const [question,setQuestion] = useState(""); 
+    const [answer,setAnswer] = useState(""); 
     const [img, setImg] = useState({
         isLoading: false,
         error: "",
@@ -19,23 +18,20 @@ const NewPromt = ({data})=>{
         aiData: {},
     });
 
-    const chat = model.startChat({
-        history: [
-          {
-            role: "user",
-            parts: [{ text: "Hello" }],
-          },
-          {
-            role: "model",
-            parts: [{ text: "Great to meet you. What would you like to know?" }],
-          },
-        ],
-        //generationConfig: {},
-      });
 
+    const chat = model.startChat({
+      history: [
+          ...(data?.history?.map(({ role, parts }) => ({
+              role,
+              parts: [{ text: parts[0].text }],
+          })) || []) // התוצאה המתקבלת תהיה מערך ריק במקרה ש-data או data.history אינם קיימים
+      ],
+      generationConfig: {},
+  });
+
+  
     const endRef= useRef(null);
     const formRef= useRef(null);
-
     useEffect(() => {
       const scrollToBottom = () => {
         endRef.current?.scrollIntoView({ behavior:'smooth' });
@@ -43,7 +39,7 @@ const NewPromt = ({data})=>{
       scrollToBottom();
     },[data,question,answer,img.dbData]);
 
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient();
 
   
     const mutation = useMutation({
@@ -97,9 +93,7 @@ const NewPromt = ({data})=>{
           accuumltedtext+=chunkText;
           setAnswer(accuumltedtext);
       }
-
       mutation.mutate();
-
         
     } catch (error) {
       console.error(error);   
@@ -108,16 +102,14 @@ const NewPromt = ({data})=>{
 
 
     const handleSubmit = async (e) => {
-
       e.preventDefault();
       console.log("IN HANDLE SUBMIT FUNC");
       const text= e.target.text.value;
       if(!text) return;
       add(text, false);
-
     };
-    
 
+    
   // IN PRODUCTION WE DON'T NEED IT
   const hasRun = useRef(false);
   useEffect(() => {
@@ -145,7 +137,7 @@ const NewPromt = ({data})=>{
 
             {question && <div className="message user">{question}</div>}
             {answer && <div className="message"><Markdown>{answer}</Markdown></div>}
-            {/*<button onClick={add}>test</button>*/}
+
 
             <div className="endChat" ref={endRef}></div>
             <form className="newform" onSubmit={handleSubmit} ref={formRef}>

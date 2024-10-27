@@ -64,7 +64,7 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
       console.log(savedChat._id);
       const newUserChats = new UserChats({
         userId: userId,
-        chats: [{ _id: savedChat.id, title: text.substring(0, 40) }],
+        chats: [{ _id: savedChat._id, title: text.substring(0, 40) }],
       });
 
       await newUserChats.save();
