@@ -8,7 +8,7 @@ import { IKImage } from 'imagekitio-react';
 
 const ChatPage = () => {
   const path= useLocation().pathname;
-  const chatId= path.split('/').pop();
+  const chatId= path.split("/").pop();
 
   const { isPending, error, data } = useQuery({
     queryKey: ["chat", chatId],
@@ -20,6 +20,7 @@ const ChatPage = () => {
       ),
   })
   console.log(data);
+
 
 
 
@@ -48,10 +49,7 @@ const ChatPage = () => {
             </>
 
           ))}
-
-
-          <NewPromt data={data}/>
-
+          {data && <NewPromt data={data}/>}
         </div>
       </div>
     </div>

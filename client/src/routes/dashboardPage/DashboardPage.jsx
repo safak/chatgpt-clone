@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom';
     },
     onSuccess: (id) => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ['userChats'] });
+      queryClient.invalidateQueries({ queryKey: ["userChats"] });
       navigate(`/dashboard/chats/${id}`);
     },
   })

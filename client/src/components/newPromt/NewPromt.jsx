@@ -34,19 +34,21 @@ const NewPromt = ({data})=>{
       });
 
     const endRef= useRef(null);
+    const formRef= useRef(null);
+
     useEffect(() => {
       const scrollToBottom = () => {
         endRef.current?.scrollIntoView({ behavior:'smooth' });
       };
       scrollToBottom();
-    },[question,answer,img.dbData]);
+    },[data,question,answer,img.dbData]);
 
     const queryClient = useQueryClient()
 
   
     const mutation = useMutation({
       mutationFn: async() =>{
-        return fetch(`${import.meta.env.VITE_API_URL}/api/chats${data._id}`,{
+        return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`,{
           method: "PUT",
           credentials: "include",
           headers: {
@@ -56,11 +58,13 @@ const NewPromt = ({data})=>{
             answer,
             img: img.dbData?.filePath || undefined,
           }),
-        }).then(res=>res.json())
+        }).then((res)=>res.json())
       },
       onSuccess: () => {
         // Invalidate and refetch
         queryClient.invalidateQueries({ queryKey: ["chat",data._id] }).then(()=>{
+          console.log("on success");
+          formRef.current.reset();
           setQuestion("");
           setAnswer("");
           setImg({
@@ -77,11 +81,10 @@ const NewPromt = ({data})=>{
     })
 
 
-    const add = async (text) => {
+    const add = async (text,isInitial) => {
 
       console.log("IN ADD FUNC");
-      console.log(text);
-      setQuestion(text);
+      if (!isInitial) setQuestion(text);
 
     try {
       const result = await chat.sendMessageStream(Object.entries(img.aiData).length ? [img.aiData,text] : [text]);
@@ -99,12 +102,10 @@ const NewPromt = ({data})=>{
 
         
     } catch (error) {
-      console.error(error);
-        
-    }
-        
-
+      console.error(error);   
+    } 
     };
+
 
     const handleSubmit = async (e) => {
 
@@ -112,9 +113,21 @@ const NewPromt = ({data})=>{
       console.log("IN HANDLE SUBMIT FUNC");
       const text= e.target.text.value;
       if(!text) return;
-      add(text);
+      add(text, false);
 
     };
+    
+
+  // IN PRODUCTION WE DON'T NEED IT
+  const hasRun = useRef(false);
+  useEffect(() => {
+    if (!hasRun.current) {
+      if (data?.history?.length === 1) {
+        add(data.history[0].parts[0].text, true);
+      }
+    }
+    hasRun.current = true;
+  }, []);
 
     return(
         <div className="newpPromt">
@@ -135,7 +148,7 @@ const NewPromt = ({data})=>{
             {/*<button onClick={add}>test</button>*/}
 
             <div className="endChat" ref={endRef}></div>
-            <form className="newform" onSubmit={handleSubmit}>
+            <form className="newform" onSubmit={handleSubmit} ref={formRef}>
                 <Upload setImg={setImg}/>
                 <input id="file" type="file" multiple={false} hidden/>
                 <input type="text" name="text" placeholder="Ask Anything boy..."/>

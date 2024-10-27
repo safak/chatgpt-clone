@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    background-color: #1d3b4d;
 
     .wrapper{
         flex: 1;
