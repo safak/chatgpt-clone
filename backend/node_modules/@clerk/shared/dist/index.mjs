@@ -1,0 +1,314 @@
+import {
+  applyFunctionToObj,
+  filterProps,
+  removeUndefined,
+  without
+} from "./chunk-CFXQSUF6.mjs";
+import {
+  Poller,
+  createWorkerTimers
+} from "./chunk-3Y3TETF2.mjs";
+import {
+  camelToSnake,
+  deepCamelToSnake,
+  deepSnakeToCamel,
+  getNonUndefinedValues,
+  isIPV4Address,
+  isTruthy,
+  snakeToCamel,
+  titleize,
+  toSentence
+} from "./chunk-QE2A7CJI.mjs";
+import {
+  buildClerkJsScriptAttributes,
+  clerkJsScriptUrl,
+  loadClerkJsScript,
+  setClerkJsLoadingErrorPackageName
+} from "./chunk-PUKQK7SA.mjs";
+import {
+  versionSelector
+} from "./chunk-3SQT77YJ.mjs";
+import {
+  isHttpOrHttps,
+  isProxyUrlRelative,
+  isValidProxyUrl,
+  proxyUrlToAbsoluteURL
+} from "./chunk-6NDGN2IU.mjs";
+import {
+  addClerkPrefix,
+  cleanDoubleSlashes,
+  getClerkJsMajorVersionOrTag,
+  getScriptUrl,
+  hasLeadingSlash,
+  hasTrailingSlash,
+  isAbsoluteUrl,
+  isCurrentDevAccountPortalOrigin,
+  isLegacyDevAccountPortalOrigin,
+  isNonEmptyURL,
+  joinURL,
+  parseSearchParams,
+  stripScheme,
+  withLeadingSlash,
+  withTrailingSlash,
+  withoutLeadingSlash,
+  withoutTrailingSlash
+} from "./chunk-IFTVZ2LQ.mjs";
+import {
+  createDeferredPromise,
+  loadScript,
+  logErrorInDevMode,
+  runWithExponentialBackOff
+} from "./chunk-HBJ5MS5V.mjs";
+import {
+  noop
+} from "./chunk-7FNX7RWY.mjs";
+import {
+  isStaging
+} from "./chunk-3TMSNP4L.mjs";
+import {
+  LocalStorageBroadcastChannel
+} from "./chunk-RSOCGYTF.mjs";
+import {
+  logger
+} from "./chunk-CYDR2ZSA.mjs";
+import {
+  deprecated,
+  deprecatedObjectProperty,
+  deprecatedProperty
+} from "./chunk-4EIZQYWK.mjs";
+import {
+  isDevelopmentEnvironment,
+  isProductionEnvironment,
+  isTestEnvironment
+} from "./chunk-QMOEH4QX.mjs";
+import {
+  deriveState
+} from "./chunk-6NISCHKC.mjs";
+import {
+  DEV_BROWSER_JWT_KEY,
+  extractDevBrowserJWTFromURL,
+  setDevBrowserJWTInURL
+} from "./chunk-K64INQ4C.mjs";
+import {
+  ClerkAPIResponseError,
+  ClerkRuntimeError,
+  EmailLinkError,
+  EmailLinkErrorCode,
+  buildErrorThrower,
+  is4xxError,
+  isCaptchaError,
+  isClerkAPIResponseError,
+  isClerkRuntimeError,
+  isEmailLinkError,
+  isKnownError,
+  isMetamaskError,
+  isNetworkError,
+  isPasswordPwnedError,
+  isUnauthorizedError,
+  isUserLockedError,
+  parseError,
+  parseErrors
+} from "./chunk-T4WHYQYX.mjs";
+import {
+  fastDeepMergeAndKeep,
+  fastDeepMergeAndReplace
+} from "./chunk-4LL2VPJL.mjs";
+import {
+  extension,
+  readJSONFile
+} from "./chunk-5JU2E5TY.mjs";
+import {
+  handleValueOrFn
+} from "./chunk-TRWMHODU.mjs";
+import {
+  apiUrlFromPublishableKey
+} from "./chunk-QPSU45F4.mjs";
+import {
+  buildPublishableKey,
+  createDevOrStagingUrlCache,
+  getCookieSuffix,
+  getSuffixedCookieName,
+  isDevelopmentFromPublishableKey,
+  isDevelopmentFromSecretKey,
+  isProductionFromPublishableKey,
+  isProductionFromSecretKey,
+  isPublishableKey,
+  parsePublishableKey
+} from "./chunk-L2BNNARM.mjs";
+import {
+  isomorphicAtob
+} from "./chunk-TETGTEI2.mjs";
+import {
+  isomorphicBtoa
+} from "./chunk-KOH7GTJO.mjs";
+import {
+  inBrowser,
+  isBrowserOnline,
+  isValidBrowser,
+  isValidBrowserOnline,
+  userAgentIsRobot
+} from "./chunk-LJ4R7M7R.mjs";
+import {
+  callWithRetry
+} from "./chunk-4PW5MDZA.mjs";
+import {
+  colorToSameTypeString,
+  hasAlpha,
+  hexStringToRgbaColor,
+  isHSLColor,
+  isRGBColor,
+  isTransparent,
+  isValidHexString,
+  isValidHslaString,
+  isValidRgbaString,
+  stringToHslaColor,
+  stringToSameTypeColor
+} from "./chunk-X6NLIF7Y.mjs";
+import {
+  CURRENT_DEV_INSTANCE_SUFFIXES,
+  DEV_OR_STAGING_SUFFIXES,
+  LEGACY_DEV_INSTANCE_SUFFIXES,
+  LOCAL_API_URL,
+  LOCAL_ENV_SUFFIXES,
+  PROD_API_URL,
+  STAGING_API_URL,
+  STAGING_ENV_SUFFIXES,
+  iconImageUrl
+} from "./chunk-I6MTSTOF.mjs";
+import {
+  addYears,
+  dateTo12HourTime,
+  differenceInCalendarDays,
+  formatRelative,
+  normalizeDate
+} from "./chunk-FSKKI4LG.mjs";
+import "./chunk-7ELT755Q.mjs";
+export {
+  CURRENT_DEV_INSTANCE_SUFFIXES,
+  ClerkAPIResponseError,
+  ClerkRuntimeError,
+  DEV_BROWSER_JWT_KEY,
+  DEV_OR_STAGING_SUFFIXES,
+  EmailLinkError,
+  EmailLinkErrorCode,
+  LEGACY_DEV_INSTANCE_SUFFIXES,
+  LOCAL_API_URL,
+  LOCAL_ENV_SUFFIXES,
+  LocalStorageBroadcastChannel,
+  PROD_API_URL,
+  Poller,
+  STAGING_API_URL,
+  STAGING_ENV_SUFFIXES,
+  addClerkPrefix,
+  addYears,
+  apiUrlFromPublishableKey,
+  applyFunctionToObj,
+  buildClerkJsScriptAttributes,
+  buildErrorThrower,
+  buildPublishableKey,
+  callWithRetry,
+  camelToSnake,
+  cleanDoubleSlashes,
+  clerkJsScriptUrl,
+  colorToSameTypeString,
+  createDeferredPromise,
+  createDevOrStagingUrlCache,
+  createWorkerTimers,
+  dateTo12HourTime,
+  deepCamelToSnake,
+  deepSnakeToCamel,
+  deprecated,
+  deprecatedObjectProperty,
+  deprecatedProperty,
+  deriveState,
+  differenceInCalendarDays,
+  extension,
+  extractDevBrowserJWTFromURL,
+  fastDeepMergeAndKeep,
+  fastDeepMergeAndReplace,
+  filterProps,
+  formatRelative,
+  getClerkJsMajorVersionOrTag,
+  getCookieSuffix,
+  getNonUndefinedValues,
+  getScriptUrl,
+  getSuffixedCookieName,
+  handleValueOrFn,
+  hasAlpha,
+  hasLeadingSlash,
+  hasTrailingSlash,
+  hexStringToRgbaColor,
+  iconImageUrl,
+  inBrowser,
+  is4xxError,
+  isAbsoluteUrl,
+  isBrowserOnline,
+  isCaptchaError,
+  isClerkAPIResponseError,
+  isClerkRuntimeError,
+  isCurrentDevAccountPortalOrigin,
+  isDevelopmentEnvironment,
+  isDevelopmentFromPublishableKey,
+  isDevelopmentFromSecretKey,
+  isEmailLinkError,
+  isHSLColor,
+  isHttpOrHttps,
+  isIPV4Address,
+  isKnownError,
+  isLegacyDevAccountPortalOrigin,
+  isMetamaskError,
+  isNetworkError,
+  isNonEmptyURL,
+  isPasswordPwnedError,
+  isProductionEnvironment,
+  isProductionFromPublishableKey,
+  isProductionFromSecretKey,
+  isProxyUrlRelative,
+  isPublishableKey,
+  isRGBColor,
+  isStaging,
+  isTestEnvironment,
+  isTransparent,
+  isTruthy,
+  isUnauthorizedError,
+  isUserLockedError,
+  isValidBrowser,
+  isValidBrowserOnline,
+  isValidHexString,
+  isValidHslaString,
+  isValidProxyUrl,
+  isValidRgbaString,
+  isomorphicAtob,
+  isomorphicBtoa,
+  joinURL,
+  loadClerkJsScript,
+  loadScript,
+  logErrorInDevMode,
+  logger,
+  noop,
+  normalizeDate,
+  parseError,
+  parseErrors,
+  parsePublishableKey,
+  parseSearchParams,
+  proxyUrlToAbsoluteURL,
+  readJSONFile,
+  removeUndefined,
+  runWithExponentialBackOff,
+  setClerkJsLoadingErrorPackageName,
+  setDevBrowserJWTInURL,
+  snakeToCamel,
+  stringToHslaColor,
+  stringToSameTypeColor,
+  stripScheme,
+  titleize,
+  toSentence,
+  userAgentIsRobot,
+  versionSelector,
+  withLeadingSlash,
+  withTrailingSlash,
+  without,
+  withoutLeadingSlash,
+  withoutTrailingSlash
+};
+//# sourceMappingURL=index.mjs.map
