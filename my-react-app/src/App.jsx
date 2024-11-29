@@ -1,32 +1,29 @@
-import React, { useState } from 'react';
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Homepage from "./pages/home/Home";
+import Dashboard from "./pages/dashboard/Dashboard";
+import ChatPage from "./pages/chatpage/ChatPage";
+import RootLayout from "./layout/rootLayout/RootLayout";
+import DashboardLayout from "./layout/dashBoardLayout/DashboardLayout";
 
 const App = () => {
-  const [darkMode, setDarkMode] = useState(false);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    if (!darkMode) {
-      document.documentElement.classList.add('dark');
-      console.log('Dark mode enabled');
-    } else {
-      document.documentElement.classList.remove('dark');
-      console.log('Dark mode disabled');
-    }
-  };
-  
-
   return (
-    <div className="min-h-screen p-4 bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
-      <button
-        onClick={toggleDarkMode}
-        className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400"
-      >
-        Toggle Dark Mode
-      </button>
-      <h1 className="text-3xl font-bold">Welcome to Vite + React + Tailwind</h1>
-      <p className="mt-2 text-lg">
-        This is a lightweight Vite setup with Tailwind and a dark mode toggle.
-      </p>
+    <div className="app">
+      <Routes>
+        {/* Redirect from root to "/home" */}
+        <Route path="/" element={<Navigate to="/home" replace />} />
+        
+        {/* RootLayout wraps all other routes */}
+        <Route path="/" element={<RootLayout />}>
+          <Route path="home" element={<Homepage />} /> {/* Homepage route */}
+          <Route element={<DashboardLayout/>}>
+            <Route path="dashboard" element={<Dashboard />} /> {/* Dashboard route */}
+            <Route path="dashboard/chats/:id" element={<ChatPage />} /> {/* Dynamic Chat page route */}
+          </Route> 
+          
+          
+        </Route>
+      </Routes>
     </div>
   );
 };
