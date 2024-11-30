@@ -17,8 +17,9 @@ const App = () => {
         {/* RootLayout wraps all other routes */}
         <Route path="/" element={<RootLayout />}>
           <Route path="home" element={<Homepage />} /> {/* Homepage route */}
-          <Route path="sign-in" element={<SignIn />} /> {/* Sign-in route */}
-          <Route path="sign-up" element={<SignUp />} /> {/* Sign-up route */}
+          <Route path="sign-in" element={<SignIn redirectUrl="/dashboard" />} />
+          <Route path="sign-up" element={<SignUp redirectUrl="/dashboard" />} />
+
 
           {/* Protected routes, nested inside DashboardLayout */}
           <Route element={<DashboardLayout />}>
