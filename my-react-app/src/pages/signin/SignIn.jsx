@@ -13,8 +13,8 @@ function SignInPage() {
   }, [isSignedIn, navigate]);
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md px-6 py-8 bg-white rounded-lg shadow-md">
+    <div className=" ">
+      <div className="">
         <SignIn
           path="/sign-in"
           routing="path"

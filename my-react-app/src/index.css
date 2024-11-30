@@ -36,3 +36,19 @@
     height: 520px; /* Custom height */
   }
   
+  /* In your CSS file */
+::-webkit-scrollbar {
+  width: 4px;  /* Custom width */
+}
+
+::-webkit-scrollbar-track {
+  background: #3a3a3a;  /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #505050;  /* Thumb color */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #535353;  /* Thumb hover color */
+}
