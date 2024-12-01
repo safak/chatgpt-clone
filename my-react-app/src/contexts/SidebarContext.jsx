@@ -10,7 +10,7 @@ export const useSidebar = () => {
 
 // Sidebar provider component
 export const SidebarProvider = ({ children }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [newChat, setNewChat] = useState(false); // Track if new chat is initiated
 
   const toggleSidebar = () => {

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import ChatList from '../../components/chatlist/ChatList';
-import { HiMenuAlt1, HiX } from 'react-icons/hi'; // Icons for sidebar toggle
 import { useSidebar } from '../../contexts/SidebarContext'; // Import the context
 
 function DashboardLayout() {
@@ -16,14 +15,13 @@ function DashboardLayout() {
     }
   }, [isLoaded, userId, navigate]);
 
-  if (!isLoaded) return <div className="text-white">Loading....</div>;
+  if (!isLoaded) return <div className="text-black">Loading....</div>;
 
   return (
-    <div className="flex h-screen  mt-2 ">
+    <div className="flex h-screen  ">
       {/* Sidebar */}
       <aside
-        className={`lg:w-1/8 bg-gray-800 text-white p-4 transition-all duration-300 rounded-xl ${
-          isSidebarOpen ? 'block' : 'hidden '
+        className={`lg:w-1/8 bg-[#fff4f4] text-gray  transition-all duration-300 
         }`}
       >
         <ChatList />
@@ -32,21 +30,10 @@ function DashboardLayout() {
 
       {/* Main Content Area */}
       <main
-        className={`flex-1 bg-[#12101b] p-16 text-white relative rounded-xl ${
+        className={`flex-1 bg-white text-gray-200 ${
           isSidebarOpen ? 'ml-1/4' : 'ml-0'
         } lg:ml-1/4 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100`}
       >
-        {/* Background Pattern */}
-        <div
-          className="absolute inset-0 bg-pattern-dots opacity-10 pointer-events-none"
-          style={{
-            backgroundImage: `radial-gradient(circle, #ffffff 1px, transparent 1px)`,
-            backgroundSize: `20px 20px`,
-            backgroundPosition: `center center`,
-            transform: `rotate(45deg)`,
-          }}
-        ></div>
-
         {/* Main Content */}
         <div className="">
           <Outlet />
@@ -61,3 +48,4 @@ function DashboardLayout() {
 }
 
 export default DashboardLayout;
+
