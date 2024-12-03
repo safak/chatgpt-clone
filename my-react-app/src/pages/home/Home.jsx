@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import orbital from "../../../public/orbital.png";
+import orbital from "../../assets/orbital.png";
 import { TypeAnimation } from 'react-type-animation';
-import bot from "../../../public/bot.png"
-import human1 from "../../../public/human1.jpeg"
-import human2 from "../../../public/human2.jpeg"
-import bg from "../../../public/bg.png"
+import bot from "../../assets/bot.png"
+import human1 from "../../assets/human1.jpeg"
+import human2 from "../../assets/human2.jpeg"
+import bg from "../../assets/bg.png"
 
 function Home() {
   const [typingStatus, setTypingStatus] = useState("Human1");

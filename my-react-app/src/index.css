@@ -42,13 +42,13 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #3a3a3a;  /* Track color */
+  background: #bebebe;  /* Track color */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #505050;  /* Thumb color */
+  background: #818181;  /* Thumb color */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #535353;  /* Thumb hover color */
+  background: #666666;  /* Thumb hover color */
 }
