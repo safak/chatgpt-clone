@@ -2,7 +2,6 @@ import React from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { ClerkProvider, SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import { HiMenuAlt1, HiX, HiChat } from 'react-icons/hi'; // Icons for sidebar toggle
-import { RiChatNewFill } from "react-icons/ri";
 import { useSidebar } from '../../contexts/SidebarContext'; // Import the context
 
 function RootLayout() {

@@ -46,7 +46,7 @@ const ChatBody = ({ messages }) => {
         ))}
       </div>
       <div className=" flex flex-col w-full max-w-4xl mx-auto">
-        ||||||||||||||||||||||||||||||||||||||
+        
       </div>
     </div>
   </div>
