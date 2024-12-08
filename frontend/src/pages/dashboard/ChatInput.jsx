@@ -24,7 +24,7 @@ const ChatInput = ({
   };
 
   return (
-    <div className="fixed bottom-4 left-8 right-0 " onClick={handleInputClick}>
+    <div className="fixed bottom-4 left-0 right-0 " onClick={handleInputClick}>
       <div className="flex flex-col  space-y-3 bg-gray-100 rounded-xl mx-[20%]  p-4">
         <input
           type="text"

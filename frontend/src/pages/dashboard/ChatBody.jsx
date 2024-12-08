@@ -17,14 +17,14 @@ const ChatBody = ({ messages }) => {
     <div className="relative flex justify-center flex-1">
       <div
         className="w-full mx-auto"
-        style={{ height: "calc(100vh - 9rem)" }} // Available space between header and input
+        style={{ height: "calc(100vh - 8rem)" }} // Available space between header and input
       >
         <div
           ref={chatBodyRef}
-          className="overflow-y-auto p-4 w-full custom-scrollbar"
-          style={{ height: "calc(100vh - 9rem)", paddingBottom: "4rem" }} // Add padding at the bottom
+          className="overflow-y-auto w-full custom-scrollbar"
+          style={{ height: "calc(100vh - 11rem)", paddingBottom: "2rem" }} // Add padding at the bottom
         >
-          <div className="flex flex-col w-full max-w-4xl mx-auto">
+          <div className="flex flex-col w-full max-w-3xl mx-auto">
             {messages.map((msg, index) => (
               <div
                 key={index}
@@ -38,7 +38,7 @@ const ChatBody = ({ messages }) => {
                 >
                   {/* Conditionally render image if available */}
                   {msg.image && (
-                    <div className="mb-2">
+                    <div className="mb-2 ">
                       <img src={msg.image} alt="uploaded" />
                     </div>
                   )}
