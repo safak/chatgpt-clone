@@ -1,55 +1,66 @@
 import React, { useState, useRef } from "react";
 import Header from "./Header";
-import ChatBody from "./ChatBody.jsx";
+import ChatBody from "./ChatBody";
 import ChatInput from "./ChatInput";
-import { useImage } from "../../contexts/ImageContext"; // Import the useImage hook
+import { useImage } from "../../contexts/ImageContext";
+import model from "../../lib/gemini";
 
 function Dashboard() {
   const [inputText, setInputText] = useState("");
   const [messages, setMessages] = useState([]);
   const inputRef = useRef(null);
-  const { image, setImage } = useImage();  // Access global image state and setter
+  const { image, setImage } = useImage();
 
-  const handleIconClick = () => {
-    if (inputRef.current) inputRef.current.focus();
-  };
-
-  const handleInputSubmit = (e) => {
+  const handleInputSubmit = async (e) => {
     if (e.key === "Enter" || e.type === "click") {
-      if (!inputText.trim() && !image.dbData?.url) return; // Ensure either text or image is present
+      if (!inputText.trim() && !image.dbData?.url) return;
 
       const userMessage = {
         role: "user",
         text: inputText,
-        image: image.dbData?.url, // Add image if available
+        image: image.dbData?.url,
       };
 
       setMessages((prevMessages) => [...prevMessages, userMessage]);
 
-      setTimeout(() => {
-        const aiResponse = {
-          role: "ai",
-          text: `AI Response to: "${inputText}"`,
-        };
-        setMessages((prevMessages) => [...prevMessages, aiResponse]);
-      }, 1000);
+      setInputText(""); // Clear input field
+      setImage({ isLoading: false, dbData: null }); // Reset image state
 
-      setInputText("");
-      setImage({ isLoading: false, dbData: null }); // Reset the image after sending
+      try {
+        const aiResponse = await model.generateContent(inputText);
+        const aiMessage = {
+          role: "ai",
+          text: aiResponse.response.text(),
+        };
+
+        setMessages((prevMessages) => [...prevMessages, aiMessage]);
+      } catch (error) {
+        console.error("Error generating AI response:", error);
+        const errorMessage = {
+          role: "ai",
+          text: "Sorry, something went wrong. Please try again later.",
+        };
+        setMessages((prevMessages) => [...prevMessages, errorMessage]);
+      }
     }
+  };
+
+  const clearUploadedFile = () => {
+    setImage({ isLoading: false, dbData: null }); // Reset image in context
   };
 
   return (
     <div className="flex flex-col h-screen">
       <Header inputText={inputText} />
-      <ChatBody messages={messages} />
+      <div className="flex-1 overflow-y-hidden">
+        <ChatBody messages={messages} />
+      </div>
       <ChatInput
-        className=""
         inputText={inputText}
         setInputText={setInputText}
         handleInputSubmit={handleInputSubmit}
-        handleIconClick={handleIconClick}
         inputRef={inputRef}
+        clearUploadedFile={clearUploadedFile} // Pass clear function
       />
     </div>
   );

@@ -45,7 +45,7 @@ function Upload({ onClearFileName }) {
   const [fileName, setFileName] = useState(""); // Uploaded file name
 
   useEffect(() => {
-    // Clear the file name when onClearFileName changes
+    // Clear the file name when onClearFileName triggers
     if (onClearFileName) {
       setFileName("");
     }

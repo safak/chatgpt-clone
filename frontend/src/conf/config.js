@@ -4,4 +4,5 @@ export const config = {
     VITE_IMAGE_KIT_PUBLIC_KEY: import.meta.env.VITE_IMAGE_KIT_PUBLIC_KEY,
     REACT_APP_CLERK_FRONTEND_API: import.meta.env.REACT_APP_CLERK_FRONTEND_API,
     REACT_APP_CLERK_API_KEY: import.meta.env.REACT_APP_CLERK_API_KEY,
+    VITE_GOOGLE_AI_API_KEY: import.meta.env.VITE_GOOGLE_AI_API_KEY
 };

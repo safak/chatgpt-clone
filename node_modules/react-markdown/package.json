@@ -1,0 +1,175 @@
+{
+  "name": "react-markdown",
+  "version": "9.0.1",
+  "description": "React component to render markdown",
+  "license": "MIT",
+  "keywords": [
+    "ast",
+    "commonmark",
+    "component",
+    "gfm",
+    "markdown",
+    "react",
+    "react-component",
+    "remark",
+    "unified"
+  ],
+  "repository": "remarkjs/react-markdown",
+  "bugs": "https://github.com/remarkjs/react-markdown/issues",
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/unified"
+  },
+  "author": "Espen Hovlandsdal <espen@hovlandsdal.com>",
+  "contributors": [
+    "Espen Hovlandsdal <espen@hovlandsdal.com>",
+    "Titus Wormer <tituswormer@gmail.com> (https://wooorm.com)",
+    "Thomas Lindstrøm <t@hom.as>",
+    "Fabian Irsara <info@fabianirsara.com>",
+    "René Kooi <renee@kooi.me>",
+    "Nicolas Venegas <nvenegas@atlassian.com>",
+    "Christian Murphy <christian.murphy.42@gmail.com>",
+    "Linus Unnebäck <linus@folkdatorn.se>",
+    "Peng Guanwen <pg999w@outlook.com>",
+    "mudrz <mudrz@outlook.com>",
+    "Jesse Pinho <jesse@jessepinho.com>",
+    "Florentin Luca Rieger <florentin.rieger@gmail.com>",
+    "Frank <frankieali4@gmail.com>",
+    "Igor Kamyshev <garik.novel@gmail.com>",
+    "Jack Williams <jsw547@gmail.com>",
+    "Jakub Chrzanowski <jakub@chrzanowski.info>",
+    "Jeremy Moseley <jeremy@jeremymoseley.net>",
+    "Kelvin Chan <kchan@securitycompass.com>",
+    "Kohei Asai <me@axross.io>",
+    "Marshall Smith <marshall@radialdevgroup.com>",
+    "Nathan Bierema <nbierema@gmail.com>",
+    "Petr Gazarov <petrgazarov@gmail.com>",
+    "Phil Rajchgot <tophil@outlook.com>",
+    "Rasmus Eneman <rasmus@eneman.eu>",
+    "Riku Rouvila <riku.rouvila@gmail.com>",
+    "Robin Wieruch <wrobin@gmx.net>",
+    "Rostyslav Melnychuk <blackswordgc@gmail.com>",
+    "Ted Piotrowski <tppiotrowski@gmail.com>",
+    "Thibaud Courtoison <do.not.press.enter@gmail.com>",
+    "Tiago Roldão <focus5.6@gmail.com>",
+    "cerkiewny <mstarzycki@gmail.com>",
+    "evoye <rosej@gmx.net>",
+    "gRoberts84 <gavin@gav-roberts.co.uk>",
+    "Alexander Wallin <office@alexanderwallin.com>",
+    "vanchagreen <vanchagreen@gmail.com>",
+    "Alexander Wong <admin@alexander-wong.com>",
+    "André Staltz <andre@staltz.com>",
+    "Angus MacIsaac <angus.macisaac@busbud.com>",
+    "Beau Roberts <beau.roberts@autodesk.com>",
+    "Charlie Chen <doveccl@live.com>",
+    "Christoph Werner <christoph@codepunkt.de>",
+    "Danny <dannyharding10@gmail.com>",
+    "Dennis S <denis.s@svsg.co>",
+    "Evan Hensleigh <futuraprime@gmail.com>"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "exports": "./index.js",
+  "files": [
+    "lib/",
+    "index.d.ts",
+    "index.js"
+  ],
+  "dependencies": {
+    "@types/hast": "^3.0.0",
+    "devlop": "^1.0.0",
+    "hast-util-to-jsx-runtime": "^2.0.0",
+    "html-url-attributes": "^3.0.0",
+    "mdast-util-to-hast": "^13.0.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.0.0",
+    "unified": "^11.0.0",
+    "unist-util-visit": "^5.0.0",
+    "vfile": "^6.0.0"
+  },
+  "peerDependencies": {
+    "@types/react": ">=18",
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "c8": "^8.0.0",
+    "esbuild": "^0.19.0",
+    "eslint-plugin-react": "^7.0.0",
+    "prettier": "^3.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "rehype-raw": "^7.0.0",
+    "remark-cli": "^11.0.0",
+    "remark-gfm": "^4.0.0",
+    "remark-preset-wooorm": "^9.0.0",
+    "remark-toc": "^9.0.0",
+    "type-coverage": "^2.0.0",
+    "typescript": "^5.0.0",
+    "xo": "^0.56.0"
+  },
+  "scripts": {
+    "build": "tsc --build --clean && tsc --build && type-coverage",
+    "format": "remark . --frail --output --quiet && prettier . --log-level warn --write && xo --fix",
+    "prepack": "npm run build && npm run format",
+    "test": "npm run build && npm run format && npm run test-coverage",
+    "test-api": "node --conditions development --experimental-loader=./script/load-jsx.js --no-warnings test.jsx",
+    "test-coverage": "c8 --100 --exclude script/ --reporter lcov npm run test-api"
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "singleQuote": true,
+    "semi": false,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "useTabs": false
+  },
+  "remarkConfig": {
+    "plugins": [
+      "remark-preset-wooorm",
+      [
+        "./node_modules/remark-preset-wooorm/node_modules/remark-gfm/index.js",
+        {
+          "tablePipeAlign": false
+        }
+      ],
+      [
+        "remark-lint-table-pipe-alignment",
+        false
+      ],
+      [
+        "remark-lint-no-html",
+        false
+      ]
+    ]
+  },
+  "typeCoverage": {
+    "atLeast": 100,
+    "detail": true,
+    "ignoreCatch": true,
+    "strict": true
+  },
+  "xo": {
+    "envs": [
+      "shared-node-browser"
+    ],
+    "extends": "plugin:react/jsx-runtime",
+    "overrides": [
+      {
+        "files": [
+          "**/*.jsx"
+        ],
+        "rules": {
+          "no-unused-vars": "off"
+        }
+      }
+    ],
+    "prettier": true,
+    "rules": {
+      "complexity": "off",
+      "n/file-extension-in-import": "off"
+    }
+  }
+}

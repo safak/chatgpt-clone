@@ -11,7 +11,7 @@ const Header = ({ inputText, selectedBox }) => {
 
         {/* Right Side - Selected Box */}
         <div className="text-gray-700 ml-auto">
-          {selectedBox ? `>${selectedBox}` : "Select Box"} {/* Display selected box */}
+          {selectedBox ? `>${selectedBox}` : "Gemini"} {/* Display selected box */}
         </div>
       </div>
 
