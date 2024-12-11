@@ -65,9 +65,9 @@ const ChatBody = ({ messages }) => {
                           <h2 className="mt-4 mb-2 text-xl font-semibold" {...props} />
                         ),
                         h3: ({ node, ...props }) => (
-                          <h3 className="mt-4 mb-2 text-lg font-medium" {...props} />
+                          <h3 className="mt-4 mb- text-lg font-medium" {...props} />
                         ),
-                        p: ({ node, ...props }) => <p className="mb-4" {...props} />,
+                        p: ({ node, ...props }) => <p className="" {...props} />,
                       }}
                     >
                       {msg.text}

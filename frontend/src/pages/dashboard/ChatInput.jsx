@@ -1,28 +1,19 @@
 import React, { useState } from "react";
 import { FaArrowUpLong } from "react-icons/fa6";
 import Upload from "../../components/upload/Upload";
+import { useImage } from "../../contexts/ImageContext"; // Import the useImage hook
 
-const ChatInput = ({
-  inputText,
-  setInputText,
-  handleInputSubmit,
-  inputRef,
-  clearUploadedFile,
-}) => {
+const ChatInput = ({ inputText, setInputText, handleInputSubmit, inputRef }) => {
+  const { messageSent, markMessageAsSent, resetMessageStatus } = useImage();
   const [uploadedImage, setUploadedImage] = useState(null);
 
   const handleInputChange = (e) => {
     setInputText(e.target.value);
   };
 
-  const handleInputClick = () => {
-    if (inputRef?.current) {
-      inputRef.current.focus();
-    }
-  };
-
   const handleImageUpload = (image) => {
     setUploadedImage(image);
+    resetMessageStatus(); // Reset the messageSent flag when a new image is uploaded
   };
 
   const handleSendMessage = (e) => {
@@ -30,8 +21,8 @@ const ChatInput = ({
       if (inputText.trim() || uploadedImage) {
         handleInputSubmit(e);
         setInputText(""); // Clear input text
-        setUploadedImage(null); // Clear uploaded image or file
-        if (clearUploadedFile) clearUploadedFile(); // Clear the file in `Upload`
+        setUploadedImage(null); // Clear uploaded image
+        markMessageAsSent(); // Mark that a message was sent
       }
     }
   };
@@ -58,9 +49,7 @@ const ChatInput = ({
         <div className="flex items-center justify-between text-black">
           <div className="relative flex items-center pl-4">
             <Upload
-              onClearFileName={uploadedImage === null} // Pass clear state to Upload
               onUpload={(file) => handleImageUpload(file)} // Pass the uploaded image
-              className="absolute top-0 left-0 opacity-0 pointer-events-none"
             />
           </div>
           <div className="flex items-center space-x-3">

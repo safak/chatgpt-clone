@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { IKContext, IKUpload } from "imagekitio-react";
 import { config } from "../../conf/config";
 import { useImage } from "../../contexts/ImageContext"; // Import the useImage hook
+import { PiPaperclipHorizontal } from "react-icons/pi";
 
 const urlEndpoint = config.VITE_IMAGE_KIT_ENDPOINT;
 const publicKey = config.VITE_IMAGE_KIT_PUBLIC_KEY;
@@ -21,74 +22,65 @@ const authenticator = async () => {
   }
 };
 
-const onError = (err) => {
-  console.log("Error", err);
-};
-
-const onSuccess = (res, setImage, setFileName) => {
-  console.log("Success", res);
-  setImage((prev) => ({ ...prev, isLoading: false, dbData: res }));
-  setFileName(res.name); // Update the uploaded file name
-};
-
-const onUploadProgress = (progress, setImage) => {
-  setImage((prev) => ({ ...prev, isLoading: true }));
-};
-
-const onUploadStart = () => {
-  console.log("Upload started");
-};
-
-function Upload({ onClearFileName }) {
-  const { setImage } = useImage(); // Access global setImage
+function Upload() {
+  const { setImage, setFileName, messageSent, resetMessageStatus } = useImage();
   const [isLoading, setIsLoading] = useState(false); // Local loading state
-  const [fileName, setFileName] = useState(""); // Uploaded file name
+  const [error, setError] = useState(""); // Error state
 
   useEffect(() => {
-    // Clear the file name when onClearFileName triggers
-    if (onClearFileName) {
-      setFileName("");
+    if (messageSent) {
+      setFileName(""); // Clear the file name once the message has been sent
+      resetMessageStatus(); // Reset the messageSent flag
     }
-  }, [onClearFileName]);
+  }, [messageSent, resetMessageStatus]);
+
+  const onError = (err) => {
+    setIsLoading(false); // Stop loading on error
+    setError(`Upload failed: ${err.message || "An unexpected error occurred"}`);
+    console.error("Error:", err);
+  };
+
+  const onSuccess = (res) => {
+    console.log("the response from dataserver is:", res)
+    setIsLoading(false);
+    setError(""); // Clear any previous errors
+    setImage((prev) => ({ ...prev, isLoading: false, dbData: res }));
+    setFileName(res.name); // Update the uploaded file name in global context
+  };
+
+  const onUploadProgress = (progress) => {
+    setImage((prev) => ({ ...prev, isLoading: true }));
+  };
 
   return (
     <div>
       <IKContext urlEndpoint={urlEndpoint} publicKey={publicKey} authenticator={authenticator}>
         {isLoading ? (
-          <div className="text-gray-500 px-2">Uploading, please wait...</div>
-        ) : fileName ? (
-          <div className="flex flex-row items-center">
-            <IKUpload
-              onError={onError}
-              onSuccess={(res) => {
-                setIsLoading(false);
-                onSuccess(res, setImage, setFileName);
-              }}
-              useUniqueFileName={true}
-              onUploadStart={() => {
-                setIsLoading(true);
-                onUploadStart();
-              }}
-              onUploadProgress={(progress) => onUploadProgress(progress, setImage)}
-            />
-            <span className="text-green-600">Uploaded: {fileName}</span>
-          </div>
+          <div className="text-gray-500 px-2 flex flex-row">Uploading, please wait...</div>
         ) : (
-          <IKUpload
-            onError={onError}
-            onSuccess={(res) => {
-              setIsLoading(false);
-              onSuccess(res, setImage, setFileName);
-            }}
-            useUniqueFileName={true}
-            onUploadStart={() => {
-              setIsLoading(true);
-              onUploadStart();
-            }}
-            onUploadProgress={(progress) => onUploadProgress(progress, setImage)}
-          />
+          <div className="flex flex-row items-center">
+            <label className="cursor-pointer flex items-center justify-center w-10 h-10 bg-gray-200 rounded-full hover:bg-gray-300">
+              <PiPaperclipHorizontal className="w-6 h-6 rotate-90" />
+              <IKUpload
+                className="hidden"
+                onError={onError}
+                onSuccess={onSuccess}
+                useUniqueFileName={true}
+                onUploadStart={() => {
+                  setIsLoading(true);
+                }}
+                onUploadProgress={onUploadProgress}
+              />
+            </label>
+          </div>
         )}
       </IKContext>
+
+      {error && (
+        <div className="mt-2 text-red-600 bg-red-100 p-2 rounded">
+          {error}
+        </div>
+      )}
     </div>
   );
 }
