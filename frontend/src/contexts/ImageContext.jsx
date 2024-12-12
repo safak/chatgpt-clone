@@ -11,7 +11,7 @@ export const useImage = () => {
 
 // Image provider component
 export const ImageProvider = ({ children }) => {
-  const [image, setImage] = useState({ isLoading: false, dbData: null });
+  const [image, setImage] = useState({ isLoading: false, dbData: null, aiData: null });
   const [fileName, setFileName] = useState(""); // Store the file name
   const [messageSent, setMessageSent] = useState(false); // Flag to track message sent after image upload
 

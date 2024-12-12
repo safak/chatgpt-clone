@@ -19,18 +19,5 @@ const safetySettings = [
 // Set up the generative model with the defined safety settings
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash", safetySettings: safetySettings });
 
+// Export the model
 export default model;
-
-// Function to generate content asynchronously with error handling
-const generateContent = async (prompt) => {
-    try {
-        const result = await model.generateContent(prompt);
-        console.log(result.response.text()); // Assuming `text()` is the method to extract the text
-    } catch (error) {
-        console.error("Error generating content:", error);
-    }
-};
-
-// Example usage:
-const prompt = "Explain how AI works";
-// generateContent(prompt);
