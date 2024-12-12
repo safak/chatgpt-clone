@@ -89,7 +89,7 @@ function Dashboard() {
           ? [image.aiData, inputText] // Include aiData if available
           : [inputText];             // Only inputText if aiData is not available
   
-        console.log("Payload for AI API:", payload);
+        // console.log("Payload for AI API:", payload);
   
         const aiResponse = await generateContentWithRetry(payload);
   
