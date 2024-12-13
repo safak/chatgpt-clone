@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Import Link here
 import { useSidebar } from '../../contexts/SidebarContext';
-import { LuHome, LuPlus, LuPanelLeftOpen, LuPanelRightOpen } from "react-icons/lu";
+import {  LuPlus, LuPanelLeftOpen, LuPanelRightOpen } from "react-icons/lu";
+import { BiHomeAlt } from "react-icons/bi";
+
 import { TfiReload } from "react-icons/tfi";
 import { PiTreeStructureLight } from "react-icons/pi";
 import { CiSettings } from "react-icons/ci";
@@ -30,7 +32,7 @@ function ChatList() {
             <LuPlus />
           </Link>
           <Link to="/" className="flex items-center justify-center p-2 rounded-md hover:bg-gray-200 hover:text-black">
-            <LuHome />
+            <BiHomeAlt />
           </Link>
           <Link to="/reload" className="flex items-center justify-center p-2 rounded-md hover:bg-gray-200 hover:text-black">
             <TfiReload />

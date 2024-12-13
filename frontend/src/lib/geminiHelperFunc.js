@@ -1,3 +1,5 @@
+import React from "react";
+import { useImage } from "../contexts/ImageContext.jsx";
 import model from "./gemini.js";
 
 
@@ -37,21 +39,13 @@ export const generateContentWithRetry = async (prompt, imageUrl = null, retries 
 
 
 export const startChatWithMessage = async (message, imageUrl = null, history = []) => {
-  
-  // Format history to ensure consistency with the model's expected input format
-  const formattedHistory = history.map((msg) => ({
-    role: msg.role === "ai" ? "model" : msg.role,
-    parts: [{ text: msg.text }],
-  }));
-
-  // Initialize the chat with the provided history, or start a new conversation if no history is provided
   const chat = model.startChat({
-    history: formattedHistory.length > 0 ? formattedHistory : [
+    history: history.length > 0 ? history : [
       { role: "user", parts: [{ text: "Hello" }] },
       { role: "model", parts: [{ text: "Great to meet you. What would you like to know?" }] },
     ],
   });
-
+  
   console.log("Chat Initialized:", chat);
 
   try {
@@ -59,10 +53,10 @@ export const startChatWithMessage = async (message, imageUrl = null, history = [
 
     // Send both text and image if image URL is provided
       result = await chat.sendMessageStream(message);
-    
+      
 
-    // Accumulate the streamed response
-    let responseText = "";
+      // Accumulate the streamed response
+      let responseText = "";
     for await (const chunk of result.stream) {
       const chunkText = chunk.text();
       responseText += chunkText;
@@ -72,14 +66,18 @@ export const startChatWithMessage = async (message, imageUrl = null, history = [
     history.push({ role: "user", text: message });
     history.push({ role: "ai", text: responseText });
 
+
     return responseText;
   } catch (error) {
     console.error("Error during chat session:", error);
-
+    
     if (error.message.includes('blocked due to SAFETY')) {
       throw new Error("Your message was flagged as unsafe. Please modify the input and try again.");
     }
-
+    
     throw new Error("An unexpected error occurred during the chat session.");
   }
+  
 };
+
+
