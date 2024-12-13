@@ -1,4 +1,6 @@
-// ImageContext.js
+
+
+
 import React, { createContext, useContext, useState } from 'react';
 
 // Create Image Context
@@ -14,6 +16,7 @@ export const ImageProvider = ({ children }) => {
   const [image, setImage] = useState({ isLoading: false, dbData: null, aiData: null });
   const [fileName, setFileName] = useState(""); // Store the file name
   const [messageSent, setMessageSent] = useState(false); // Flag to track message sent after image upload
+  const [messages, setMessages] = useState([]); // Store chat messages
 
   const updateImage = (newImage) => {
     setImage(newImage);
@@ -31,8 +34,29 @@ export const ImageProvider = ({ children }) => {
     setMessageSent(false); // Reset flag when needed (e.g., when a new image is uploaded)
   };
 
+  const addMessage = (newMessage) => {
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+  };
+
+  const clearMessages = () => {
+    setMessages([]); // Clear all messages
+  };
+
   return (
-    <ImageContext.Provider value={{ image, setImage: updateImage, fileName, setFileName: updateFileName, messageSent, markMessageAsSent, resetMessageStatus }}>
+    <ImageContext.Provider
+      value={{
+        image,
+        setImage: updateImage,
+        fileName,
+        setFileName: updateFileName,
+        messageSent,
+        markMessageAsSent,
+        resetMessageStatus,
+        messages,
+        addMessage,
+        clearMessages,
+      }}
+    >
       {children}
     </ImageContext.Provider>
   );
