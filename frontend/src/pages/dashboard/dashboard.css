@@ -1,0 +1,24 @@
+/* Custom scrollbar styles for the dashboard */
+
+/* Unique class name to avoid conflicts */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;  /* Custom width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f0f0f0;  /* Track color */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #6b7280;  /* Thumb color */
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;  /* Thumb hover color */
+}
+
+/* To ensure scrollbars appear if needed */
+.custom-scrollbar {
+  overflow: auto;  /* Ensure overflow behavior is active */
+}
