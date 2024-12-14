@@ -96,99 +96,54 @@ function Dashboard() {
 
   // const handleInputSubmit = async (e) => {
   //   if ((e.key === "Enter" || e.type === "click") && !isLoading) {
-  //     // Validate input (ensure text or image URL is provided)
+  //     // Validate input
   //     if (!inputText.trim() && !image.dbData?.url) {
   //       console.warn("Input is empty and no image is provided.");
   //       return;
   //     }
   
-  //     // Create a user message with optional image URL
+  //     // Create a user message
   //     const userMessage = {
   //       role: "user",
   //       text: inputText,
   //       image: image.dbData?.url, // Optional image URL
-  //       aiData: image.aiData,     // Optional AI-specific data
+  //       aiData: image.aiData,
   //     };
-  
-  //     // Add the user message to chat history
   //     addMessage(userMessage);
   
-  //     // Reset input and image state after sending the message
   //     setInputText("");
   //     setImage({ isLoading: false, dbData: null });
   //     setIsLoading(true);
   
   //     try {
-  //       // Format the history: map each message to the expected structure
+  //       // Format messages as history for API
   //       const formattedHistory = messages.map((msg) => ({
-  //         role: msg.role === "ai" ? "model" : msg.role,  // Convert role 'ai' to 'model' as per expected format
+  //         role: msg.role === "ai" ? "model" : msg.role,
   //         parts: [{ text: msg.text }],
   //       }));
   
-  //       // Add the user message to the history
-  //       const userPayload = {
-  //         role: "user",
-  //         parts: [{ text: inputText }],
-  //       };
-  //       formattedHistory.push(userPayload);
+  //       // Pass the history to the chat function
+  //       const aiResponse = await startChatWithMessage(inputText, image.aiData, formattedHistory);
   
-  //       // Prepare the payload
-  //       const payload = {
-  //         history: formattedHistory,
-  //         imageUrl: image.dbData?.url,
-  //         message: inputText,
-  //       };
-  
-  //       console.log("Sending Payload:", payload);
-  
-  //       // Call the chat API
-  //       let aiResponse;
-  //       if (image.aiData) {
-  //         console.log("Sending with AI data and image.");
-  //         aiResponse = await startChatWithMessage(payload);
-  //       } else {
-  //         console.log("Sending with just text.");
-  //         aiResponse = await startChatWithMessage(payload);
-  //       }
-  
-  //       // Add AI response to chat history
   //       const aiMessage = {
-  //         role: "model",  // Correct role for AI message
+  //         role: "model",
   //         text: aiResponse,
   //       };
   //       addMessage(aiMessage);
-  
   //     } catch (error) {
   //       console.error("Error during startChatWithMessage:", error);
   
-  //       try {
-  //         // Fallback to generateContentWithRetry if the primary API call fails
-  //         console.log("Falling back to generateContentWithRetry...");
-  //         const fallbackResponse = await generateContentWithRetry(payload);
-  
-  //         const fallbackMessage = {
-  //           role: "model", // Correct role for fallback message
-  //           text: fallbackResponse,
-  //         };
-  
-  //         addMessage(fallbackMessage);
-  //       } catch (fallbackError) {
-  //         console.error("Error during fallback to generateContentWithRetry:", fallbackError);
-  
-  //         const errorMessage = {
-  //           role: "model",  // Correct role for error message
-  //           text: "Sorry, something went wrong. Please try again later.",
-  //         };
-  
-  //         addMessage(errorMessage);
-  //       }
+  //       const errorMessage = {
+  //         role: "model",
+  //         text: "Sorry, something went wrong. Please try again later.",
+  //       };
+  //       addMessage(errorMessage);
   //     } finally {
-  //       setIsLoading(false); // Stop loading state
+  //       setIsLoading(false);
   //     }
   //   }
   // };
   
-
   
 
   const clearUploadedFile = () => {
