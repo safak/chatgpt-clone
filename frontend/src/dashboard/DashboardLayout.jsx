@@ -3,6 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import ChatList from "../components/chatlist/ChatList";
 import { useSidebar } from "../contexts/SidebarContext"; // Import the context
 import authService from '../AserverAuth/auth';
+import Header from './Header2';
 
 function DashboardLayout() {
   const [isAuthenticated, setIsAuthenticated] = useState(null); // Track authentication status
@@ -12,6 +13,7 @@ function DashboardLayout() {
 
   const handleLogout = () => {
     setIsUserLoggedOut(true); // Set the state to reflect that the user is logged out
+    navigate("/login")
   };
 
   useEffect(() => {
@@ -43,7 +45,7 @@ function DashboardLayout() {
       </aside>
 
       {/* Main Content Area */}
-      <main className={`flex-1 bg-white text-gray-200 ${isSidebarOpen ? 'ml-1/4' : 'ml-0'} lg:ml-1/4 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100`}>
+          <main className={`flex-1 bg-white text-gray-200 ${isSidebarOpen ? 'ml-1/4' : 'ml-0'} lg:ml-1/4 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100`}>
         <div>
           <Outlet /> {/* Render the child components */}
         </div>

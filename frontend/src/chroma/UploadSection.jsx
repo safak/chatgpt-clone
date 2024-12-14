@@ -1,43 +1,23 @@
-import React from 'react'
+import React from 'react';
+import Upload from '../components/upload/Upload';
 
 function UploadSection({ selectedFile, errorMessage, handleFileChange, handleUpload }) {
-    return (
-      <div className="p-6 border-t bg-white">
-        <h2 className="text-xl font-bold mb-4">Upload Your PDF</h2>
-        <p className="text-gray-600 mb-6">Select a PDF file to upload. Only .pdf files are allowed.</p>
-  
-        {/* File Input */}
-        <input
-          type="file"
-          accept="application/pdf" // Restrict file picker to PDFs
-          onChange={handleFileChange}
-          className="mb-4"
-        />
-  
-        {/* Error Message */}
-        {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
-  
-        {/* Selected File */}
-        {selectedFile && (
-          <p className="text-green-600 mb-4">
-            Selected File: {selectedFile.name}
-          </p>
-        )}
-  
-        {/* Upload Button */}
-        <button
-          onClick={handleUpload}
-          disabled={!selectedFile} // Disable button if no file is selected
-          className={`px-6 py-3 rounded-md text-white ${
-            selectedFile
-              ? "bg-blue-600 hover:bg-blue-700"
-              : "bg-gray-400 cursor-not-allowed"
-          }`}
-        >
-          Upload PDF
-        </button>
-      </div>
-    );
-  }
+  return (
+    <div className="flex justify-center items-center p-8 bg-gray-50">
+      <div className="bg-white rounded-lg shadow-lg p-8 max-w-lg w-full">
+        <h2 className="text-2xl font-bold mb-4 text-blue-600">Upload Your PDF</h2>
+        <div className="flex items-center justify-between mb-6">
+          <p className="text-gray-600">Select a PDF file to upload. Only .pdf files are allowed.</p>
 
-export default UploadSection
+          {/* Upload Component */}
+          <Upload onChange={handleFileChange} />
+        </div>
+
+        {/* Error Message */}
+        {errorMessage && <p className="text-red-500 mt-4">{errorMessage}</p>}
+      </div>
+    </div>
+  );
+}
+
+export default UploadSection;

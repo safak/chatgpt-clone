@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "../dashboard/Header";
+import Header from "../dashboard/Header2";
 import HistorySection from "./HistorySection";
 import UploadSection from "./UploadSection";
 

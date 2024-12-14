@@ -51,7 +51,7 @@ function Dashboard() {
   
         // Check if aiData exists and send the image with text if present
         if (image.aiData) {
-          console.log("Sending with AI data and image.");
+          // console.log("Sending with AI data and image.");
           aiResponse = await startChatWithMessage(payload);
         } else {
           // console.log("Sending with just text.");

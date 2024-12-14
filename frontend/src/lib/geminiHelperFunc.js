@@ -39,7 +39,7 @@ export const generateContentWithRetry = async (prompt, imageUrl = null, retries 
 
 
 export const startChatWithMessage = async (message, imageUrl = null, history = []) => {
-  console.log("the history is:||||||||||||||||||||||", history)
+  // console.log("the history is:||||||||||||||||||||||", history)
   const chat = model.startChat({
     history: history ? history : [
       { role: "user", parts: [{ text: "Hello" }] },
@@ -47,7 +47,7 @@ export const startChatWithMessage = async (message, imageUrl = null, history = [
     ],
   });
   
-  console.log("Chat Initialized:", chat);
+  // console.log("Chat Initialized:", chat);
 
   try {
     let result;
