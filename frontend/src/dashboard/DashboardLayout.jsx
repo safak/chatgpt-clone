@@ -5,9 +5,14 @@ import { useSidebar } from "../contexts/SidebarContext"; // Import the context
 import authService from '../AserverAuth/auth';
 
 function DashboardLayout() {
-  const [isAuthenticated, setIsAuthenticated] = useState(null); // To track authentication status
+  const [isAuthenticated, setIsAuthenticated] = useState(null); // Track authentication status
+  const [isUserLoggedOut, setIsUserLoggedOut] = useState(false); // Track logout status
   const navigate = useNavigate();
-  const { isSidebarOpen, toggleSidebar } = useSidebar(); // Access global state
+  const { isSidebarOpen } = useSidebar(); // Access global state
+
+  const handleLogout = () => {
+    setIsUserLoggedOut(true); // Set the state to reflect that the user is logged out
+  };
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -16,31 +21,31 @@ function DashboardLayout() {
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
-        navigate('/login'); // Redirect to the sign-in page if not authenticated
       }
     };
 
     checkAuthentication();
-  }, [navigate]);
+  }, []); // Only run once when the component mounts
+
+  useEffect(() => {
+    if (isUserLoggedOut) {
+      navigate('/login'); // Navigate to login page when logged out
+    }
+  }, [isUserLoggedOut, navigate]); // This effect only runs when the user logs out
 
   if (isAuthenticated === null) return <div className="text-black">Loading....</div>;
 
   return (
     <div className="flex h-screen">
       {/* Sidebar */}
-      <aside
-        className={`lg:w-1/8 bg-[#fff4f4] text-gray  transition-all duration-300`}
-      >
-        <ChatList />
+      <aside className="lg:w-1/8 bg-[#fff4f4] text-gray transition-all duration-300">
+        <ChatList onLogout={handleLogout} /> {/* Pass the handleLogout function as a prop */}
       </aside>
 
       {/* Main Content Area */}
-      <main
-        className={`flex-1 bg-white text-gray-200 ${isSidebarOpen ? 'ml-1/4' : 'ml-0'} lg:ml-1/4 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100`}
-      >
-        {/* Main Content - Rendering the child components */}
-        <div className="">
-          <Outlet /> {/* Renders the child routes/components */}
+      <main className={`flex-1 bg-white text-gray-200 ${isSidebarOpen ? 'ml-1/4' : 'ml-0'} lg:ml-1/4 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100`}>
+        <div>
+          <Outlet /> {/* Render the child components */}
         </div>
       </main>
     </div>
