@@ -2,53 +2,106 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-dark-neon {
+    background-color: #1a1a2e;
+    box-shadow: 0 0 15px #0f0f3e, inset 0 0 5px #0f0f3e;
+  }
+  
+  .neon-text {
+    color: #ffffff;
+    text-shadow: 0 0 3px #ffffff, 0 0 8px #ffffff, 0 0 15px #ffffff;
+  }
+  
+  .neon-button {
+    color: #ffffff;
+    background: linear-gradient(45deg, #ff0080, #ff6600);
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 0 10px #ff0080, 0 0 20px #ff6600;
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+  
+  .neon-button:hover {
+    box-shadow: 0 0 15px #ff0080, 0 0 30px #ff6600;
+    transform: scale(1.1);
+  }
+  
+  .shadow-neon {
+    box-shadow: 0 0 10px #ff0080, 0 0 15px #ff6600;
+  }
+  
+
+  
 /* In your global stylesheet (e.g., index.css) */
 
 @keyframes rotate {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(60deg);
-    }
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .animate-rotate {
-    animation: rotate 100s linear infinite;
+  100% {
+    transform: rotate(60deg);
   }
+}
+
+.animate-rotate {
+  animation: rotate 100s linear infinite;
+}
 
 
-  @keyframes botAnimation {
-    0% {
-      transform: rotate(0deg) scale(1);
-    }
-    100% {
-      transform: rotate(-5deg) scale(1.1);
-    }
+@keyframes botAnimation {
+  0% {
+    transform: rotate(0deg) scale(1);
   }
-  
-  .botImage {
-    animation: botAnimation 3s ease-in-out infinite alternate;
+  100% {
+    transform: rotate(-5deg) scale(1.1);
   }
+}
 
-  .custom-size {
-    width: 520px;  /* Custom width */
-    height: 520px; /* Custom height */
-  }
-  
-  /* In your CSS file */
+.botImage {
+  animation: botAnimation 3s ease-in-out infinite alternate;
+}
+
+.custom-size {
+  width: 520px;  /* Custom width */
+  height: 520px; /* Custom height */
+}
+
+/* In your CSS file */
 ::-webkit-scrollbar {
-  width: 4px;  /* Custom width */
+width: 4px;  /* Custom width */
 }
 
 ::-webkit-scrollbar-track {
-  background: #bebebe;  /* Track color */
+background: #f1f1f1;  /* Track color */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #818181;  /* Thumb color */
+background: #d4d4d4;  /* Thumb color */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #666666;  /* Thumb hover color */
+background: #b3b3b3;  /* Thumb hover color */
 }
+/* Styling the scrollbar */
+.overflow-auto::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+  background-color: #d4d4d4; /* Green color for the scrollbar thumb */
+  border-radius: 4px; /* Rounded corners for the thumb */
+}
+
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+  background-color: #b3b3b3; /* Darker green on hover */
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Light gray for the scrollbar track */
+  border-radius: 4px; /* Rounded corners for the track */
+}
+

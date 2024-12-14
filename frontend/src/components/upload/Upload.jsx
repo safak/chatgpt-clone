@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { IKContext, IKUpload } from "imagekitio-react";
-import { config } from "../../conf/config";
+import conf from "../../conf/conf";
 import { useImage } from "../../contexts/ImageContext"; // Import the useImage hook
 import { PiPaperclipHorizontal } from "react-icons/pi";
 import { FaS } from "react-icons/fa6";
 
-const urlEndpoint = config.VITE_IMAGE_KIT_ENDPOINT;
-const publicKey = config.VITE_IMAGE_KIT_PUBLIC_KEY;
+const urlEndpoint = conf.imageKitEndpoint;
+const publicKey = conf.imageKitPublicKey;
 
 const authenticator = async () => {
   try {
