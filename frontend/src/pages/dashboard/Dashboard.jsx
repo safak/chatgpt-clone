@@ -94,56 +94,6 @@ function Dashboard() {
   };
   
 
-  // const handleInputSubmit = async (e) => {
-  //   if ((e.key === "Enter" || e.type === "click") && !isLoading) {
-  //     // Validate input
-  //     if (!inputText.trim() && !image.dbData?.url) {
-  //       console.warn("Input is empty and no image is provided.");
-  //       return;
-  //     }
-  
-  //     // Create a user message
-  //     const userMessage = {
-  //       role: "user",
-  //       text: inputText,
-  //       image: image.dbData?.url, // Optional image URL
-  //       aiData: image.aiData,
-  //     };
-  //     addMessage(userMessage);
-  
-  //     setInputText("");
-  //     setImage({ isLoading: false, dbData: null });
-  //     setIsLoading(true);
-  
-  //     try {
-  //       // Format messages as history for API
-  //       const formattedHistory = messages.map((msg) => ({
-  //         role: msg.role === "ai" ? "model" : msg.role,
-  //         parts: [{ text: msg.text }],
-  //       }));
-  
-  //       // Pass the history to the chat function
-  //       const aiResponse = await startChatWithMessage(inputText, image.aiData, formattedHistory);
-  
-  //       const aiMessage = {
-  //         role: "model",
-  //         text: aiResponse,
-  //       };
-  //       addMessage(aiMessage);
-  //     } catch (error) {
-  //       console.error("Error during startChatWithMessage:", error);
-  
-  //       const errorMessage = {
-  //         role: "model",
-  //         text: "Sorry, something went wrong. Please try again later.",
-  //       };
-  //       addMessage(errorMessage);
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   }
-  // };
-  
   
 
   const clearUploadedFile = () => {

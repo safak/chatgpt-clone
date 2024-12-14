@@ -28,7 +28,7 @@ function ChatList() {
 
         {/* Icons Section */}
         <div className="flex flex-col items-center space-y-4 mt-4">
-          <Link to="/upload" className="flex items-center justify-center p-2 rounded-md hover:bg-gray-200 bg-white hover:text-black">
+          <Link to="dashboard/upload-pdf" className="flex items-center justify-center p-2 rounded-md hover:bg-gray-200 bg-white hover:text-black">
             <LuPlus />
           </Link>
           <Link to="/" className="flex items-center justify-center p-2 rounded-md hover:bg-gray-200 hover:text-black">
