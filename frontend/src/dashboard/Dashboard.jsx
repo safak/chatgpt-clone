@@ -98,6 +98,47 @@ function Dashboard() {
     }
   };
   
+//   const handleInputSubmit = async (e) => {
+//   if ((e.key === "Enter" || e.type === "click") && !isLoading) {
+//     if (!inputText.trim() && !image.dbData?.url) {
+//       console.warn("Input is empty and no image is provided.");
+//       return;
+//     }
+
+//     // Format the user message
+//     const userMessage = {
+//       role: "user",
+//       text: inputText,
+//       image: image.dbData?.url,
+//       aiData: image.aiData,
+//     };
+
+//     addMessage(userMessage);  // This should update the messages state
+//     setInputText("");
+//     setImage({ isLoading: false, dbData: null });
+//     setIsLoading(true);
+
+//     try {
+//       const payload = image.aiData
+//         ? [{ text: inputText }, image.aiData]
+//         : [{ text: inputText }];
+
+//       // Pass setMessages correctly to the helper function
+//       await startChatWithMessage(payload, messages, setMessages);
+//     } catch (error) {
+//       console.error("Error:", error);
+
+//       const errorMessage = {
+//         role: "model",
+//         text: "Sorry, something went wrong. Please try again later.",
+//       };
+//       addMessage(errorMessage);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   }
+// };
+
 
   
 
@@ -124,3 +165,5 @@ function Dashboard() {
 
 export default Dashboard;
  
+
+
