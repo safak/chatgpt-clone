@@ -6,11 +6,13 @@ import { FileData } from "../models/filedata.model.js";
 import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
 
+
 const addFileData = asyncHandler(async (req, res) => {
   try {
-    const { fileUrl } = req.body.data; // Extract fileUrl from the request body
+    
+    const { fileUrl, fileName } = req.body.data; // Extract fileUrl and fileName from the request body
     const userId = req.user?._id; // Extract the user ID from the authenticated user
-    console.log("Inside the addFileData function:", userId);
+    // console.log("Filename is :", fileName, fileUrl)
 
     // Validate required fields
     if (!fileUrl) {
@@ -27,9 +29,10 @@ const addFileData = asyncHandler(async (req, res) => {
       });
     }
 
-    // Create a new FileData document with only the fileUrl
+    // Create a new FileData document with fileUrl and fileName
     const fileData = new FileData({
       fileUrl,
+      fileName, // This can be optional; null or undefined is fine if not provided
     });
 
     // Save the FileData document
@@ -70,11 +73,14 @@ const addFileData = asyncHandler(async (req, res) => {
 });
 
 
+
+
+
 const getFileHistory = asyncHandler(async (req, res) => {
   try {
-    console.log("Retriving started")
+    // console.log("Retriving started")
     const userId = req.user._id; // Get user ID from the authenticated user
-    console.log("User retrived:", userId)
+    // console.log("User retrived:", userId)
     // Validate user ID
     if (!userId) {
       return res.status(401).json({

@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"; // Import useLocation from react-router-dom
+import { useLocation } from "react-router-dom";
 import Header from "../dashboard/Header2";
 import HistorySection from "./HistorySection";
 import UploadSection from "./UploadSection";
 import getUserData from "../AserverAuth/getUserData"; // Assuming getUserData is a class
+import { TfiReload } from "react-icons/tfi";
+
 
 function UploadPdf() {
-  const [uploadedFiles, setUploadedFiles] = useState([]); // State to hold history of uploaded files
-  const [selectedFile, setSelectedFile] = useState(null); // State to hold the current file
-  const [errorMessage, setErrorMessage] = useState(""); // State to hold validation error messages
-  const location = useLocation(); // Hook to track the current location (route)
+  const [uploadedFiles, setUploadedFiles] = useState([]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const location = useLocation();
 
   // Function to fetch file history
   const fetchFileHistory = async () => {
     try {
-      console.log("Inside the fetchHistory")
-      const response = await getUserData.getFileHistory(); // Call the class method
-      console.log("The response was from history:", response);
-      setUploadedFiles(response.data || []); // Set fetched file history
+      // console.log("Inside the fetchHistory");
+      const response = await getUserData.getFileHistory();
+      // console.log("The response was from history:", response);
+      setUploadedFiles(response.data || []);
     } catch (error) {
       console.error("Error fetching file history:", error.message);
     }
@@ -25,34 +27,29 @@ function UploadPdf() {
 
   // Call the fetch function when the location changes
   useEffect(() => {
-    fetchFileHistory(); // Trigger the fetch function when the route changes
-  }, [location]); // Run the effect whenever the location changes
+    fetchFileHistory();
+  }, []);
 
-  // Handle file input change
   const handleFileChange = (e) => {
-    const file = e.target.files[0]; // Get the first selected file
-
-    // Validate if the file is a PDF
+    const file = e.target.files[0];
     if (file && file.type === "application/pdf") {
-      setSelectedFile(file); // Save file for upload
-      setErrorMessage(""); // Clear error
+      setSelectedFile(file);
+      setErrorMessage("");
     } else {
-      setSelectedFile(null); // Reset file
-      setErrorMessage("Only PDF files are allowed."); // Set error message
+      setSelectedFile(null);
+      setErrorMessage("Only PDF files are allowed.");
     }
   };
 
-  // Handle the file upload
   const handleUpload = () => {
     if (selectedFile) {
-      // Mock uploading the file and adding to history
       const newUpload = {
         name: selectedFile.name,
         date: new Date().toLocaleString(),
       };
 
-      setUploadedFiles((prev) => [newUpload, ...prev]); // Add to history
-      setSelectedFile(null); // Reset selected file
+      setUploadedFiles((prev) => [newUpload, ...prev]);
+      setSelectedFile(null);
       alert("PDF uploaded successfully!");
     } else {
       alert("Please select a valid PDF file.");
@@ -61,21 +58,25 @@ function UploadPdf() {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* Reuse existing Header */}
       <Header inputText="" />
 
-      {/* Reload Button */}
-      <button
-        onClick={fetchFileHistory}
-        className="p-2 bg-blue-500 text-white rounded-full"
-      >
-        🔄 {/* Reload symbol */}
-      </button>
+      {/* Title and Reload Icon */}
+      <div className="flex items-center bg-gray-200 p-1  px-4 py-2">
+        <h2 className="text-lg text-black px-4 font-semibold">Upload History</h2>
+        <button
+          onClick={fetchFileHistory}
+          className="flex items-center justify-center text-black p-1 rounded-full hover:bg-white "
+          title="Reload History"
+        >
+          
+                       
+                      
+                      <TfiReload />
+        </button>
+      </div>
 
-      {/* History Section */}
       <HistorySection uploadedFiles={uploadedFiles} />
 
-      {/* Upload Section */}
       <UploadSection
         selectedFile={selectedFile}
         errorMessage={errorMessage}

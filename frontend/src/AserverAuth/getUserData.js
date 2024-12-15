@@ -16,7 +16,7 @@ class GetUserData {
             }
     
             // Axios POST request
-            console.log("Before sending history request to server")
+            // console.log("Before sending history request to server")
             const response = await axios.post(
                 `${this.apiUrl}/users/get-file-history`, // API endpoint
                 {},
@@ -28,7 +28,7 @@ class GetUserData {
                 }
             );
     
-            console.log("File history retrieved successfully:", response.data);
+            // console.log("File history retrieved successfully:", response.data);
             return response.data;
         } catch (error) {
             console.error('Error uploading chat history:', error.response?.data || error.message);

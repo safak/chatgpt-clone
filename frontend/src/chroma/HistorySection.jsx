@@ -2,11 +2,11 @@ import React from 'react';
 import { FaFilePdf } from 'react-icons/fa'; // Using React Icons for PDF icon
 
 function HistorySection({ uploadedFiles }) {
-  console.log("The file history is:", uploadedFiles);
+  // console.log("The file history is:", uploadedFiles);
 
   return (
     <div className="flex-1 overflow-y-auto p-6">
-      <h2 className="text-2xl font-bold mb-4">Upload History</h2>
+      {/* <h2 className="text-2xl font-bold mb-4">Upload History</h2> */}
       {uploadedFiles && uploadedFiles.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 overflow-y-auto">
           {uploadedFiles.map((file, index) => (
@@ -22,6 +22,9 @@ function HistorySection({ uploadedFiles }) {
                 </div>
               </div>
               <div className="mt-2">
+                <p className="text-gray-500 text-sm">
+                  Title: {file.fileName}
+                </p>
                 <p className="text-gray-500 text-sm">
                   Upload Time: {new Date(file.createdAt).toLocaleString()}
                 </p>

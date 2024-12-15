@@ -6,6 +6,10 @@ const fileDataSchema = new Schema(
       type: String,
       required: true, // The file URL is mandatory
     },
+    fileName: {
+      type: String,
+      required: false, // The file URL is mandatory
+    },
   },
   { timestamps: true }
 );

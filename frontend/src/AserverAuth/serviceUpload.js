@@ -47,7 +47,7 @@ async addFileData(data){
         // Axios POST request
         const response = await axios.post(
             `${this.apiUrl}/users/add-file-data`, // API endpoint
-            { data }, // Send the history in the request body
+            {data}, // Send the history in the request body
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`, // Attach the access token
