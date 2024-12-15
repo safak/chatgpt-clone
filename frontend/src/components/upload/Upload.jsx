@@ -43,100 +43,104 @@ function Upload() {
   };
 
 
-  
-  const onSuccess = (res) => {
-  
+  const onSuccess = async (res) => {
     if (!res.url) {
       setError("File URL is missing from the response.");
       return;
     }
   
-    fetch(res.url)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to fetch file: ${response.statusText}`);
-        }
-        return response.blob();
-      })
-      .then((fileBlob) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setImage((prev) => ({
-            ...prev,
-            isLoading: false,
-            aiData: {
-              inlineData: {
-                data: reader.result.split(",")[1], // Base64 string
-                mimeType: fileBlob.type,
-              },
-            },
-            dbData: res,
-          }));
-        };
-        reader.readAsDataURL(fileBlob);
-        
-      })
-      .catch((error) => {
-        console.error("Error fetching or reading file:", error);
-        setError(`Failed to fetch or read file: ${error.message}`);
-      });
+    try {
+      // Prepare the data for the server (just the file URL)
+      const uploadData = {
+        fileUrl: res.url, // File URL from the response
+      };
   
-    setFileName(res.name);
-    setIsLoading(false);
+      // Send the file URL to the server
+      const serverResponse = await uploadService.addFileData(uploadData);
+      console.log("File uploaded successfully to the server:", serverResponse?.data?._id);
+  
+      const idForFile = serverResponse?.data?._id;
+  
+      // Update state with the uploaded data
+      setImage((prev) => ({
+        ...prev,
+        isLoading: false,
+        aiData: {}, // You can keep this empty since no inline data is needed
+        dbData: res, // Store server response data (including file URL)
+        currentFileId: idForFile,
+      }));
+  
+      setFileName(res.name);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error uploading file to the server:", error);
+      setError(`Failed to upload file: ${error.message}`);
+    }
   };
   
+ 
+
+  // const  onSuccess = (res) => {
+  //   if (!res.url) {
+  //     setError("File URL is missing from the response.");
+  //     return;
+  //   }
   
-//   const onSuccess = (res) => {
-//   if (!res.url) {
-//     setError("File URL is missing from the response.");
-//     return;
-//   }
-
-//   fetch(res.url)
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error(`Failed to fetch file: ${response.statusText}`);
-//       }
-//       return response.blob();
-//     })
-//     .then((fileBlob) => {
-//       const reader = new FileReader();
-//       reader.onloadend = async () => {
-//         const base64Data = reader.result.split(",")[1]; // Base64 string
-
-//         // Prepare the aiData object
-//         const aiData = {
-//           inlineData: {
-//             data: base64Data,
-//             mimeType: fileBlob.type,
-//           },
-//           url: res.url, // Include the URL from the response
-//         };
-
-//         // Update the image state
-//         setImage((prev) => ({
-//           ...prev,
-//           isLoading: false,
-//           aiData: aiData,
-//           dbData: res,
-//         }));
-
-//         // Send aiData to backend
-//         try {
-//           const fileDataResponse = await uploadService.addFileData(aiData); // Send to the server
-//           console.log("File data uploaded successfully:", fileDataResponse);
-//         } catch (error) {
-//           console.error("Error uploading file data:", error);
-//           setError("Error uploading file data to the server.");
-//         }
-//       };
-//       reader.readAsDataURL(fileBlob);
-//     })
-//     .catch((error) => {
-//       console.error("Error fetching file:", error);
-//       setError("Error fetching file.");
-//     });
-// };
+  //   fetch(res.url)
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error(`Failed to fetch file: ${response.statusText}`);
+  //       }
+  //       return response.blob();
+  //     })
+  //     .then((fileBlob) => {
+  //       const reader = new FileReader();
+  //       reader.onloadend = async () => {
+  //         try {
+  //           const inlineData = {
+  //             data: reader.result.split(",")[1], // Base64 string
+  //             mimeType: fileBlob.type,
+  //           };
+  
+  //           // Prepare the data for the server
+  //           const uploadData = {
+  //             fileUrl: res.url, // File URL
+  //             inlineData,
+  //           };
+  
+  //           // Send data to the server
+  //           const serverResponse = await uploadService.addFileData(uploadData);
+  //           console.log("File uploaded successfully to the server:", serverResponse?.data?._id);
+  //           const idForFile = serverResponse?.data?._id
+  
+  //           // Update state with the uploaded data
+  //           setImage((prev) => ({
+  //             ...prev,
+  //             isLoading: false,
+  //             aiData: { inlineData},
+  //             dbData: res, // Server response data
+  //             currentFileId: idForFile
+  //           }));
+  //           setFileName(res.name);
+  //           setIsLoading(false);
+  //         } catch (error) {
+  //           console.error("Error uploading file to the server:", error);
+  //           setError(`Failed to upload file: ${error.message}`);
+  //         }
+  //       };
+  
+  //       reader.readAsDataURL(fileBlob); // Read the file as a Base64 string
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching or reading file:", error);
+  //       setError(`Failed to fetch or read file: ${error.message}`);
+  //     });
+  
+  //   // setFileName(res.name);
+  //   // setIsLoading(false);
+  // };
+  
+  
 
 
   return (

@@ -13,7 +13,7 @@ const ChatInput = ({ inputText, setInputText, handleInputSubmit, inputRef }) => 
 
   const handleImageUpload = (image) => {
     setUploadedImage(image);
-    resetMessageStatus(); // Reset the messageSent flag when a new image is uploaded
+    // resetMessageStatus(); // Reset the messageSent flag when a new image is uploaded
   };
 
   const handleSendMessage = (e) => {
@@ -21,8 +21,8 @@ const ChatInput = ({ inputText, setInputText, handleInputSubmit, inputRef }) => 
       if (inputText.trim() || uploadedImage) {
         handleInputSubmit(e);
         setInputText(""); // Clear input text
-        setUploadedImage(null); // Clear uploaded image
-        markMessageAsSent(); // Mark that a message was sent
+        // setUploadedImage(null); // Clear uploaded image
+        // markMessageAsSent(); // Mark that a message was sent
       }
     }
   };

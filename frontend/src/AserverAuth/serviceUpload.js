@@ -8,7 +8,6 @@ class UploadService {
 
 async addChatHistory(history) {
     try {
-        console.log("Inside the addChatHistory:", history);
         const accessToken = localStorage.getItem('accessToken');
         if (!accessToken) {
             console.error('No access token found in localStorage');
@@ -27,7 +26,7 @@ async addChatHistory(history) {
             }
         );
 
-        console.log("Chat history uploaded successfully:", response.data);
+        // console.log("Chat history uploaded successfully:", response.data);
         return response.data;
     } catch (error) {
         console.error('Error uploading chat history:', error.response?.data || error.message);
@@ -38,7 +37,7 @@ async addChatHistory(history) {
 
 async addFileData(data){
     try {
-        console.log("Inside the addChatHistory:", data);
+        
         const accessToken = localStorage.getItem('accessToken');
         if (!accessToken) {
             console.error('No access token found in localStorage');
@@ -57,7 +56,6 @@ async addFileData(data){
             }
         );
 
-        console.log("Chat history uploaded successfully:", response.data);
         return response.data;
     } catch (error) {
         console.error('Error uploading chat history:', error.response?.data || error.message);
