@@ -81,10 +81,10 @@ const userSchema = new Schema(
     coverImage: {
       type: String,
     },
-    watchHistory: [
+    fileData: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Video",
+        ref: "FileData",
       },
     ],
     password: {

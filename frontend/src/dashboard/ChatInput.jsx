@@ -55,9 +55,9 @@ const ChatInput = ({ inputText, setInputText, handleInputSubmit, inputRef }) => 
           />
         
         <div className="flex items-center justify-between text-black">
-          {/* <div className="relative flex items-center pl-4">
+          <div className="relative flex items-center pl-4">
             <Upload onUpload={(file) => handleImageUpload(file)} />
-          </div> */}
+          </div>
           <div className="flex items-center space-x-3">
             <div className="text-gray-500 text-sm">{`${inputText.length}/2000`}</div>
             <button

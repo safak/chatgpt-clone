@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { registerUser, loginWithTempToken, loginUser, logoutUser, refreshAccessToken, changeCurrentPassword, getCurrentUser, updateAccountDetails, updateUserAvatar, updateUserCoverImage, uploadFile } from "../controllers/user.controller.js";
+import { registerUser, loginWithTempToken, loginUser, logoutUser,  refreshAccessToken, changeCurrentPassword, getCurrentUser, updateAccountDetails, 
+    updateUserAvatar, updateUserCoverImage, uploadFile } from "../controllers/user.controller.js";
+import { addFileData } from "../controllers/userFileData.controller.js";
+import { insertChat } from "../controllers/userChat.controller.js";
 import { upload } from "../middlewares/multer.middleware.js"; // Your multer setup
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -16,7 +19,9 @@ router.route("/update-account").patch(verifyJWT, updateAccountDetails);
 router.route("/avatar").patch(verifyJWT, upload.single("avatar"), updateUserAvatar);
 router.route("/cover-image").patch(verifyJWT, upload.single("coverImage"), updateUserCoverImage);
 
-// New route for file upload
+// New route for file upload and saving the uplaoded url of file and the specific encoded data
+router.route("/add-file-data").post(verifyJWT, addFileData);
+router.route("/insert-chat").post(verifyJWT, insertChat);
 router.route("/upload-file").post(verifyJWT, upload.single("file"), uploadFile);
 
 export default router;

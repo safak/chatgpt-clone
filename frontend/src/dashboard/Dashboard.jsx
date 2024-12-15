@@ -1,146 +1,168 @@
+// // Dashboard.js
+// import React, { useState, useRef } from "react";
+// import { useImage } from "../contexts/ImageContext";
+// import { useLoading } from "../contexts/LoadingContext";
+// import Header from "./Header2";
+// import ChatBody from "./ChatBody";
+// import ChatInput from "./ChatInput";
+// import { handleInputSubmitLogic } from "../utils/chatHandler";
 
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { logout } from "../store/authSlice"; // Assuming you have a logout action
-import authService from "../AserverAuth/auth";
-import Settings from "../pages/Settings";
-import React, { useState, useRef } from "react";
+// function Dashboard() {
+//   const [inputText, setInputText] = useState("");
+//   const inputRef = useRef(null);
+//   const { image, setImage, messages, addMessage } = useImage();
+//   const { isLoading, setIsLoading } = useLoading();
+
+//   const handleInputSubmit = (e) => {
+//     handleInputSubmitLogic({
+//       e,
+//       inputText,
+//       setInputText,
+//       image,
+//       setImage,
+//       addMessage,
+//       messages, // Pass the messages array
+//       isLoading,
+//       setIsLoading,
+//     });
+//   };
+
+//   const clearUploadedFile = () => {
+//     setImage({ isLoading: false, dbData: null });
+//   };
+
+//   return (
+//     <div className="flex flex-col h-screen">
+//       <Header inputText={inputText} />
+//       <div className="flex-1 overflow-y-hidden">
+//         <ChatBody messages={messages} isLoading={isLoading} />
+//       </div>
+//       <ChatInput
+//         inputText={inputText}
+//         setInputText={setInputText}
+//         handleInputSubmit={handleInputSubmit}
+//         inputRef={inputRef}
+//         clearUploadedFile={clearUploadedFile}
+//       />
+//     </div>
+//   );
+// }
+
+// export default Dashboard;
+
+
+
+
+
+
+
+// import React, { useState, useRef, useEffect } from "react";
+// import { useImage } from "../contexts/ImageContext";
+// import { useLoading } from "../contexts/LoadingContext";
+// import Header from "./Header2";
+// import ChatBody from "./ChatBody";
+// import ChatInput from "./ChatInput";
+// import { handleInputSubmitLogic } from "../utils/chatHandler";
+// import { v4 as uuidv4 } from "uuid";  // Import uuidv4 for unique chat ID generation
+
+// function Dashboard() {
+//   const [inputText, setInputText] = useState("");
+//   const inputRef = useRef(null);
+//   const { image, setImage, messages, addMessage } = useImage();
+//   const { isLoading, setIsLoading } = useLoading();
+//   const [chatId, setChatId] = useState(null);  // State to store the chat ID
+
+//   // Generate a unique chat ID when the dashboard is loaded
+//   useEffect(() => {
+//     setChatId(uuidv4()); // Generate and set a unique ID for the chat
+//   }, []);
+
+//   const handleInputSubmit = (e) => {
+//     handleInputSubmitLogic({
+//       e,
+//       inputText,
+//       setInputText,
+//       image,
+//       setImage,
+//       addMessage,
+//       messages, // Pass the messages array
+//       isLoading,
+//       setIsLoading,
+//       associatedChat: chatId, // Pass the generated chat ID
+//     });
+//   };
+
+//   const clearUploadedFile = () => {
+//     setImage({ isLoading: false, dbData: null });
+//   };
+
+//   return (
+//     <div className="flex flex-col h-screen">
+//       <Header inputText={inputText} />
+//       <div className="flex-1 overflow-y-hidden">
+//         <ChatBody messages={messages} isLoading={isLoading} />
+//       </div>
+//       <ChatInput
+//         inputText={inputText}
+//         setInputText={setInputText}
+//         handleInputSubmit={handleInputSubmit}
+//         inputRef={inputRef}
+//         clearUploadedFile={clearUploadedFile}
+//       />
+//     </div>
+//   );
+// }
+
+// export default Dashboard;
+
+
+import React, { useState, useRef, useEffect } from "react";
+import { useImage } from "../contexts/ImageContext";
+import { useLoading } from "../contexts/LoadingContext";
 import Header from "./Header2";
 import ChatBody from "./ChatBody";
 import ChatInput from "./ChatInput";
-import { useImage } from "../contexts/ImageContext";
-import { useLoading } from "../contexts/LoadingContext";
-import { startChatWithMessage, generateContentWithRetry } from "../lib/geminiHelperFunc";
+import { handleInputSubmitLogic } from "../utils/chatHandler";
+import { v4 as uuidv4 } from "uuid";  // Import uuidv4 for unique chat ID generation
 
 function Dashboard() {
   const [inputText, setInputText] = useState("");
   const inputRef = useRef(null);
-  const { image, setImage, messages,setMessages,  addMessage } = useImage();
+  const { image, setImage, messages, addMessage } = useImage();
   const { isLoading, setIsLoading } = useLoading();
+  const [chatId, setChatId] = useState(null);  // State to store the chat ID
 
+  // Generate a unique chat ID when the dashboard is loaded
+  useEffect(() => {
+    setChatId(uuidv4()); // Generate and set a unique ID for the chat
+  }, []);
 
-  const handleInputSubmit = async (e) => {
-    if ((e.key === "Enter" || e.type === "click") && !isLoading) {
-      // Validate input (ensure text or image URL is provided)
-      if (!inputText.trim() && !image.dbData?.url) {
-        console.warn("Input is empty and no image is provided.");
-        return;
-      }
-  
-      // Create a user message with optional image URL
-      const userMessage = {
-        role: "user",
-        text: inputText,
-        image: image.dbData?.url, // Optional image URL
-        aiData: image.aiData,     // Optional AI-specific data
-      };
-  
-      // Add the user message to chat history
-      addMessage(userMessage);
-  
-      // Reset input and image state after sending the message
-      setInputText("");
+  // Manage loading state after a response is received
+  useEffect(() => {
+    if (!isLoading) {
+      // Reset the input text and image once loading is done
+      setInputText('');
       setImage({ isLoading: false, dbData: null });
-      setIsLoading(true);
-  
-      try {
-        let aiResponse;
-        const payload = image.aiData
-          ? [image.aiData, inputText] // Include aiData if available
-          : [inputText];    
-  
-        // Check if aiData exists and send the image with text if present
-        if (image.aiData) {
-          // console.log("Sending with AI data and image.");
-          aiResponse = await startChatWithMessage(payload);
-        } else {
-          // console.log("Sending with just text.");
-          aiResponse = await startChatWithMessage(payload);
-        }
-  
-        // Add AI response to chat history
-        const aiMessage = {
-          role: "model",  // Correct role for AI message
-          text: aiResponse,
-        };
-        addMessage(aiMessage);
-  
-      } catch (error) {
-        console.error("Error during startChatWithMessage:", error);
-  
-        try {
-          // Fallback to generateContentWithRetry if the primary API call fails
-          console.log("Falling back to generateContentWithRetry...");
-          const payload = image.aiData
-          ? [image.aiData, inputText] // Include aiData if available
-          : [inputText];  
-          const fallbackResponse = await generateContentWithRetry(payload);
-  
-          const fallbackMessage = {
-            role: "model", // Correct role for fallback message
-            text: fallbackResponse,
-          };
-  
-          addMessage(fallbackMessage);
-        } catch (fallbackError) {
-          console.error("Error during fallback to generateContentWithRetry:", fallbackError);
-  
-          const errorMessage = {
-            role: "model",  // Correct role for error message
-            text: "Sorry, something went wrong. Please try again later.",
-          };
-  
-          addMessage(errorMessage);
-        }
-      } finally {
-        setIsLoading(false); // Stop loading state
-      }
     }
+  }, [isLoading]);
+
+  const handleInputSubmit = (e) => {
+    // Prevent submitting if already loading
+    if (isLoading) return;
+
+    handleInputSubmitLogic({
+      e,
+      inputText,
+      setInputText,
+      image,
+      setImage,
+      addMessage,
+      messages, // Pass the messages array
+      isLoading,
+      setIsLoading,
+      associatedChat: chatId, // Pass the generated chat ID
+    });
   };
-  
-//   const handleInputSubmit = async (e) => {
-//   if ((e.key === "Enter" || e.type === "click") && !isLoading) {
-//     if (!inputText.trim() && !image.dbData?.url) {
-//       console.warn("Input is empty and no image is provided.");
-//       return;
-//     }
-
-//     // Format the user message
-//     const userMessage = {
-//       role: "user",
-//       text: inputText,
-//       image: image.dbData?.url,
-//       aiData: image.aiData,
-//     };
-
-//     addMessage(userMessage);  // This should update the messages state
-//     setInputText("");
-//     setImage({ isLoading: false, dbData: null });
-//     setIsLoading(true);
-
-//     try {
-//       const payload = image.aiData
-//         ? [{ text: inputText }, image.aiData]
-//         : [{ text: inputText }];
-
-//       // Pass setMessages correctly to the helper function
-//       await startChatWithMessage(payload, messages, setMessages);
-//     } catch (error) {
-//       console.error("Error:", error);
-
-//       const errorMessage = {
-//         role: "model",
-//         text: "Sorry, something went wrong. Please try again later.",
-//       };
-//       addMessage(errorMessage);
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   }
-// };
-
-
-  
 
   const clearUploadedFile = () => {
     setImage({ isLoading: false, dbData: null });
@@ -164,6 +186,3 @@ function Dashboard() {
 }
 
 export default Dashboard;
- 
-
-

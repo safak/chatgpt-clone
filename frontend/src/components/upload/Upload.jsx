@@ -4,8 +4,7 @@ import conf from "../../conf/conf";
 import { useImage } from "../../contexts/ImageContext"; // Import the useImage hook
 import { PiPaperclipHorizontal } from "react-icons/pi";
 import { FaFileUpload } from "react-icons/fa";
-
-import { FaS } from "react-icons/fa6";
+import uploadService from "../../AserverAuth/serviceUpload";
 
 const urlEndpoint = conf.imageKitEndpoint;
 const publicKey = conf.imageKitPublicKey;
@@ -46,7 +45,6 @@ function Upload() {
 
   
   const onSuccess = (res) => {
-    console.log("Upload success response:", res);
   
     if (!res.url) {
       setError("File URL is missing from the response.");
@@ -76,6 +74,7 @@ function Upload() {
           }));
         };
         reader.readAsDataURL(fileBlob);
+        
       })
       .catch((error) => {
         console.error("Error fetching or reading file:", error);
@@ -87,6 +86,58 @@ function Upload() {
   };
   
   
+//   const onSuccess = (res) => {
+//   if (!res.url) {
+//     setError("File URL is missing from the response.");
+//     return;
+//   }
+
+//   fetch(res.url)
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw new Error(`Failed to fetch file: ${response.statusText}`);
+//       }
+//       return response.blob();
+//     })
+//     .then((fileBlob) => {
+//       const reader = new FileReader();
+//       reader.onloadend = async () => {
+//         const base64Data = reader.result.split(",")[1]; // Base64 string
+
+//         // Prepare the aiData object
+//         const aiData = {
+//           inlineData: {
+//             data: base64Data,
+//             mimeType: fileBlob.type,
+//           },
+//           url: res.url, // Include the URL from the response
+//         };
+
+//         // Update the image state
+//         setImage((prev) => ({
+//           ...prev,
+//           isLoading: false,
+//           aiData: aiData,
+//           dbData: res,
+//         }));
+
+//         // Send aiData to backend
+//         try {
+//           const fileDataResponse = await uploadService.addFileData(aiData); // Send to the server
+//           console.log("File data uploaded successfully:", fileDataResponse);
+//         } catch (error) {
+//           console.error("Error uploading file data:", error);
+//           setError("Error uploading file data to the server.");
+//         }
+//       };
+//       reader.readAsDataURL(fileBlob);
+//     })
+//     .catch((error) => {
+//       console.error("Error fetching file:", error);
+//       setError("Error fetching file.");
+//     });
+// };
+
 
   return (
     <div>
