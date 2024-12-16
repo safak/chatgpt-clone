@@ -12,6 +12,18 @@ function UploadPdf() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
   const location = useLocation();
+  const [isRotating, setIsRotating] = useState(false);
+
+  const handleReloadClick = () => {
+    // Trigger the rotation
+    setIsRotating(true);
+
+    // Call fetchFileHistory function after animation
+    fetchFileHistory();
+
+    // Reset the rotation state after the animation ends (1 second in this case)
+    setTimeout(() => setIsRotating(false), 1000);
+  };
 
   // Function to fetch file history
   const fetchFileHistory = async () => {
@@ -57,33 +69,36 @@ function UploadPdf() {
   };
 
   return (
+
+
     <div className="flex flex-col h-screen">
-      <Header inputText="" />
+    <Header inputText="" />
 
-      {/* Title and Reload Icon */}
-      <div className="flex items-center bg-gray-200 p-1  px-4 py-2">
-        <h2 className="text-lg text-black px-4 font-semibold">Upload History</h2>
-        <button
-          onClick={fetchFileHistory}
-          className="flex items-center justify-center text-black p-1 rounded-full hover:bg-white "
-          title="Reload History"
-        >
-          
-                       
-                      
-                      <TfiReload />
-        </button>
-      </div>
-
-      <HistorySection uploadedFiles={uploadedFiles} />
-
-      <UploadSection
-        selectedFile={selectedFile}
-        errorMessage={errorMessage}
-        handleFileChange={handleFileChange}
-        handleUpload={handleUpload}
-      />
+    {/* Title and Reload Icon */}
+    <div className="flex items-center bg-gray-200 p-1 px-4 py-2">
+      <h2 className="text-lg text-black px-4 font-semibold">Upload History</h2>
+      <button
+        onClick={handleReloadClick}
+        className={`flex items-center justify-center text-black p-1 rounded-full hover:bg-white ${
+          isRotating ? "rotate-animation" : ""
+        }`}
+        title="Reload History"
+      >
+        <TfiReload />
+      </button>
     </div>
+
+    <HistorySection uploadedFiles={uploadedFiles} />
+
+    <UploadSection
+      selectedFile={selectedFile}
+      errorMessage={errorMessage}
+      handleFileChange={handleFileChange}
+      handleUpload={handleUpload}
+    />
+  </div>
+
+
   );
 }
 

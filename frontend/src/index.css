@@ -104,4 +104,16 @@ background: #b3b3b3;  /* Thumb hover color */
   background-color: #f1f1f1; /* Light gray for the scrollbar track */
   border-radius: 4px; /* Rounded corners for the track */
 }
+.rotate-animation {
+  animation: rotate360 1s ease-in-out;
+}
+
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 

@@ -36,6 +36,51 @@ class GetUserData {
         }
         
     }
+    
+    
+    
+    
+    async vectorData(fileId) {
+        try {
+          // Validate fileId before making the request
+          if (!fileId || typeof fileId !== "string") {
+            console.error("Invalid or missing 'fileId'.");
+            return null;
+          }
+      
+          const accessToken = localStorage.getItem("accessToken");
+          if (!accessToken) {
+            console.error("No access token found in localStorage");
+            return null;
+          }
+      
+          // Make the Axios POST request
+          const response = await axios.post(
+            `${this.apiUrl}/users/get-vector`, // Ensure the API endpoint matches
+            { fileId },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`, // Attach the access token
+              },
+              withCredentials: false, // Cookies not required
+            }
+          );
+      
+          // Log and return the vector data
+          console.log("Vector Data Received:", response.data);
+          return response.data;
+        } catch (error) {
+          // Improved error handling for better debugging
+          console.error(
+            "Error retrieving vector data:",
+            error.response?.data || error.message
+          );
+      
+          // Propagate a descriptive error message
+          throw new Error(error.response?.data?.message || "Failed to retrieve vector data.");
+        }
+      }
+      
 
 }
 

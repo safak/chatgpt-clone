@@ -25,7 +25,7 @@ function Dashboard() {
     if (!isLoading) {
       // Reset the input text and image once loading is done
       setInputText('');
-      setImage({ isLoading: false, dbData: null });
+      // setImage({ isLoading: false, dbData: null });
     }
   }, [isLoading]);
 
@@ -48,7 +48,7 @@ function Dashboard() {
   };
 
   const clearUploadedFile = () => {
-    setImage({ isLoading: false, dbData: null });
+    // setImage({ isLoading: false, dbData: null });
   };
 
   return (

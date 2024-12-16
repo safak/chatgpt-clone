@@ -14,7 +14,7 @@ function App() {
   const dispatch = useDispatch();
   
   // Get login status from the Redux store
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
     authService.getCurrentUser()

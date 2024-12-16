@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { FileData } from "../models/filedata.model.js";
 import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
-import { parseAndVectorizePDF } from "./parseAndVectorizePDF.conroller.js";
+import { parseAndVectorizePDF, getDecompressedVector } from "./parseAndVectorizePDF.conroller.js";
 
 
 // const addFileData = asyncHandler(async (req, res) => {
@@ -195,9 +195,54 @@ const getFileHistory = asyncHandler(async (req, res) => {
   }
 });
 
+const getVectorData = asyncHandler(async (req, res) => {
+  try {
+    // Validate request body
+    const { fileId } = req.body;
+
+    if (!fileId || typeof fileId !== "string") {
+      return res.status(400).json({
+        status: 400,
+        message: "Invalid or missing 'fileId' in request body",
+      });
+    }
+
+    console.log("The body contains: ", req.body);
+
+    // Attempt to retrieve and decompress the vector
+    const vectorData = await getDecompressedVector(fileId);
+
+    if (!vectorData) {
+      return res.status(404).json({
+        status: 404,
+        message: `No vector data found for file ID: ${fileId}`,
+      });
+    }
+
+    // Success response
+    res.status(200).json({
+      status: 200,
+      message: "Vector data retrieved successfully",
+      data: vectorData,
+    });
+  } catch (error) {
+    console.error(`Error retrieving vector data: ${error.message}`);
+
+    // Generic error response
+    res.status(500).json({
+      status: 500,
+      message: "An error occurred while retrieving vector data",
+      error: error.message,
+    });
+  }
+});
+
+
+
 
 
 
 export { addFileData,
-    getFileHistory
+    getFileHistory,
+    getVectorData
  };
