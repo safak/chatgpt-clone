@@ -40,8 +40,9 @@ function UploadPdf() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col ">
       {/* Reuse existing Header */}
+      
       <Header inputText="" />
 
       {/* History Section */}

@@ -1,6 +1,6 @@
 import { startChatWithMessage, generateContentWithRetry } from "../lib/geminiHelperFunc";
 import uploadService from "../AserverAuth/serviceUpload";
-import { useDispatch, useSelector } from 'react-redux';
+
 
 export const handleInputSubmitLogic = async ({
   e,
@@ -12,10 +12,13 @@ export const handleInputSubmitLogic = async ({
   messages,
   isLoading,
   setIsLoading,
+  fileUrl,
+  fileId,
+  vectorData
 }) => {
-  const fileUrl = useSelector((state)=>state.file.fileUrl)
+  
   if ((e.key === "Enter" || e.type === "click") && !isLoading) {
-    if (!inputText.trim() && !image.dbData?.url) {
+    if (!inputText.trim() && !fileUrl) {
       console.warn("Input is empty and no image is provided.");
       return;
     }
@@ -23,7 +26,7 @@ export const handleInputSubmitLogic = async ({
     const userMessage = {
       role: "user",
       text: inputText,
-      image: image.dbData?.url, // Directly use the image URL if it exists
+      image: fileUrl, // Directly use the image URL if it exists
     };
     addMessage(userMessage);
 
@@ -35,7 +38,7 @@ export const handleInputSubmitLogic = async ({
 
     try {
       // Prepare the payload for the model API call
-      const payload = image.dbData?.url ? [inputText, image.dbData?.url] : [inputText];
+      const payload = fileUrl ? [inputText, fileUrl] : [inputText];
       // console.log("The payload is in the format:", payload);
 
       // Send the message and image URL (if available) to startChatWithMessage
@@ -53,16 +56,16 @@ export const handleInputSubmitLogic = async ({
       }));
 
       try {
-        console.log("The id for current file:", image.currentFileId);
-        const resultUpload = await uploadService.addChatHistory(formattedMessages, image.currentFileId); // Include URL if available
-        console.log("After uploading history result:", resultUpload);
+        // console.log("The id for current file:", image.currentFileId);
+        const resultUpload = await uploadService.addChatHistory(formattedMessages, fileId); // Include URL if available
+        // console.log("After uploading history result:", resultUpload);
       } catch (error) {
         console.log("Error saving history:", error);
       }
     } catch (error) {
       console.error("Error during startChatWithMessage:", error);
       try {
-        const payload = image.aiData ? [image.aiData, inputText] : [inputText];
+        const payload = fileUrl ? [fileUrl, inputText] : [inputText];
         const fallbackResponse = await generateContentWithRetry(payload);
 
         const fallbackMessage = { role: "model", text: fallbackResponse };
@@ -77,8 +80,8 @@ export const handleInputSubmitLogic = async ({
         }));
 
         try {
-          const resultUpload = await uploadService.addChatHistory(formattedMessages, image.aiData?.url);
-          console.log("After uploading history result:", resultUpload);
+          const resultUpload = await uploadService.addChatHistory(formattedMessages, fileId);
+          // console.log("After uploading history result:", resultUpload);
         } catch (error) {
           console.log("Error saving history:", error);
         }

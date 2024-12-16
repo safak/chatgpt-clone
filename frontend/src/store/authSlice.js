@@ -14,7 +14,6 @@ const initialState = {
         updatedAt: null,
         __v: null,
     },
-    userHistory: [], // Additional field to store detailed user history
 };
 
 const authSlice = createSlice({
@@ -32,20 +31,10 @@ const authSlice = createSlice({
                 fullname: action.payload.fullname,
                 avatar: action.payload.avatar,
                 coverImage: action.payload.coverImage,
-                watchHistory: action.payload.watchHistory,
                 createdAt: action.payload.createdAt,
                 updatedAt: action.payload.updatedAt,
                 __v: action.payload.__v,
             };
-        },
-        updateUserHistory: (state, action) => {
-            state.userHistory = action.payload; // Replace the user history with new data
-        },
-        addToUserHistory: (state, action) => {
-            state.userHistory.push(action.payload); // Add a single item to the history
-        },
-        clearUserHistory: (state) => {
-            state.userHistory = []; // Clear user history
         },
         logout: (state) => {
             state.status = false; // Reset login status
@@ -56,7 +45,6 @@ const authSlice = createSlice({
                 fullname: null,
                 avatar: null,
                 coverImage: null,
-                watchHistory: [],
                 createdAt: null,
                 updatedAt: null,
                 __v: null,
@@ -69,9 +57,6 @@ const authSlice = createSlice({
 export const {
     setLoginStatus,
     setUserData,
-    updateUserHistory,
-    addToUserHistory,
-    clearUserHistory,
     logout,
 } = authSlice.actions;
 
