@@ -89,17 +89,44 @@ export const parseAndVectorizePDF = async (fileId, fileUrl) => {
 };
 
 // Usage Example: Retrieve and Decompress Vector
-export const getDecompressedVector = async (fileId) => {
+export const getCompressedVector = async (fileId) => {
   try {
     const vectorData = await VectorData.findOne({ fileId });
     if (!vectorData || !vectorData.vector) {
       throw new Error(`No vector data found for file ID: ${fileId}`);
     }
 
-    const decompressedVector = decompressVector(vectorData.vector);
-    console.log("Decompressed Vector (Preview):", decompressedVector.slice(0, 10));
-    return decompressedVector;
+    console.log("Compressed Vector Data Retrieved");
+    return vectorData.vector; // Directly return the stored vector data
   } catch (error) {
-    console.error(`Error retrieving vector for file ID: ${fileId}`, error.message);
+    console.error(`Error retrieving compressed vector for file ID: ${fileId}`, error.message);
+    throw error; // Re-throw the error so it can be handled by the caller
   }
 };
+
+
+
+// export const getDecompressedVector = async (fileId) => {
+//   try {
+//     const vectorData = await VectorData.findOne({ fileId });
+//     if (!vectorData || !vectorData.vector) {
+//       throw new Error(`No vector data found for file ID: ${fileId}`);
+//     }
+
+//     // Decompress and parse the vector
+//     const decompressed = zlib.gunzipSync(vectorData.vector).toString();
+//     console.log("Decompressed Data (String):");
+
+//     const decompressedVector = JSON.parse(decompressed);
+
+//     if (!Array.isArray(decompressedVector)) {
+//       console.error("Decompressed vector is not an array. Received:", typeof(decompressVector));
+//       throw new Error("Decompressed vector is not an array.");
+//     }
+
+//     console.log("Decompressed Vector (Preview):", decompressedVector.slice(0, 10));
+//     return decompressedVector;
+//   } catch (error) {
+//     console.error(`Error retrieving vector for file ID: ${fileId}`, error.message);
+//   }
+// };

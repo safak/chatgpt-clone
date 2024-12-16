@@ -5,7 +5,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { FileData } from "../models/filedata.model.js";
 import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
-import { parseAndVectorizePDF, getDecompressedVector } from "./parseAndVectorizePDF.conroller.js";
+import { parseAndVectorizePDF, getCompressedVector } from "./parseAndVectorizePDF.conroller.js";
 
 
 // const addFileData = asyncHandler(async (req, res) => {
@@ -195,6 +195,8 @@ const getFileHistory = asyncHandler(async (req, res) => {
   }
 });
 
+
+
 const getVectorData = asyncHandler(async (req, res) => {
   try {
     // Validate request body
@@ -210,7 +212,7 @@ const getVectorData = asyncHandler(async (req, res) => {
     console.log("The body contains: ", req.body);
 
     // Attempt to retrieve and decompress the vector
-    const vectorData = await getDecompressedVector(fileId);
+    const vectorData = await getCompressedVector(fileId);
 
     if (!vectorData) {
       return res.status(404).json({

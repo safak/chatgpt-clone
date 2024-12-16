@@ -1,9 +1,11 @@
 import React from "react";
 import { useImage } from "../contexts/ImageContext"; // Import the useImage hook
 import { BsChatLeftText } from "react-icons/bs";
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const Header = ({ inputText }) => {
-  const { fileName } = useImage(); // Get the file name from the context
+  const fileName = useSelector((state) => state.file?.currentFileData?.fileName || "");
 
   // Function to truncate text
   const truncateText = (text, maxLength = 15) => {
@@ -33,7 +35,7 @@ const Header = ({ inputText }) => {
           {fileName ? (
             <>
               <span className="mr-2 text-blue-600">{truncateText(fileName, 15)}</span>
-              <span role="img" aria-label="Gemini" className="text-purple-500 text-xl">
+              <span role="img" aria-label="Gemini" className="text-purple-500 ">
                 💎
               </span>
             </>

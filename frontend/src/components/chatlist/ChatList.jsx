@@ -13,6 +13,7 @@ function ChatList({ onLogout }) {
   const { isSidebarOpen, toggleSidebar } = useSidebar();
   const [currentUser, setCurrentUser] = useState(null);
   const location = useLocation();
+  
 
   useEffect(() => {
     const fetchCurrentUser = async () => {

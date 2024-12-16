@@ -40,7 +40,7 @@ class GetUserData {
     
     
     
-    async vectorData(fileId) {
+    async getVectorData(fileId) {
         try {
           // Validate fileId before making the request
           if (!fileId || typeof fileId !== "string") {
