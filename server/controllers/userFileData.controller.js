@@ -78,6 +78,7 @@ const addFileData = asyncHandler(async (req, res) => {
   try {
     const { fileUrl, fileName } = req.body.data;
     const userId = req.user?._id;
+    // console.log("in here:")
 
     if (!fileUrl) {
       return res.status(400).json({
