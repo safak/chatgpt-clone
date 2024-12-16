@@ -118,6 +118,7 @@ const addFileData = asyncHandler(async (req, res) => {
     parseAndVectorizePDF(fileData._id, fileUrl).catch((err) => {
       console.error("Error during vectorization:", err.message);
     });
+    console.error("Done with the background or in the backforung----------");
 
     // Respond to the user immediately
     res.status(201).json({

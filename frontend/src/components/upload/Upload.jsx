@@ -237,7 +237,7 @@ function Upload() {
 
     // Extract and store the original file name
     if (file) {
-      console.log("The file is :", file.target.files[0].name);
+      // console.log("The file is :", file.target.files[0].name);
       originalFileNameRef.current = file.target.files[0].name; // Save the original name before uploading
     }
   };
