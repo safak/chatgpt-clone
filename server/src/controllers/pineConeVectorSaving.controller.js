@@ -42,63 +42,73 @@ const model = await pipeline("feature-extraction", "sentence-transformers/all-Mi
 });
 
 // Convert text to vector (embedding)
+// Convert text to vector (embedding)
 const textToVector = async (text) => {
-  const embeddings = await model(text); // Get embeddings from the model
-  return embeddings[0]; // Return the first embedding
-};
-
-export const parseAndStoreInPinecone = async (fileId, fileUrl) => {
-  try {
-    console.log(`Processing file with ID: ${fileId}`);
-
-    // Step 1: Download the PDF
-    const response = await axios.get(fileUrl, { responseType: "arraybuffer", timeout: 5000 });
-    const pdfBuffer = response.data;
-
-    if (!pdfBuffer || pdfBuffer.length === 0) {
-      throw new Error("Failed to download the PDF file or file is empty.");
+    const embeddings = await model(text); // Get embeddings from the model
+    const vector = embeddings[0]; // Extract the first embedding (for the entire text)
+  
+    // Check if it's a tensor and convert it to a plain array
+    if (vector && vector.cpuData) {
+        console.log("Moving in here with the vector data conversion")
+      return Array.from(vector.cpuData); // Convert tensor to a plain array
+    } else {
+      return vector; // If it's already an array, return it as is
     }
-
-    // Step 2: Parse the PDF content
-    const pdfData = await pdfParse(pdfBuffer);
-    const pdfText = pdfData?.text;
-
-    if (!pdfText || pdfText.trim() === "") {
-      throw new Error("PDF parsing failed or produced empty text.");
+  };
+  
+  export const parseAndStoreInPinecone = async (fileId, fileUrl) => {
+    try {
+      console.log(`Processing file with ID: ${fileId}`);
+  
+      // Step 1: Download the PDF
+      const response = await axios.get(fileUrl, { responseType: "arraybuffer", timeout: 5000 });
+      const pdfBuffer = response.data;
+  
+      if (!pdfBuffer || pdfBuffer.length === 0) {
+        throw new Error("Failed to download the PDF file or file is empty.");
+      }
+  
+      // Step 2: Parse the PDF content
+      const pdfData = await pdfParse(pdfBuffer);
+      const pdfText = pdfData?.text;
+  
+      if (!pdfText || pdfText.trim() === "") {
+        throw new Error("PDF parsing failed or produced empty text.");
+      }
+  
+      console.log("Parsed PDF Text done, now sending to the textToVector|||||||||||||||||||||||||||>>>>>>>>>>>>>>>>>>>");
+  
+      // Step 3: Convert the text into a vector format (embedding)
+      const vector = await textToVector(pdfText);
+  
+      if (!vector || vector.length === 0) {
+        throw new Error("Vectorization failed or produced an empty vector.");
+      }
+  
+      console.log("Generated Vector (sdfgsdfgdfgsfdgsdgsdfgsdfgsdfgPreview):", ); // Log a preview of the vector
+  
+      // Step 4: Store vector data in Pinecone
+      const index = pc.index(indexName);
+      const upsertResponse = await index.upsert({
+        vectors: [
+          {
+            id: fileId.toString(), // Use fileId as Pinecone ID (converted to string)
+            values: vector, // Store the raw vector
+            metadata: { fileId }, // Optional metadata for future reference
+          },
+        ],
+      });
+  
+      console.log(`Successfully stored vector for file ID: ${fileId} in Pinecone`);
+  
+      // Return the Pinecone vector ID
+      return upsertResponse.upsertedIds[0];
+    } catch (error) {
+      console.error(`Error processing file with ID: ${fileId}`, error.message);
+      throw new Error("Error during vectorization and Pinecone storage.");
     }
-
-    console.log("Parsed PDF Text done, now sending to the textToVector");
-
-    // Step 3: Convert the text into a vector format (embedding)
-    const vector = await textToVector(pdfText);
-
-    if (!vector || vector.length === 0) {
-      throw new Error("Vectorization failed or produced an empty vector.");
-    }
-
-    console.log("Generated Vector (Preview):", vector.slice(0, 10)); // Log a preview of the vector
-
-    // Step 4: Store vector data in Pinecone
-    const index = pc.index(indexName);
-    const upsertResponse = await index.upsert({
-      vectors: [
-        {
-          id: fileId.toString(), // Use fileId as Pinecone ID (converted to string)
-          values: vector, // Store the raw vector
-          metadata: { fileId }, // Optional metadata for future reference
-        },
-      ],
-    });
-
-    console.log(`Successfully stored vector for file ID: ${fileId} in Pinecone`);
-
-    // Return the Pinecone vector ID
-    return upsertResponse.upsertedIds[0];
-  } catch (error) {
-    console.error(`Error processing file with ID: ${fileId}`, error.message);
-    throw new Error("Error during vectorization and Pinecone storage.");
-  }
-};
+  };
+  
 
 export const getVectorFromPinecone = async (fileId) => {
   try {
