@@ -1,4 +1,4 @@
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -27,15 +27,17 @@ const config = {
     },
     externalEndpoints: {
         url1: `${process.env.EXTERNAL_VIDEO_ENDPOINT}/translate`,
-        url2: process.env.EXTERNAL_VIDEO_ENDPOINT2
+        url2: process.env.EXTERNAL_VIDEO_ENDPOINT2,
     },
     googleAuth: {
         clientId: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         callbackUrl: process.env.GOOGLE_CALLBACK_URL,
     },
+    pinecone: {
+        apiKey: process.env.PINECONE_API,
+    },
     sessionSecret: process.env.SESSION_SECRET || 'supersecretkey',
 };
-
 
 export default config;
