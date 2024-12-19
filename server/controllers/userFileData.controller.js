@@ -1,21 +1,18 @@
-
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
 import { FileData } from "../models/filedata.model.js";
 import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
+import { parseAndStoreInPinecone, getVectorFromPinecone } from "./pineConeVectorSaving.controller.js";
 import { parseAndVectorizePDF, getCompressedVector } from "./parseAndVectorizePDF.conroller.js";
+
 
 
 // const addFileData = asyncHandler(async (req, res) => {
 //   try {
-    
-//     const { fileUrl, fileName } = req.body.data; // Extract fileUrl and fileName from the request body
-//     const userId = req.user?._id; // Extract the user ID from the authenticated user
-//     // console.log("Filename is :", fileName, fileUrl)
 
-//     // Validate required fields
+//     const { fileUrl, fileName } = req.body.data;
+//     const userId = req.user?._id;
+
 //     if (!fileUrl) {
 //       return res.status(400).json({
 //         status: 400,
@@ -30,55 +27,54 @@ import { parseAndVectorizePDF, getCompressedVector } from "./parseAndVectorizePD
 //       });
 //     }
 
-//     // Create a new FileData document with fileUrl and fileName
+//     // Create a new FileData document
 //     const fileData = new FileData({
 //       fileUrl,
-//       fileName, // This can be optional; null or undefined is fine if not provided
+//       fileName,
 //     });
-
-//     // Save the FileData document
 //     await fileData.save();
 
-//     // Find the user and update their fileData array with the newly created fileData ObjectId
-//     await User.findByIdAndUpdate(userId, {
-//       $push: { fileData: fileData._id }, // Push the new fileData's ObjectId into the user's fileData array
-//     });
+//     // Update the user with the new FileData reference
+//     const userUpdate = await User.findByIdAndUpdate(
+//       userId,
+//       { $push: { fileData: fileData._id } },
+//       { new: true } // Return the updated document
+//     );
 
-//     // Respond with the populated file data
-//     const populatedFileData = await FileData.findById(fileData._id);
-//     res.status(201).json({
-//       status: 201,
-//       message: "FileData added successfully",
-//       data: populatedFileData,
-//     });
-
-//   } catch (error) {
-//     // Handle different errors and respond with specific messages
-//     if (error.name === "ValidationError") {
-//       return res.status(400).json({
-//         status: 400,
-//         message: "Validation failed: " + error.message,
-//       });
-//     } else if (error.name === "MongoError" && error.code === 11000) {
-//       return res.status(400).json({
-//         status: 400,
-//         message: "Duplicate field error: " + error.message,
-//       });
-//     } else {
-//       return res.status(500).json({
-//         status: 500,
-//         message: "Server error: " + (error.message || "An unknown error occurred."),
+//     if (!userUpdate) {
+//       return res.status(404).json({
+//         status: 404,
+//         message: "User not found.",
 //       });
 //     }
+
+//     // Trigger vectorization in the background and store the Pinecone ID
+//     const pineconeVectorId = await parseAndStoreInPinecone(fileData._id, fileUrl);
+    
+//     // Save the Pinecone vector ID in the file data
+//     fileData.pineconeVectorId = pineconeVectorId;
+//     await fileData.save();
+
+//     // Respond to the user immediately
+//     res.status(201).json({
+//       status: 201,
+//       message: "FileData added successfully. Vectorization has started.",
+//       data: fileData,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       status: 500,
+//       message: "Server error: " + (error.message || "An unknown error occurred."),
+//     });
 //   }
 // });
+
 
 
 const addFileData = asyncHandler(async (req, res) => {
   try {
     const { fileUrl, fileName } = req.body.data;
     const userId = req.user?._id;
-    // console.log("in here:")
 
     if (!fileUrl) {
       return res.status(400).json({
@@ -115,18 +111,31 @@ const addFileData = asyncHandler(async (req, res) => {
       });
     }
 
-    // Trigger vectorization in the background
-    parseAndVectorizePDF(fileData._id, fileUrl).catch((err) => {
-      console.error("Error during vectorization:", err.message);
-    });
-    console.error("Done with the background or in the backforung----------");
-
     // Respond to the user immediately
     res.status(201).json({
       status: 201,
       message: "FileData added successfully. Vectorization has started.",
       data: fileData,
     });
+
+    // Run the vectorization task in the background
+    new Promise(async (resolve, reject) => {
+      try {
+        const pineconeVectorId = await parseAndStoreInPinecone(fileData._id, fileUrl);
+        
+        // Save the Pinecone vector ID in the file data
+        fileData.pineconeVectorId = pineconeVectorId;
+        await fileData.save();
+
+        resolve(pineconeVectorId);
+      } catch (error) {
+        console.error("Error during vectorization:", error.message);
+        reject(error);
+      }
+    }).catch((error) => {
+      console.error("Background task failed:", error.message);
+    });
+
   } catch (error) {
     res.status(500).json({
       status: 500,
@@ -135,6 +144,52 @@ const addFileData = asyncHandler(async (req, res) => {
   }
 });
 
+
+
+
+
+
+const getVectorData = asyncHandler(async (req, res) => {
+  try {
+    // Validate request body
+    const { fileId } = req.body;
+
+    if (!fileId || typeof fileId !== "string") {
+      return res.status(400).json({
+        status: 400,
+        message: "Invalid or missing 'fileId' in request body",
+      });
+    }
+
+    console.log("The body contains: ", req.body);
+
+    // Attempt to retrieve and decompress the vector
+    const vectorData = await getVectorFromPinecone(fileId);
+
+    if (!vectorData) {
+      return res.status(404).json({
+        status: 404,
+        message: `No vector data found for file ID: ${fileId}`,
+      });
+    }
+
+    // Success response
+    res.status(200).json({
+      status: 200,
+      message: "Vector data retrieved successfully",
+      data: vectorData,
+    });
+  } catch (error) {
+    console.error(`Error retrieving vector data: ${error.message}`);
+
+    // Generic error response
+    res.status(500).json({
+      status: 500,
+      message: "An error occurred while retrieving vector data",
+      error: error.message,
+    });
+  }
+});
 
 
 
@@ -196,48 +251,6 @@ const getFileHistory = asyncHandler(async (req, res) => {
 });
 
 
-
-const getVectorData = asyncHandler(async (req, res) => {
-  try {
-    // Validate request body
-    const { fileId } = req.body;
-
-    if (!fileId || typeof fileId !== "string") {
-      return res.status(400).json({
-        status: 400,
-        message: "Invalid or missing 'fileId' in request body",
-      });
-    }
-
-    console.log("The body contains: ", req.body);
-
-    // Attempt to retrieve and decompress the vector
-    const vectorData = await getCompressedVector(fileId);
-
-    if (!vectorData) {
-      return res.status(404).json({
-        status: 404,
-        message: `No vector data found for file ID: ${fileId}`,
-      });
-    }
-
-    // Success response
-    res.status(200).json({
-      status: 200,
-      message: "Vector data retrieved successfully",
-      data: vectorData,
-    });
-  } catch (error) {
-    console.error(`Error retrieving vector data: ${error.message}`);
-
-    // Generic error response
-    res.status(500).json({
-      status: 500,
-      message: "An error occurred while retrieving vector data",
-      error: error.message,
-    });
-  }
-});
 
 
 
