@@ -72,7 +72,7 @@ function UploadPdf() {
 
 
     <div className="flex flex-col h-screen">
-    <Header inputText="" />
+    <Header inputText="Upload History" />
 
     {/* Title and Reload Icon */}
     <div className="flex items-center bg-gray-200 p-1 px-4 py-2">
