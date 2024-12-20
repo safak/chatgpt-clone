@@ -1,23 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  currentFile: null, // Vector data for the selected file
+  currentFile: null,
   currentFileData: {
     fileId: null,
     fileUrl: null,
     fileName: null,
   },
+  fileUploadError: false, // Flag for file upload error
 };
 
 const fileSlice = createSlice({
   name: "file",
   initialState,
   reducers: {
-    // Action to set the vector data
     setCurrentFile(state, action) {
       state.currentFile = action.payload;
     },
-    // Action to set the metadata (fileId, URL, and name)
     setCurrentFileData(state, action) {
       state.currentFileData = {
         fileId: action.payload.fileId,
@@ -25,7 +24,9 @@ const fileSlice = createSlice({
         fileName: action.payload.fileName,
       };
     },
-    // Optionally add a reset action
+    setFileUploadError(state, action) {
+      state.fileUploadError = action.payload; // true for error, false otherwise
+    },
     resetFileState(state) {
       state.currentFile = null;
       state.currentFileData = {
@@ -33,10 +34,16 @@ const fileSlice = createSlice({
         fileUrl: null,
         fileName: null,
       };
+      state.fileUploadError = false; // Reset error flag
     },
   },
 });
 
-export const { setCurrentFile, setCurrentFileData, resetFileState } = fileSlice.actions;
+export const {
+  setCurrentFile,
+  setCurrentFileData,
+  setFileUploadError,
+  resetFileState,
+} = fileSlice.actions;
 
 export default fileSlice.reducer;

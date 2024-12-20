@@ -55,7 +55,7 @@
 
 
 
-import React from "react";
+import React from "react";  
 import { BsChatLeftText } from "react-icons/bs";
 import { useSelector } from "react-redux";
 
@@ -70,7 +70,7 @@ const Header = ({ inputText, currentModel = "💎 Gemini" }) => {
   };
 
   return (
-    <div className="sticky top-0 flex items-center justify-between p-3 bg-[#fff4f4] border-b border-gray-300">
+    <div className="sticky top-0 flex items-center justify-between p-2 pb-3 bg-[#fff4f4] border-b border-gray-300">
       {/* Input Text Section */}
       <div className="flex-1 text-gray-800 font-medium truncate max-w-[40%]">
         {inputText ? (

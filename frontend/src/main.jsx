@@ -9,8 +9,6 @@ import Home from './pages/Home';
 import { AuthLayout } from './components';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import InputURL from './pages/InputURL.jsx';
-import UserHistory from './pages/UserHistory.jsx';
 import ForgetPassword from './pages/ForgetPassword.jsx';
 import Dashboard from './dashboard/Dashboard.jsx';
 import DashboardLayout from './dashboard/DashboardLayout.jsx';
@@ -69,22 +67,7 @@ const router = createBrowserRouter([
             },
           ],
         },
-        {
-          path: "/history",
-          element: (
-            <AuthLayout authentication>
-              <UserHistory />
-            </AuthLayout>
-          ),
-        },
-        {
-          path: "/add-url",
-          element: (
-            <AuthLayout authentication>
-              <InputURL />
-            </AuthLayout>
-          ),
-        },
+      
         {
           path: "/forgot-password",
           element: <ForgetPassword />,

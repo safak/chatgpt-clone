@@ -10,7 +10,7 @@ function UploadSection({ selectedFile, errorMessage, handleFileChange, handleUpl
           <p className="text-gray-600">Select a PDF file to upload.</p>
 
           {/* Upload Component */}
-          <Upload onChange={handleFileChange} />
+          <Upload  />
         </div>
 
         {/* Error Message */}

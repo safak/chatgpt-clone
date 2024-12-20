@@ -74,11 +74,9 @@ app.get("/", (req, res) => {
 
 // Import routes
 import userRouter from "../router/user.routes.js";
-import videoRouter from "../router/video.routes.js";
 
 // Declare routes
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/videos", videoRouter);
 
 // Export the app
 export { app };

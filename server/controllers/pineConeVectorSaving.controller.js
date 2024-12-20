@@ -19,7 +19,7 @@ const model = "multilingual-e5-large"; // Replace with the model of your choice
 
 // Function to generate embeddings using Pinecone's Inference API
 const generateEmbeddings = async (text) => {
-  console.log("Generating embeddings for the provided text...");
+  // console.log("Generating embeddings for the provided text...");
   try {
     const embeddings = await pc.inference.embed(model, [text], {
       inputType: "passage", // Use "query" for queries
@@ -80,18 +80,13 @@ export const parseAndStoreInPinecone = async (fileId, fileUrl) => {
         values: vector,
         metadata: { fileId, text: pdfText },
       }]);
-      console.log("the Returned data from the PineCone db:", upsertResponse);
-  
-      // Check if upsertResponse contains upsertedIds
-      if (upsertResponse && upsertResponse.upsertedIds) {
-        console.log(`Successfully stored vector for file ID: ${fileId} in Pinecone`);
-        return upsertResponse.upsertedIds[0];
-      } else {
-        console.error("No upserted IDs returned from Pinecone response.");
-        // Fallback: return fileId if Pinecone doesn't return an ID
-        console.log(`Falling back to using the fileId: ${fileId}`);
-        return fileId;  // Using fileId as the ID for Pinecone database
+      if(upsertResponse){
+        console.log("there was a response:", upsertResponse)
       }
+      console.log("Done without anyResponse Error");
+  
+        return fileId;  // Using fileId as the ID for Pinecone database
+      
     } catch (error) {
       console.error(`Error processing file with ID: ${fileId}`, error.message);
       throw new Error("Error during vectorization and Pinecone storage.");
@@ -136,7 +131,7 @@ export const getVectorFromPinecone = async (fileId) => {
       }
   
       // Log and return the vector data
-      console.log("Vector Data Retrieved from Pinecone:", result);
+      console.log("Vector Data Retrieved from Pinecone");
       return result.matches[0]; // Return the first match (since topK is set to 1)
   
     } catch (error) {
