@@ -4,6 +4,7 @@ import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
 import { parseAndStoreInPinecone, getVectorFromPinecone } from "./pineConeVectorSaving.controller.js";
 import { parseAndVectorizePDF, getCompressedVector } from "./parseAndVectorizePDF.conroller.js";
+import conf from "../src/conf.js"
 
 
 
@@ -152,7 +153,7 @@ const addFileData = asyncHandler(async (req, res) => {
 const getVectorData = asyncHandler(async (req, res) => {
   try {
     // Validate request body
-    const { fileId } = req.body;
+    const { fileId, query } = req.body;
 
     if (!fileId || typeof fileId !== "string") {
       return res.status(400).json({

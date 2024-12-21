@@ -105,40 +105,50 @@ export const parseAndStoreInPinecone = async (fileId, fileUrl) => {
 
 
 
-
 // Function to retrieve vectors from Pinecone using metadata filtering (without a vector query)
 export const getVectorFromPinecone = async (fileId) => {
-    console.log(`Retrieving vector for file ID: ${fileId} from Pinecone...`);
-    try {
-      // Initialize Pinecone index
-      const index = pc.index(indexName);
-  
-      console.log("Fetching vector data from Pinecone...");
-  
-      // Query the Pinecone index using metadata filter (fileId)
-      const result = await index.namespace(nameSpaceName).query({
-        topK: 1, // We are fetching the vector for a specific fileId, so topK=1
-        id: fileId.toString(),
-        filter: { fileId: { '$eq': fileId.toString() } }, // Filtering by fileId stored in metadata
-        includeValues: true,  // Include the vector values in the response
-        includeMetadata: true,  // Include metadata (e.g., text, fileId) in the response
-      });
-  
-      // Check if the result contains matches
-      if (!result || !result.matches || result.matches.length === 0) {
-        console.error(`No matching vector found for file ID: ${fileId}`);
-        throw new Error(`No matching vector found for file ID: ${fileId}`);
-      }
-  
-      // Log and return the vector data
-      console.log("Vector Data Retrieved from Pinecone");
-      return result.matches[0]; // Return the first match (since topK is set to 1)
-  
-    } catch (error) {
-      // Catch errors and log detailed messages
-      console.error(`Error retrieving vector for file ID: ${fileId}`, error.message);
-      throw new Error(`Error retrieving vector from Pinecone: ${error.message}`);
+  console.log(`Ngrok url is ${conf.externalEndpoints.flaskApi} from Pinecone...`);
+
+  try {
+    // Initialize Pinecone index
+    
+    console.log("Fetching vector data from Pinecone...");
+
+    // Query the Pinecone index using metadata filter (fileId)
+    const requestBody = {
+      file_id: fileId, 
+    };
+    const apiUrl = conf.externalEndpoints.flaskApi || "https://7ac8-34-91-77-28.ngrok-free.app";
+    const response = await fetch(`${apiUrl}/get_model_response`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody), // Send the request body as JSON
+    });
+
+    // Check if the response is OK (HTTP 2xx)
+    if (!response.ok) {
+        throw new Error(`Server responded with status ${response.status}: ${response.statusText}`);
     }
-  };
-  
-  
+
+    // Parse the JSON response
+    const data = await response.json();
+
+    // Log the response to the console
+    // console.log("Response from Flask server:", data);
+
+    // Log and return the vector data
+    if (data && data.data) {
+      console.log("Vector Data Retrieved from Pinecone");
+      return data.data; // Return the vector data (assuming the response has 'data' field)
+    } else {
+      throw new Error("No vector data found in the response");
+    }
+
+  } catch (error) {
+    // Catch errors and log detailed messages
+    console.error(`Error retrieving vector for file ID: ${fileId}`, error.message);
+    throw new Error(`Error retrieving vector from Pinecone: ${error.message}`);
+  }
+};
