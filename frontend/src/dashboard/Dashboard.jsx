@@ -7,6 +7,8 @@ import ChatBody from "./ChatBody";
 import ChatInput from "./ChatInput";
 import { handleInputSubmitLogic } from "../utils/chatHandler";
 import { v4 as uuidv4 } from "uuid";  // Import uuidv4 for unique chat ID generation
+import RAGInterface from "./RAGInterface";
+import FileViewer from "./FileViewer";
 
 function Dashboard() {
   const [inputText, setInputText] = useState("");
@@ -67,6 +69,7 @@ function Dashboard() {
     <div className="flex flex-col h-screen">
       <Header inputText={inputText} />
       <div className="flex-1 overflow-y-hidden">
+
         <ChatBody messages={messages} isLoading={isLoading} />
       </div>
       <ChatInput

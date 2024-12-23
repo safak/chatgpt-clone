@@ -27,15 +27,17 @@ const MessagesList = ({ messages, isLoading }) => {
   }, [messages, isLoading]);
 
   const messageVariants = {
-    initial: { opacity: 0, x: 20 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -20 },
+    initial: { opacity: 0, y: 10 }, // Start from below
+    animate: { opacity: 1, y: 0 },  // Move to its position
+    exit: { opacity: 0, y: -10 },   // Exit moving upward
   };
+  
+  
 
   const loadingVariants = {
-    initial: { opacity: 0, x: 20 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -20 },
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -10 },
   };
 
   return (

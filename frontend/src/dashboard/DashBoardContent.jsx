@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import Header from "./Header2"; // Assuming you have a Header component
+import Header from "./Header2"; 
 
 const DashboardContent = () => {
   const navigate = useNavigate();

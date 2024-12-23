@@ -116,4 +116,31 @@ background: #b3b3b3;  /* Thumb hover color */
     transform: rotate(360deg);
   }
 }
+.file-viewer-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container,
+.pdf-container {
+  max-width: 90%;
+  max-height: 80%;
+}
+
+.file-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pdf-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
