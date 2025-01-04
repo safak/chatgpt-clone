@@ -1,6 +1,7 @@
 import React from "react";
 import { useImage } from "../../contexts/ImageContext"; // Import the useImage hook
 import { BsChatLeftText } from "react-icons/bs";
+// import { LuNotebookText } from "react-icons/lu";
 
 const Header = ({ inputText }) => {
   const { fileName } = useImage(); // Get the file name from the context
@@ -20,6 +21,7 @@ const Header = ({ inputText }) => {
             <div className="flex items-center space-x-2 bg-pink-100 text-purple-600 font-medium px-3 rounded-full">
               <span className="text-purple-500">
                 <BsChatLeftText />
+                {/* <LuNotebookText /> */}
               </span>
               <span className="truncate">{truncateText(inputText)}</span>
             </div>
