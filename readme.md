@@ -1,3 +1,34 @@
+### **Screenshots and Demo**
+
+#### Project Screenshots
+Below are screenshots of the project frontend showcasing key features and design:
+
+1. **Homepage**
+   ![Homepage Screenshot](images/herosection.png)
+
+2. **Chat Interface**
+   ![Chat Interface Screenshot](images/chatPage.png)
+
+3. **PDF Upload and Parsing**
+   ![PDF Upload Screenshot](images/uploads.png)
+
+4. **Dashboard**
+   ![PDF Upload Screenshot](images/dashboard.png)
+
+5. **Chat and Response**
+   ![PDF Upload Screenshot](images/chaWithTag.png)
+
+
+---
+#### Video Demo
+
+> Watch the complete project walkthrough on OneDrive:  
+✨ [**Click Here to Watch the Demo**](https://drive.google.com/file/d/1332duVBuI06ZGelWHwBWR_OuJyQzvzTt/view?usp=sharing) ✨
+
+---
+
+
+
 # Enhanced RAG Website with MERN Stack and Pinecone Integration
 
 This project started as a fork of a repository designed to teach the basics of building a RAG (Retrieval-Augmented Generation) website. I have significantly extended the functionality by adding new features, utilizing advanced technologies, and addressing edge cases.
