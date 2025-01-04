@@ -1,0 +1,1 @@
+export const DB_NAME =  "RAGAI2?retryWrites=true&w=majority&appName=Cluster0" 
