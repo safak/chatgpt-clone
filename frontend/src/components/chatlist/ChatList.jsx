@@ -71,12 +71,6 @@ function ChatList() {
 
         <hr className="border-gray-200 p-0 m-0" />
 
-<<<<<<< HEAD
-        {/* Icons Section */}
-        <div className="flex flex-col items-center space-y-4 mt-4">
-          <Link to="dashboard/upload-pdf" className="flex items-center justify-center p-2 rounded-md hover:bg-gray-200 bg-white hover:text-black">
-            <LuPlus />
-=======
         <div className="flex flex-col items-center space-y-3 mt-3">
           <Link
             to="/dashboard/uploadpdf"
@@ -86,7 +80,6 @@ function ChatList() {
             title="Upload PDF"
           >
             <LuPlus className={iconClasses} />
->>>>>>> 7e7405ac788f18dfdd0bd0ff83642c243531dca1
           </Link>
           <Link
             to="/dashboard/chat"

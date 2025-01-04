@@ -26,6 +26,7 @@ export class AuthService {
             }
     
             // Send the request to the backend
+            console.log("the url is:", this.apiUrl)
             const response = await axios.post(`${this.apiUrl}/users/register`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'

@@ -27,6 +27,7 @@
     "html-react-parser": "^5.1.18",
     "imagekitio-react": "^4.2.0",
     "js-cookie": "^3.0.5",
+    "motion": "^11.15.0",
     "pdfjs-dist": "^3.11.174",
     "query-string": "^9.1.1",
     "react": "^18.3.1",
