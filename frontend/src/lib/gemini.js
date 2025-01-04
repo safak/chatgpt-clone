@@ -1,8 +1,8 @@
 import { HarmBlockThreshold, HarmCategory, GoogleGenerativeAI } from "@google/generative-ai";
-import { config } from "../conf/config";
+import conf from "../conf/conf";
 
 // Initialize the GoogleGenerativeAI instance
-const genAI = new GoogleGenerativeAI(config.VITE_GOOGLE_AI_API_KEY);
+const genAI = new GoogleGenerativeAI(conf.googleAiApiKey);
 
 // Define safety settings for the generative model
 const safetySettings = [

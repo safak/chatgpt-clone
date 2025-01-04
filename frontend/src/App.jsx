@@ -1,118 +1,155 @@
-// import React from "react";
-// import { Routes, Route, Navigate } from "react-router-dom";
-// import Homepage from "./pages/home/Home";
-// import Dashboard from "./pages/dashboard/Dashboard";
-// import ChatPage from "./pages/chatpage/ChatPage";
-// import RootLayout from "./layout/rootLayout/RootLayout";
-// import DashboardLayout from "./layout/dashBoardLayout/DashboardLayout";
-// import { SignIn, SignUp } from "@clerk/clerk-react";
+// import { useState, useEffect } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import authService from "./AserverAuth/auth";
+// import { setLoginStatus, setUserData, logout } from "./store/authSlice";
+
+// import { Outlet } from "react-router-dom";
+// import { ImageProvider } from "./contexts/ImageContext";
+// import { LoadingProvider } from "./contexts/LoadingContext";
 // import { SidebarProvider } from "./contexts/SidebarContext";
-// import { ImageProvider } from "./contexts/ImageContext";  // Import ImageProvider
-// import { LoadingProvider } from "./contexts/LoadingContext";  // Import LoadingProvider
-// import UploadPdf from "./pages/chroma/UploadPdf";
+// import ToastNotification from "./components/toastNotification/ToastNotification";
 
-// const App = () => {
+// function App() {
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+//   const fileName = useSelector((state) => state.file?.currentFileData?.fileName || null);
+//   const dispatch = useDispatch();
+//   const [toastMessage, setToastMessage] = useState(null);
+//   const [isError, setIsError] = useState(false);
+
+//   // Handle toast notification when fileName changes
+//   useEffect(() => {
+//     if (fileName) {
+//       setToastMessage(`File "${fileName}" uploaded successfully!`);
+//       setIsError(false);
+//     }
+//   }, [fileName]);
+
+//   useEffect(() => {
+//     authService
+//       .getCurrentUser()
+//       .then((userData) => {
+//         if (userData) {
+//           dispatch(setLoginStatus(true)); // Assuming `setLoginStatus` expects a boolean
+//           dispatch(setUserData(userData)); // Pass user data directly
+//         } else {
+//           dispatch(logout());
+//         }
+//       })
+//       .catch((error) => {
+//         console.error("Error fetching current user:", error);
+//         setError(error.message || "Failed to load user data.");
+//       })
+//       .finally(() => {
+//         setLoading(false);
+//       });
+//   }, [dispatch]);
+
 //   return (
-//     <LoadingProvider> {/* Wrap the app with LoadingProvider */}
-//       <ImageProvider> {/* Wrap the app with ImageProvider */}
-//         <SidebarProvider> {/* Wrap the app with SidebarProvider */}
-//           <div className="app">
-//             <Routes>
-//               {/* Redirect from root to "/home" */}
-//               <Route path="/" element={<Navigate to="/home" replace />} />
-
-//               {/* RootLayout wraps all other routes */}
-//               <Route path="/" element={<RootLayout />}>
-//                 <Route path="home" element={<Homepage />} /> {/* Homepage route */}
-//                 <Route path="sign-in" element={<SignIn redirectUrl="/dashboard" />} />
-//                 <Route path="sign-up" element={<SignUp redirectUrl="/dashboard" />} />
-
-//                 {/* Protected routes, nested inside DashboardLayout */}
-//                 <Route element={<DashboardLayout />}>
-//                   <Route path="dashboard" element={<Dashboard />} /> {/* Dashboard route */}
-//                   <Route path="dashboard/chats/:id" element={<ChatPage />} /> {/* Dynamic Chat page route */}
-//                   <Route path="dashboard/upload-pdf" element={<UploadPdf />} /> {/* UploadPdf route */}
-//                 </Route>
-//               </Route>
-//             </Routes>
+//     <ImageProvider> {/* Wrap the entire app with ImageProvider */}
+//       <LoadingProvider> {/* Wrap inside LoadingProvider */}
+//         <SidebarProvider> {/* Wrap inside SidebarProvider */}
+//           {/* ToastNotification positioned absolutely */}
+//           {toastMessage && (
+//             <div className="fixed top-0 left-0 w-full flex justify-center z-50">
+//               <ToastNotification
+//                 message={toastMessage}
+//                 duration={3000}
+//                 isSuccess={!isError}
+//                 onClose={() => setToastMessage(null)} // Clear toast on close
+//               />
+//             </div>
+//           )}
+//           <div className="flex flex-col min-h-screen bg-gray-100 text-gray-800">
+//             <main className="flex flex-grow flex-col">
+//               {loading ? (
+//                 <p className="text-blue-600 text-lg animate-pulse">Loading...</p>
+//               ) : error ? (
+//                 <p className="text-red-600 bg-red-100 p-2 rounded-lg">
+//                   Error: {error}
+//                 </p>
+//               ) : (
+//                 <Outlet /> // Render child routes here
+//               )}
+//             </main>
 //           </div>
 //         </SidebarProvider>
-//       </ImageProvider>
-//     </LoadingProvider>
+//       </LoadingProvider>
+//     </ImageProvider>
 //   );
-// };
+// }
+
+
+// export default App;
 
 
 
 
 
 
-import React, { useEffect, useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { Provider } from 'react-redux';  // Import the Provider
-import store from './redux/store';  // Import your Redux store
-import Homepage from './pages/home/Home';
-import Dashboard from './pages/dashboard/Dashboard';
-import ChatPage from './pages/chatpage/ChatPage';
-import RootLayout from './layout/rootLayout/RootLayout';
-import DashboardLayout from './layout/dashBoardLayout/DashboardLayout';
-import UploadPdf from './pages/chroma/UploadPdf';
-import { AuthService } from './services/auth.service';
-import SignUpPage from './pages/signup/SignUp';
-import SignInPage from './pages/signin/SignIn';
 
-// Import Providers
-import { SidebarProvider } from './contexts/SidebarContext';
-import { ImageProvider } from './contexts/ImageContext';
-import { LoadingProvider } from './contexts/LoadingContext';
 
-const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
+
+
+
+import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import authService from "./AserverAuth/auth";
+import { setLoginStatus, setUserData, logout } from "./store/authSlice";
+
+import { Outlet } from "react-router-dom";
+import { ImageProvider } from "./contexts/ImageContext";
+import { LoadingProvider } from "./contexts/LoadingContext";
+import { SidebarProvider } from "./contexts/SidebarContext";
+
+function App() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const authService = new AuthService();
-      try {
-        const currentUser = await authService.getCurrentUser();
-        setIsAuthenticated(!currentUser); // Update auth state based on current user
-      } catch {
-        setIsAuthenticated(false); // Set false if user is not authenticated
-      }
-    };
-
-    checkAuth();
-  }, []);
+    authService
+      .getCurrentUser()
+      .then((userData) => {
+        if (userData) {
+          dispatch(setLoginStatus(true)); // Assuming `setLoginStatus` expects a boolean
+          dispatch(setUserData(userData)); // Pass user data directly
+        } else {
+          dispatch(logout());
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching current user:", error);
+        setError(error.message || "Failed to load user data.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [dispatch]);
 
   return (
-    <Provider store={store}> {/* Wrap the app with the Redux Provider */}
+    <ImageProvider>
       <LoadingProvider>
-        <ImageProvider>
-          <SidebarProvider>
-            <div className="app">
-              <Routes>
-                <Route path="/" element={<Navigate to="/home" replace />} />
-                <Route path="/" element={<RootLayout />}>
-                  <Route path="home" element={<Homepage />} />
-                  {!isAuthenticated ? (
-                    <>
-                      <Route path="sign-in" element={<SignInPage />} />
-                      <Route path="sign-up" element={<SignUpPage />} />
-                    </>
-                  ) : (
-                    <Route element={<DashboardLayout />}>
-                      <Route path="dashboard" element={<Dashboard />} />
-                      <Route path="dashboard/chats/:id" element={<ChatPage />} />
-                      <Route path="dashboard/upload-pdf" element={<UploadPdf />} />
-                    </Route>
-                  )}
-                </Route>
-              </Routes>
-            </div>
-          </SidebarProvider>
-        </ImageProvider>
+        <SidebarProvider>
+          <div className="flex flex-col min-h-screen bg-gray-100 text-gray-800">
+            <main className="flex flex-grow flex-col">
+              {loading ? (
+                <p className="text-blue-600 text-lg animate-pulse">Loading...</p>
+              ) : error ? (
+                <p className="text-red-600 bg-red-100 p-2 rounded-lg">
+                  Error: {error}
+                </p>
+              ) : (
+                <Outlet /> // Render child routes here
+              )}
+            </main>
+          </div>
+        </SidebarProvider>
       </LoadingProvider>
-    </Provider> 
+    </ImageProvider>
   );
-};
+}
 
 export default App;
