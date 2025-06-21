@@ -1,3 +1,4 @@
-# Lama Dev AI Chat Bot App Starter Setup
+Demo Video of the app
 
-This template provides a minimal setup to get React 19 working in Vite with HMR and some ESLint rules.
+https://github.com/user-attachments/assets/cefd957c-f2a0-405f-a845-8e9aee438f54
+
