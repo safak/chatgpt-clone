@@ -12,6 +12,23 @@
         justify-content: center;
         gap: 16px;
         text-align: center;
+
+        a {
+        padding: 15px 25px;
+        background-color: #217bfe;
+        color: white;
+        border-radius: 20px;
+        font-size: 16px;
+        margin-top: 20px;
+        transition: all 0.3s ease-in-out;
+        z-index: 3;
+
+        &:hover {
+            background-color: #e55571;
+            cursor: pointer;
+            scale: 1.05;
+        }
+    }
     }
 
     h1 {
@@ -28,21 +45,6 @@
         color: rgb(229, 219, 255);
     }
 
-    a {
-        padding: 15px 25px;
-        background-color: #217bfe;
-        color: white;
-        border-radius: 20px;
-        font-size: 16px;
-        margin-top: 20px;
-        transition: all 0.3s ease-in-out;
-
-        &:hover {
-            background-color: #e55571;
-            cursor: pointer;
-            scale: 1.05;
-        }
-    }
 
     .right{
         flex:1;
@@ -114,6 +116,29 @@
         left: 0;
         opacity: 0.05;
         animation: 100s linear infinite rotateOrbital;
+    }
+
+    .terms {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        img {
+            width: 32px;
+            height: auto;
+        }
+
+        .links{
+            display: flex;
+            gap: 10px;
+            color: #888;
+            font-size: 10px;
+        }
     }
 }
 
