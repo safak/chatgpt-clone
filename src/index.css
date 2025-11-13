@@ -1,17 +1,23 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+/* index.css */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-body{
-    background-color: #0c0c16;
-    color: #ececec;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    overflow: hidden;
+body, html, #root {
+  width: 100%;
+  height: 100%; /* Kapsayıcıların tam boy olmasını sağlar */
 }
 
-a{
-    text-decoration: none;
-    color: inherit; /* <a> etiketi “rengimi ebeveynden alacağım” diyor.*/
+body {
+  background-color: #0c0c16;
+  color: #ececec;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }

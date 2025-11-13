@@ -69,14 +69,14 @@ const Homepage = () => {
           </div>
         </div>
       </div>
-      <footer className="terms">
+      <div className="terms">
         <img src="/logo.png" alt="footer logo" />
         <div className="links">
           <Link to="/">Terms of Service</Link>
           <span> | </span>
           <Link to="/">Privacy Policy</Link>
         </div>
-      </footer>
+      </div>
     </div>
   );
 };

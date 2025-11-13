@@ -3,6 +3,14 @@
     align-items: center;
     gap: 100px;
     height: 100%;
+    position: relative;
+
+    @media screen and (max-width: 1024px) {
+        flex-direction: column;
+        gap: 0px; /* Çok büyük değil */
+        padding-bottom: 100px; /* footer ile çakışmayı önlemek için */
+
+}
 
     .left{
         flex:1;
@@ -12,39 +20,51 @@
         justify-content: center;
         gap: 16px;
         text-align: center;
+        margin-bottom: 20px;
+
+        @media screen and (max-width:1024px) {
+        margin-bottom: 0px;
+    }
+
+        h1 {
+            font-size: 128px;
+            background: linear-gradient(to right, #217bfe, #e55571);
+            background-clip: text;
+            --webkit-background-clip: text;
+            color: transparent;
+
+            @media screen and (max-width:1280px) {
+            font-size: 64px;
+            }
+        }
+
+        h3 {
+            font-weight: 400;
+            max-width: 70%;
+            color: rgb(229, 219, 255);
+
+            @media screen and (max-width:1024px) {
+            max-width: 100%;
+            }
+        }
 
         a {
-        padding: 15px 25px;
-        background-color: #217bfe;
-        color: white;
-        border-radius: 20px;
-        font-size: 16px;
-        margin-top: 20px;
-        transition: all 0.3s ease-in-out;
-        z-index: 3;
+            padding: 15px 25px;
+            background-color: #217bfe;
+            color: white;
+            border-radius: 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: all 0.3s ease-in-out;
+            z-index: 3;
 
-        &:hover {
-            background-color: #e55571;
-            cursor: pointer;
-            scale: 1.05;
+            &:hover {
+                background-color: #e55571;
+                cursor: pointer;
+                scale: 1.05;
+            }
         }
     }
-    }
-
-    h1 {
-        font-size: 128px;
-        background: linear-gradient(to right, #217bfe, #e55571);
-        background-clip: text;
-        --webkit-background-clip: text;
-        color: transparent;
-    }
-
-    h3 {
-        font-weight: 400;
-        max-width: 70%;
-        color: rgb(229, 219, 255);
-    }
-
 
     .right{
         flex:1;
@@ -52,6 +72,11 @@
         align-items: center;
         justify-content: center;
         height: 100%;
+        margin-bottom: 20px;
+
+        @media screen and (max-width:1024px) {
+            height: 60%;
+            }
 
         .imgContainer {
             display: flex;
@@ -62,6 +87,7 @@
             width: 80%;
             height: 50%;
             position: relative;
+            padding: 15px;
 
             .bgContainer {
                 width: 100%;
@@ -71,15 +97,15 @@
                 top: 0;
                 left: 0;
                 border-radius: 50px;
-            }
 
-            .bg {
-                background-image: url("/bg.png");
-                opacity: 0.2;
-                width: 200%;
-                height: 100%;
-                background-size: auto 100%;
-                animation: 8s ease-in-out infinite alternate slideBg;
+                .bg {
+                    background-image: url("/bg.png");
+                    opacity: 0.2;
+                    width: 200%;
+                    height: 100%;
+                    background-size: auto 100%;
+                    animation: 8s ease-in-out infinite alternate slideBg;
+                }
             }
 
             .bot {
@@ -100,6 +126,14 @@
                 background-color: #3c3b74;
                 border-radius: 10px;
 
+                @media screen and (max-width:1024px) {
+                    display: none;
+                }
+
+                @media screen and (max-width:1280px) {
+                    right: 0;
+                }
+
                 img {
                     width: 32px;
                     height: 32px;
@@ -116,6 +150,7 @@
         left: 0;
         opacity: 0.05;
         animation: 100s linear infinite rotateOrbital;
+        z-index: -1;
     }
 
     .terms {
