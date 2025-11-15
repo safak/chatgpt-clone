@@ -30,15 +30,13 @@
         /* Firefox */
         scrollbar-width: thin;
         scrollbar-color: #3f3f46 transparent;
+    }
+    a {
+        padding: 10px;
+        border-radius: 10px;
 
-
-        a {
-            padding: 10px;
-            border-radius: 10px;
-
-            &:hover {
-                background-color: #2c2937;
-            }
+        &:hover {
+            background-color: #2c2937;
         }
     }
 
