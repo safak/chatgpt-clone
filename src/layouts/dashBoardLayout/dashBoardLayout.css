@@ -1,0 +1,57 @@
+/* dashBoardLayout.css */
+
+.dashboard-layout {
+  display: flex;
+  gap: 0;
+  height: 100%;
+}
+
+.menu {
+  width: 250px;
+  background-color: #1a1825;
+  border-right: 1px solid #3a3845;
+  padding: 1.5rem 1rem;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu::-webkit-scrollbar-track {
+  background: #1a1825;
+}
+
+.menu::-webkit-scrollbar-thumb {
+  background: #3a3845;
+  border-radius: 3px;
+}
+
+.menu::-webkit-scrollbar-thumb:hover {
+  background: #4a4855;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #0e0c16;
+  padding: 2rem;
+}
+
+.content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.content::-webkit-scrollbar-track {
+  background: #0e0c16;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: #3a3845;
+  border-radius: 4px;
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: #4a4855;
+}
