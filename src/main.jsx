@@ -10,6 +10,8 @@ import ChatPage from "./routes/chatPage/chatPage";
 import ErrorPage from "./routes/errorPage/errorPage";
 import RootLayout from "./layouts/rootLayout/rootLayout";
 import DashBoardLayout from "./layouts/dashBoardLayout/dashBoardLayout";
+import SignInPage from "./routes/signInPage/signInPage";
+import SignUpPage from "./routes/signUpPage/signUpPage";
 
 let router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ let router = createBrowserRouter([
         element: <HomePage />,
       },
       {
+        path: "/sign-in/*",
+        element: <SignInPage />,
+      },
+      {
+        path: "/sign-up/*",
+        element: <SignUpPage />,
+      },
+      {
         element: <DashBoardLayout />,
         children: [
           {
@@ -30,9 +40,9 @@ let router = createBrowserRouter([
           {
             path: "/dashboard/chats/:id",
             element: <ChatPage />,
-          }
-        ]
-      }
+          },
+        ],
+      },
     ],
   },
 ]);
