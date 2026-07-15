@@ -1,0 +1,57 @@
+.rootLayout{
+    padding: 16px 64px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+
+    header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between; 
+        gap: 24px;
+
+        .authButtons{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            button{
+                border: 1px solid #dfd9d9;
+                border-radius: 6px;
+                padding: 8px 14px;
+                background: transparent;
+                color: #dfd9d9;
+                cursor: pointer;
+                font: inherit;
+            }
+
+            button:hover{
+                background: #dfd9d9;
+                color: #191818;
+            }
+        }
+        
+        .brand{
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            .logo{
+                width: 40px;
+                height: 40px;
+            }
+        }   
+
+    
+    }
+
+ main{
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+    
+}
